@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bp-3-infos-heading">Create or edit a Bp 3 Infos</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeIsoDevise">Code Iso Devise</label>
+                    <input type="text" class="form-control" name="codeIsoDevise" id="field_codeIsoDevise"
+                           formControlName="codeIsoDevise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_libelleDevise">Libelle Devise</label>
+                    <input type="text" class="form-control" name="libelleDevise" id="field_libelleDevise"
+                           formControlName="libelleDevise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_acheteurVendeur">Acheteur Vendeur</label>
+                    <input type="text" class="form-control" name="acheteurVendeur" id="field_acheteurVendeur"
+                           formControlName="acheteurVendeur"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_achatsBilletETr">Achats Billet E Tr</label>
+                    <input type="number" class="form-control" name="achatsBilletETr" id="field_achatsBilletETr"
+                           formControlName="achatsBilletETr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ventesBilletEtr">Ventes Billet Etr</label>
+                    <input type="number" class="form-control" name="ventesBilletEtr" id="field_ventesBilletEtr"
+                           formControlName="ventesBilletEtr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_achatsChqVoy">Achats Chq Voy</label>
+                    <input type="number" class="form-control" name="achatsChqVoy" id="field_achatsChqVoy"
+                           formControlName="achatsChqVoy"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ventesChqVoy">Ventes Chq Voy</label>
+                    <input type="number" class="form-control" name="ventesChqVoy" id="field_ventesChqVoy"
+                           formControlName="ventesChqVoy"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

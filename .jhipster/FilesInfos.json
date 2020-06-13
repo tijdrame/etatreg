@@ -1,0 +1,41 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "codeFile",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "inputPath",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "outputPath",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDernierChargement",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateDernierDechargement",
+      "fieldType": "Instant"
+    }
+  ],
+  "changelogDate": "20200613214608",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "files_infos",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

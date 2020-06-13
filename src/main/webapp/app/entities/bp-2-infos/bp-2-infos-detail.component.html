@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bp2Infos">
+            <h2><span>Bp 2 Infos</span> {{ bp2Infos.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code Iso Devise</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.codeIsoDevise }}</span>
+                </dd>
+                <dt><span>Actif Billet Et Rcai</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.actifBilletEtRcai }}</span>
+                </dd>
+                <dt><span>Actif Maison Mere</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.actifMaisonMere }}</span>
+                </dd>
+                <dt><span>Actif Au Tresor</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.actifAuTresor }}</span>
+                </dd>
+                <dt><span>Actif Client Deb</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.actifClientDeb }}</span>
+                </dd>
+                <dt><span>Actif Effes Cpte</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.actifEffesCpte }}</span>
+                </dd>
+                <dt><span>Actif Effet Enc</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.actifEffetEnc }}</span>
+                </dd>
+                <dt><span>Passif Maison Mere</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.passifMaisonMere }}</span>
+                </dd>
+                <dt><span>Passif Au Tresor</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.passifAuTresor }}</span>
+                </dd>
+                <dt><span>Passif Cli Cpte Ch</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.passifCliCpteCh }}</span>
+                </dd>
+                <dt><span>Passif Cpt Apres Enc</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.passifCptApresEnc }}</span>
+                </dd>
+                <dt><span>Date Chargement</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.dateChargement }}</span>
+                </dd>
+                <dt><span>Date Dechargement</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.dateDechargement }}</span>
+                </dd>
+                <dt><span>Passif Cli Cpt Vue</span></dt>
+                <dd>
+                    <span>{{ bp2Infos.passifCliCptVue }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bp-2-infos', bp2Infos.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

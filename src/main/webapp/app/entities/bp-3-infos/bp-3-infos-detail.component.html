@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bp3Infos">
+            <h2><span>Bp 3 Infos</span> {{ bp3Infos.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code Iso Devise</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.codeIsoDevise }}</span>
+                </dd>
+                <dt><span>Libelle Devise</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.libelleDevise }}</span>
+                </dd>
+                <dt><span>Acheteur Vendeur</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.acheteurVendeur }}</span>
+                </dd>
+                <dt><span>Achats Billet E Tr</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.achatsBilletETr }}</span>
+                </dd>
+                <dt><span>Ventes Billet Etr</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.ventesBilletEtr }}</span>
+                </dd>
+                <dt><span>Achats Chq Voy</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.achatsChqVoy }}</span>
+                </dd>
+                <dt><span>Ventes Chq Voy</span></dt>
+                <dd>
+                    <span>{{ bp3Infos.ventesChqVoy }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bp-3-infos', bp3Infos.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

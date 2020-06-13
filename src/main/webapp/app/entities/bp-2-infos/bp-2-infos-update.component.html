@@ -1,0 +1,113 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bp-2-infos-heading">Create or edit a Bp 2 Infos</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeIsoDevise">Code Iso Devise</label>
+                    <input type="text" class="form-control" name="codeIsoDevise" id="field_codeIsoDevise"
+                           formControlName="codeIsoDevise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actifBilletEtRcai">Actif Billet Et Rcai</label>
+                    <input type="number" class="form-control" name="actifBilletEtRcai" id="field_actifBilletEtRcai"
+                           formControlName="actifBilletEtRcai"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actifMaisonMere">Actif Maison Mere</label>
+                    <input type="number" class="form-control" name="actifMaisonMere" id="field_actifMaisonMere"
+                           formControlName="actifMaisonMere"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actifAuTresor">Actif Au Tresor</label>
+                    <input type="number" class="form-control" name="actifAuTresor" id="field_actifAuTresor"
+                           formControlName="actifAuTresor"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actifClientDeb">Actif Client Deb</label>
+                    <input type="number" class="form-control" name="actifClientDeb" id="field_actifClientDeb"
+                           formControlName="actifClientDeb"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actifEffesCpte">Actif Effes Cpte</label>
+                    <input type="number" class="form-control" name="actifEffesCpte" id="field_actifEffesCpte"
+                           formControlName="actifEffesCpte"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_actifEffetEnc">Actif Effet Enc</label>
+                    <input type="number" class="form-control" name="actifEffetEnc" id="field_actifEffetEnc"
+                           formControlName="actifEffetEnc"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_passifMaisonMere">Passif Maison Mere</label>
+                    <input type="number" class="form-control" name="passifMaisonMere" id="field_passifMaisonMere"
+                           formControlName="passifMaisonMere"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_passifAuTresor">Passif Au Tresor</label>
+                    <input type="number" class="form-control" name="passifAuTresor" id="field_passifAuTresor"
+                           formControlName="passifAuTresor"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_passifCliCpteCh">Passif Cli Cpte Ch</label>
+                    <input type="number" class="form-control" name="passifCliCpteCh" id="field_passifCliCpteCh"
+                           formControlName="passifCliCpteCh"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_passifCptApresEnc">Passif Cpt Apres Enc</label>
+                    <input type="number" class="form-control" name="passifCptApresEnc" id="field_passifCptApresEnc"
+                           formControlName="passifCptApresEnc"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateChargement">Date Chargement</label>
+                    <div class="d-flex">
+                        <input id="field_dateChargement" type="datetime-local" class="form-control" name="dateChargement" formControlName="dateChargement" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateDechargement">Date Dechargement</label>
+                    <div class="d-flex">
+                        <input id="field_dateDechargement" type="datetime-local" class="form-control" name="dateDechargement" formControlName="dateDechargement" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_passifCliCptVue">Passif Cli Cpt Vue</label>
+                    <div class="d-flex">
+                        <input id="field_passifCliCptVue" type="datetime-local" class="form-control" name="passifCliCptVue" formControlName="passifCliCptVue" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

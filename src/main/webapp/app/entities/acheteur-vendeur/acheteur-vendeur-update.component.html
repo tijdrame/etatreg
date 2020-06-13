@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-acheteur-vendeur-heading">Create or edit a Acheteur Vendeur</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeAcheteurVendeur">Code Acheteur Vendeur</label>
+                    <input type="text" class="form-control" name="codeAcheteurVendeur" id="field_codeAcheteurVendeur"
+                           formControlName="codeAcheteurVendeur"/>
+                    <div *ngIf="editForm.get('codeAcheteurVendeur')!.invalid && (editForm.get('codeAcheteurVendeur')!.dirty || editForm.get('codeAcheteurVendeur')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('codeAcheteurVendeur')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeInterne">Code Interne</label>
+                    <input type="text" class="form-control" name="codeInterne" id="field_codeInterne"
+                           formControlName="codeInterne"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

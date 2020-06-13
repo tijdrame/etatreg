@@ -1,0 +1,72 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "codeIsoDevise",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actifBilletEtRcai",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "actifMaisonMere",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "actifAuTresor",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "actifClientDeb",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "actifEffesCpte",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "actifEffetEnc",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "passifMaisonMere",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "passifAuTresor",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "passifCliCpteCh",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "passifCptApresEnc",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dateChargement",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateDechargement",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "passifCliCptVue",
+      "fieldType": "Instant"
+    }
+  ],
+  "changelogDate": "20200613230726",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bp2infos",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

@@ -1,0 +1,44 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "codeIsoDevise",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "libelleDevise",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "acheteurVendeur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "achatsBilletETr",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "ventesBilletEtr",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "achatsChqVoy",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "ventesChqVoy",
+      "fieldType": "Double"
+    }
+  ],
+  "changelogDate": "20200613231907",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bp3infos",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

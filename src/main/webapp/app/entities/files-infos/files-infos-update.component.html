@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-files-infos-heading">Create or edit a Files Infos</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeFile">Code File</label>
+                    <input type="text" class="form-control" name="codeFile" id="field_codeFile"
+                           formControlName="codeFile"/>
+                    <div *ngIf="editForm.get('codeFile')!.invalid && (editForm.get('codeFile')!.dirty || editForm.get('codeFile')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('codeFile')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_inputPath">Input Path</label>
+                    <input type="text" class="form-control" name="inputPath" id="field_inputPath"
+                           formControlName="inputPath"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_outputPath">Output Path</label>
+                    <input type="text" class="form-control" name="outputPath" id="field_outputPath"
+                           formControlName="outputPath"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateDernierChargement">Date Dernier Chargement</label>
+                    <div class="d-flex">
+                        <input id="field_dateDernierChargement" type="datetime-local" class="form-control" name="dateDernierChargement" formControlName="dateDernierChargement" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateDernierDechargement">Date Dernier Dechargement</label>
+                    <div class="d-flex">
+                        <input id="field_dateDernierDechargement" type="datetime-local" class="form-control" name="dateDernierDechargement" formControlName="dateDernierDechargement" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

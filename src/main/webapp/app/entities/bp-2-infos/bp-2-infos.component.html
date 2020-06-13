@@ -1,0 +1,97 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bp 2 Infos</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bp-2-infos" [routerLink]="['/bp-2-infos/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Bp 2 Infos
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bp2Infos?.length === 0">
+        <span>No bp2Infos found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bp2Infos && bp2Infos.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="codeIsoDevise"><span>Code Iso Devise</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="actifBilletEtRcai"><span>Actif Billet Et Rcai</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="actifMaisonMere"><span>Actif Maison Mere</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="actifAuTresor"><span>Actif Au Tresor</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="actifClientDeb"><span>Actif Client Deb</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="actifEffesCpte"><span>Actif Effes Cpte</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="actifEffetEnc"><span>Actif Effet Enc</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="passifMaisonMere"><span>Passif Maison Mere</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="passifAuTresor"><span>Passif Au Tresor</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="passifCliCpteCh"><span>Passif Cli Cpte Ch</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="passifCptApresEnc"><span>Passif Cpt Apres Enc</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateChargement"><span>Date Chargement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateDechargement"><span>Date Dechargement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="passifCliCptVue"><span>Passif Cli Cpt Vue</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bp2Infos of bp2Infos ;trackBy: trackId">
+                    <td><a [routerLink]="['/bp-2-infos', bp2Infos.id, 'view']">{{ bp2Infos.id }}</a></td>
+                    <td>{{ bp2Infos.codeIsoDevise }}</td>
+                    <td>{{ bp2Infos.actifBilletEtRcai }}</td>
+                    <td>{{ bp2Infos.actifMaisonMere }}</td>
+                    <td>{{ bp2Infos.actifAuTresor }}</td>
+                    <td>{{ bp2Infos.actifClientDeb }}</td>
+                    <td>{{ bp2Infos.actifEffesCpte }}</td>
+                    <td>{{ bp2Infos.actifEffetEnc }}</td>
+                    <td>{{ bp2Infos.passifMaisonMere }}</td>
+                    <td>{{ bp2Infos.passifAuTresor }}</td>
+                    <td>{{ bp2Infos.passifCliCpteCh }}</td>
+                    <td>{{ bp2Infos.passifCptApresEnc }}</td>
+                    <td>{{ bp2Infos.dateChargement | date:'medium' }}</td>
+                    <td>{{ bp2Infos.dateDechargement | date:'medium' }}</td>
+                    <td>{{ bp2Infos.passifCliCptVue | date:'medium' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/bp-2-infos', bp2Infos.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/bp-2-infos', bp2Infos.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(bp2Infos)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bp2Infos && bp2Infos.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

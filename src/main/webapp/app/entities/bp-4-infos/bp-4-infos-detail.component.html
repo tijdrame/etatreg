@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bp4Infos">
+            <h2><span>Bp 4 Infos</span> {{ bp4Infos.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code Iso Pays</span></dt>
+                <dd>
+                    <span>{{ bp4Infos.codeIsoPays }}</span>
+                </dd>
+                <dt><span>Libelle Pays</span></dt>
+                <dd>
+                    <span>{{ bp4Infos.libellePays }}</span>
+                </dd>
+                <dt><span>Mntnos Cartes</span></dt>
+                <dd>
+                    <span>{{ bp4Infos.mntnosCartes }}</span>
+                </dd>
+                <dt><span>Mnt Cartes Etr</span></dt>
+                <dd>
+                    <span>{{ bp4Infos.mntCartesEtr }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bp-4-infos', bp4Infos.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

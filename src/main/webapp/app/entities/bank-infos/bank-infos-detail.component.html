@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bankInfos">
+            <h2><span>Bank Infos</span> {{ bankInfos.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code Id</span></dt>
+                <dd>
+                    <span>{{ bankInfos.codeId }}</span>
+                </dd>
+                <dt><span>Sigle</span></dt>
+                <dd>
+                    <span>{{ bankInfos.sigle }}</span>
+                </dd>
+                <dt><span>Raison Sociale</span></dt>
+                <dd>
+                    <span>{{ bankInfos.raisonSociale }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bank-infos', bankInfos.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

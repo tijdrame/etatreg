@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bp-4-infos-heading">Create or edit a Bp 4 Infos</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_codeIsoPays">Code Iso Pays</label>
+                    <input type="text" class="form-control" name="codeIsoPays" id="field_codeIsoPays"
+                           formControlName="codeIsoPays"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_libellePays">Libelle Pays</label>
+                    <input type="text" class="form-control" name="libellePays" id="field_libellePays"
+                           formControlName="libellePays"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mntnosCartes">Mntnos Cartes</label>
+                    <input type="number" class="form-control" name="mntnosCartes" id="field_mntnosCartes"
+                           formControlName="mntnosCartes"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mntCartesEtr">Mnt Cartes Etr</label>
+                    <input type="number" class="form-control" name="mntCartesEtr" id="field_mntCartesEtr"
+                           formControlName="mntCartesEtr"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
