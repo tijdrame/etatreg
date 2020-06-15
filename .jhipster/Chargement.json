@@ -1,0 +1,23 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "filesInfos",
+      "otherEntityName": "filesInfos",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "chargement"
+    }
+  ],
+  "fields": [],
+  "changelogDate": "20200614194526",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "no",
+  "entityTableName": "chargement",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

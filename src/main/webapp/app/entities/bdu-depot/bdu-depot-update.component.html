@@ -1,0 +1,114 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bdu-depot-heading">Create or edit a Bdu Depot</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                           formControlName="code"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_numEnreg">Num Enreg</label>
+                    <input type="text" class="form-control" name="numEnreg" id="field_numEnreg"
+                           formControlName="numEnreg"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_natureDepot">Nature Depot</label>
+                    <input type="number" class="form-control" name="natureDepot" id="field_natureDepot"
+                           formControlName="natureDepot"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_paysResidence">Pays Residence</label>
+                    <input type="number" class="form-control" name="paysResidence" id="field_paysResidence"
+                           formControlName="paysResidence"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ville">Ville</label>
+                    <input type="number" class="form-control" name="ville" id="field_ville"
+                           formControlName="ville"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_natureDeposant">Nature Deposant</label>
+                    <input type="number" class="form-control" name="natureDeposant" id="field_natureDeposant"
+                           formControlName="natureDeposant"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_statutJuridique">Statut Juridique</label>
+                    <input type="number" class="form-control" name="statutJuridique" id="field_statutJuridique"
+                           formControlName="statutJuridique"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sexeDeposant">Sexe Deposant</label>
+                    <input type="number" class="form-control" name="sexeDeposant" id="field_sexeDeposant"
+                           formControlName="sexeDeposant"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_secteurActivite">Secteur Activite</label>
+                    <input type="number" class="form-control" name="secteurActivite" id="field_secteurActivite"
+                           formControlName="secteurActivite"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tailleEntreprise">Taille Entreprise</label>
+                    <input type="number" class="form-control" name="tailleEntreprise" id="field_tailleEntreprise"
+                           formControlName="tailleEntreprise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateDepot">Date Depot</label>
+                    <div class="input-group">
+                        <input id="field_dateDepot" type="text" class="form-control" name="dateDepot" ngbDatepicker #dateDepotDp="ngbDatepicker" formControlName="dateDepot"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDepotDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_termeDepot">Terme Depot</label>
+                    <input type="number" class="form-control" name="termeDepot" id="field_termeDepot"
+                           formControlName="termeDepot"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantDepot">Montant Depot</label>
+                    <input type="number" class="form-control" name="montantDepot" id="field_montantDepot"
+                           formControlName="montantDepot"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tauxRenumeration">Taux Renumeration</label>
+                    <input type="number" class="form-control" name="tauxRenumeration" id="field_tauxRenumeration"
+                           formControlName="tauxRenumeration"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

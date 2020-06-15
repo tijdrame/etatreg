@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 
 /**
  * A FilesInfos.
@@ -37,10 +37,10 @@ public class FilesInfos implements Serializable {
     private String outputPath;
 
     @Column(name = "date_dernier_chargement")
-    private Instant dateDernierChargement;
+    private LocalDate dateDernierChargement;
 
     @Column(name = "date_dernier_dechargement")
-    private Instant dateDernierDechargement;
+    private LocalDate dateDernierDechargement;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -103,29 +103,29 @@ public class FilesInfos implements Serializable {
         this.outputPath = outputPath;
     }
 
-    public Instant getDateDernierChargement() {
+    public LocalDate getDateDernierChargement() {
         return dateDernierChargement;
     }
 
-    public FilesInfos dateDernierChargement(Instant dateDernierChargement) {
+    public FilesInfos dateDernierChargement(LocalDate dateDernierChargement) {
         this.dateDernierChargement = dateDernierChargement;
         return this;
     }
 
-    public void setDateDernierChargement(Instant dateDernierChargement) {
+    public void setDateDernierChargement(LocalDate dateDernierChargement) {
         this.dateDernierChargement = dateDernierChargement;
     }
 
-    public Instant getDateDernierDechargement() {
+    public LocalDate getDateDernierDechargement() {
         return dateDernierDechargement;
     }
 
-    public FilesInfos dateDernierDechargement(Instant dateDernierDechargement) {
+    public FilesInfos dateDernierDechargement(LocalDate dateDernierDechargement) {
         this.dateDernierDechargement = dateDernierDechargement;
         return this;
     }
 
-    public void setDateDernierDechargement(Instant dateDernierDechargement) {
+    public void setDateDernierDechargement(LocalDate dateDernierDechargement) {
         this.dateDernierDechargement = dateDernierDechargement;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

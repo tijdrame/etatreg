@@ -1,0 +1,91 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bdu Effets</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bdu-effet" [routerLink]="['/bdu-effet/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Bdu Effet
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bduEffets?.length === 0">
+        <span>No bduEffets found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bduEffets && bduEffets.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="code"><span>Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numEnreg"><span>Num Enreg</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="natureDeposant"><span>Nature Deposant</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paysResidence"><span>Pays Residence</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ville"><span>Ville</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantEffet"><span>Montant Effet</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateEscompte"><span>Date Escompte</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateEcheance"><span>Date Echeance</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nbreJours"><span>Nbre Jours</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tauxInteret"><span>Taux Interet</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantCharges"><span>Montant Charges</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bduEffet of bduEffets ;trackBy: trackId">
+                    <td><a [routerLink]="['/bdu-effet', bduEffet.id, 'view']">{{ bduEffet.id }}</a></td>
+                    <td>{{ bduEffet.code }}</td>
+                    <td>{{ bduEffet.numEnreg }}</td>
+                    <td>{{ bduEffet.natureDeposant }}</td>
+                    <td>{{ bduEffet.paysResidence }}</td>
+                    <td>{{ bduEffet.ville }}</td>
+                    <td>{{ bduEffet.montantEffet }}</td>
+                    <td>{{ bduEffet.dateEscompte | date:'mediumDate' }}</td>
+                    <td>{{ bduEffet.dateEcheance | date:'mediumDate' }}</td>
+                    <td>{{ bduEffet.nbreJours }}</td>
+                    <td>{{ bduEffet.tauxInteret }}</td>
+                    <td>{{ bduEffet.montantCharges }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/bdu-effet', bduEffet.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/bdu-effet', bduEffet.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(bduEffet)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bduEffets && bduEffets.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

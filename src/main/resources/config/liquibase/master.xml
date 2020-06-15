@@ -24,6 +24,10 @@
     <include file="config/liquibase/changelog/20200613230726_added_entity_Bp2Infos.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200613231907_added_entity_Bp3Infos.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200613232110_added_entity_Bp4Infos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200614161508_added_entity_BduCdb.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200614163432_added_entity_BduDepot.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200614163800_added_entity_BduEffet.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200614164803_added_entity_BduAutor.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

@@ -1,0 +1,68 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numEnreg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "natureBeneficiaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paysResidence",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "statutJuridique",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sexeBeneficiaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "secteurActivite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tailleEntreprise",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "montantMaxAutorise",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "montantMaxUtilise",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "soldeCompte",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "tauxInteret",
+      "fieldType": "Double"
+    }
+  ],
+  "changelogDate": "20200614164803",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bdu_autor",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

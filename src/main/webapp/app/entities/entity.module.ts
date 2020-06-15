@@ -44,6 +44,30 @@ import { RouterModule } from '@angular/router';
         path: 'bp-4-infos',
         loadChildren: () => import('./bp-4-infos/bp-4-infos.module').then(m => m.EtatregBp4InfosModule),
       },
+      {
+        path: 'bdu-cdb',
+        loadChildren: () => import('./bdu-cdb/bdu-cdb.module').then(m => m.EtatregBduCdbModule),
+      },
+      {
+        path: 'bdu-depot',
+        loadChildren: () => import('./bdu-depot/bdu-depot.module').then(m => m.EtatregBduDepotModule),
+      },
+      {
+        path: 'bdu-effet',
+        loadChildren: () => import('./bdu-effet/bdu-effet.module').then(m => m.EtatregBduEffetModule),
+      },
+      {
+        path: 'bdu-autor',
+        loadChildren: () => import('./bdu-autor/bdu-autor.module').then(m => m.EtatregBduAutorModule),
+      },
+      {
+        path: 'chargement',
+        loadChildren: () => import('./chargement/chargement.module').then(m => m.EtatregChargementModule),
+      },
+      {
+        path: 'dechargement',
+        loadChildren: () => import('./dechargement/dechargement.module').then(m => m.EtatregDechargementModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

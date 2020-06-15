@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bduDepot">
+            <h2><span>Bdu Depot</span> {{ bduDepot.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code</span></dt>
+                <dd>
+                    <span>{{ bduDepot.code }}</span>
+                </dd>
+                <dt><span>Num Enreg</span></dt>
+                <dd>
+                    <span>{{ bduDepot.numEnreg }}</span>
+                </dd>
+                <dt><span>Nature Depot</span></dt>
+                <dd>
+                    <span>{{ bduDepot.natureDepot }}</span>
+                </dd>
+                <dt><span>Pays Residence</span></dt>
+                <dd>
+                    <span>{{ bduDepot.paysResidence }}</span>
+                </dd>
+                <dt><span>Ville</span></dt>
+                <dd>
+                    <span>{{ bduDepot.ville }}</span>
+                </dd>
+                <dt><span>Nature Deposant</span></dt>
+                <dd>
+                    <span>{{ bduDepot.natureDeposant }}</span>
+                </dd>
+                <dt><span>Statut Juridique</span></dt>
+                <dd>
+                    <span>{{ bduDepot.statutJuridique }}</span>
+                </dd>
+                <dt><span>Sexe Deposant</span></dt>
+                <dd>
+                    <span>{{ bduDepot.sexeDeposant }}</span>
+                </dd>
+                <dt><span>Secteur Activite</span></dt>
+                <dd>
+                    <span>{{ bduDepot.secteurActivite }}</span>
+                </dd>
+                <dt><span>Taille Entreprise</span></dt>
+                <dd>
+                    <span>{{ bduDepot.tailleEntreprise }}</span>
+                </dd>
+                <dt><span>Date Depot</span></dt>
+                <dd>
+                    <span>{{ bduDepot.dateDepot }}</span>
+                </dd>
+                <dt><span>Terme Depot</span></dt>
+                <dd>
+                    <span>{{ bduDepot.termeDepot }}</span>
+                </dd>
+                <dt><span>Montant Depot</span></dt>
+                <dd>
+                    <span>{{ bduDepot.montantDepot }}</span>
+                </dd>
+                <dt><span>Taux Renumeration</span></dt>
+                <dd>
+                    <span>{{ bduDepot.tauxRenumeration }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bdu-depot', bduDepot.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

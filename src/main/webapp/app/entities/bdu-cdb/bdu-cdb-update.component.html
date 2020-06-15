@@ -1,0 +1,187 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bdu-cdb-heading">Create or edit a Bdu Cdb</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                           formControlName="code"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_numEnreg">Num Enreg</label>
+                    <input type="text" class="form-control" name="numEnreg" id="field_numEnreg"
+                           formControlName="numEnreg"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateTraitement">Date Traitement</label>
+                    <div class="d-flex">
+                        <input id="field_dateTraitement" type="datetime-local" class="form-control" name="dateTraitement" formControlName="dateTraitement" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typeCredit">Type Credit</label>
+                    <input type="number" class="form-control" name="typeCredit" id="field_typeCredit"
+                           formControlName="typeCredit"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_objetCredit">Objet Credit</label>
+                    <input type="number" class="form-control" name="objetCredit" id="field_objetCredit"
+                           formControlName="objetCredit"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantCreditDemande">Montant Credit Demande</label>
+                    <input type="number" class="form-control" name="montantCreditDemande" id="field_montantCreditDemande"
+                           formControlName="montantCreditDemande"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dureeCreditDemande">Duree Credit Demande</label>
+                    <input type="number" class="form-control" name="dureeCreditDemande" id="field_dureeCreditDemande"
+                           formControlName="dureeCreditDemande"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tauxInteretSouhaite">Taux Interet Souhaite</label>
+                    <input type="text" class="form-control" name="tauxInteretSouhaite" id="field_tauxInteretSouhaite"
+                           formControlName="tauxInteretSouhaite"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_natureDebiteur">Nature Debiteur</label>
+                    <input type="text" class="form-control" name="natureDebiteur" id="field_natureDebiteur"
+                           formControlName="natureDebiteur"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_paysResidence">Pays Residence</label>
+                    <input type="number" class="form-control" name="paysResidence" id="field_paysResidence"
+                           formControlName="paysResidence"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ville">Ville</label>
+                    <input type="number" class="form-control" name="ville" id="field_ville"
+                           formControlName="ville"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_statutJuridique">Statut Juridique</label>
+                    <input type="number" class="form-control" name="statutJuridique" id="field_statutJuridique"
+                           formControlName="statutJuridique"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sexeDebiteur">Sexe Debiteur</label>
+                    <input type="text" class="form-control" name="sexeDebiteur" id="field_sexeDebiteur"
+                           formControlName="sexeDebiteur"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_secteurActivite">Secteur Activite</label>
+                    <input type="text" class="form-control" name="secteurActivite" id="field_secteurActivite"
+                           formControlName="secteurActivite"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tailleEntreprise">Taille Entreprise</label>
+                    <input type="text" class="form-control" name="tailleEntreprise" id="field_tailleEntreprise"
+                           formControlName="tailleEntreprise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_decision">Decision</label>
+                    <input type="number" class="form-control" name="decision" id="field_decision"
+                           formControlName="decision"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motifRejet">Motif Rejet</label>
+                    <input type="text" class="form-control" name="motifRejet" id="field_motifRejet"
+                           formControlName="motifRejet"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateCredit">Date Credit</label>
+                    <div class="input-group">
+                        <input id="field_dateCredit" type="text" class="form-control" name="dateCredit" ngbDatepicker #dateCreditDp="ngbDatepicker" formControlName="dateCredit"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateCreditDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantCreditAccorde">Montant Credit Accorde</label>
+                    <input type="number" class="form-control" name="montantCreditAccorde" id="field_montantCreditAccorde"
+                           formControlName="montantCreditAccorde"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dureeCreditAccorde">Duree Credit Accorde</label>
+                    <input type="number" class="form-control" name="dureeCreditAccorde" id="field_dureeCreditAccorde"
+                           formControlName="dureeCreditAccorde"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_periodiciteRemboursement">Periodicite Remboursement</label>
+                    <input type="number" class="form-control" name="periodiciteRemboursement" id="field_periodiciteRemboursement"
+                           formControlName="periodiciteRemboursement"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tauxInteretApplique">Taux Interet Applique</label>
+                    <input type="text" class="form-control" name="tauxInteretApplique" id="field_tauxInteretApplique"
+                           formControlName="tauxInteretApplique"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantInteret">Montant Interet</label>
+                    <input type="number" class="form-control" name="montantInteret" id="field_montantInteret"
+                           formControlName="montantInteret"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantCharges">Montant Charges</label>
+                    <input type="number" class="form-control" name="montantCharges" id="field_montantCharges"
+                           formControlName="montantCharges"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantCommission">Montant Commission</label>
+                    <input type="number" class="form-control" name="montantCommission" id="field_montantCommission"
+                           formControlName="montantCommission"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_autresCommissions">Autres Commissions</label>
+                    <input type="number" class="form-control" name="autresCommissions" id="field_autresCommissions"
+                           formControlName="autresCommissions"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

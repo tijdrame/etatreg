@@ -26,11 +26,11 @@
                 </dd>
                 <dt><span>Date Dernier Chargement</span></dt>
                 <dd>
-                    <span>{{ filesInfos.dateDernierChargement }}</span>
+                    <span>{{ filesInfos.dateDernierChargement | date:'dd-MM-yyyy' }}</span>
                 </dd>
                 <dt><span>Date Dernier Dechargement</span></dt>
                 <dd>
-                    <span>{{ filesInfos.dateDernierDechargement }}</span>
+                    <span>{{ filesInfos.dateDernierDechargement | date:'dd-MM-yyyy'}}</span>
                 </dd>
             </dl>
 

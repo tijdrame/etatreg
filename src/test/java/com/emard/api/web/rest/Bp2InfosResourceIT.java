@@ -15,7 +15,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -65,14 +66,14 @@ public class Bp2InfosResourceIT {
     private static final Double DEFAULT_PASSIF_CPT_APRES_ENC = 1D;
     private static final Double UPDATED_PASSIF_CPT_APRES_ENC = 2D;
 
-    private static final Instant DEFAULT_DATE_CHARGEMENT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DATE_CHARGEMENT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_DATE_CHARGEMENT = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_CHARGEMENT = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Instant DEFAULT_DATE_DECHARGEMENT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DATE_DECHARGEMENT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_DATE_DECHARGEMENT = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_DECHARGEMENT = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Instant DEFAULT_PASSIF_CLI_CPT_VUE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_PASSIF_CLI_CPT_VUE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_PASSIF_CLI_CPT_VUE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PASSIF_CLI_CPT_VUE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private Bp2InfosRepository bp2InfosRepository;

@@ -22,7 +22,6 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="codeFile"><span>Code File</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="description"><span>Description</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="inputPath"><span>Input Path</span> <fa-icon icon="sort"></fa-icon></th>
@@ -34,13 +33,12 @@
             </thead>
             <tbody>
                 <tr *ngFor="let filesInfos of filesInfos ;trackBy: trackId">
-                    <td><a [routerLink]="['/files-infos', filesInfos.id, 'view']">{{ filesInfos.id }}</a></td>
                     <td>{{ filesInfos.codeFile }}</td>
                     <td>{{ filesInfos.description }}</td>
                     <td>{{ filesInfos.inputPath }}</td>
                     <td>{{ filesInfos.outputPath }}</td>
-                    <td>{{ filesInfos.dateDernierChargement | date:'medium' }}</td>
-                    <td>{{ filesInfos.dateDernierDechargement | date:'medium' }}</td>
+                    <td>{{ filesInfos.dateDernierChargement | date:'dd-MM-yyyy' }}</td>
+                    <td>{{ filesInfos.dateDernierDechargement | date:'dd-MM-yyyy' }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

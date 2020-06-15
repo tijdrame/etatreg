@@ -1,0 +1,120 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numEnreg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateTraitement",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "typeCredit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "objetCredit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "montantCreditDemande",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dureeCreditDemande",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tauxInteretSouhaite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "natureDebiteur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paysResidence",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "statutJuridique",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sexeDebiteur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "secteurActivite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tailleEntreprise",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "decision",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "motifRejet",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateCredit",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "montantCreditAccorde",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dureeCreditAccorde",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "periodiciteRemboursement",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "tauxInteretApplique",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "montantInteret",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "montantCharges",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "montantCommission",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "autresCommissions",
+      "fieldType": "Double"
+    }
+  ],
+  "changelogDate": "20200614161508",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bdu_cdb",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

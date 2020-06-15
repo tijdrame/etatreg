@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bduAutor">
+            <h2><span>Bdu Autor</span> {{ bduAutor.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code</span></dt>
+                <dd>
+                    <span>{{ bduAutor.code }}</span>
+                </dd>
+                <dt><span>Num Enreg</span></dt>
+                <dd>
+                    <span>{{ bduAutor.numEnreg }}</span>
+                </dd>
+                <dt><span>Nature Beneficiaire</span></dt>
+                <dd>
+                    <span>{{ bduAutor.natureBeneficiaire }}</span>
+                </dd>
+                <dt><span>Pays Residence</span></dt>
+                <dd>
+                    <span>{{ bduAutor.paysResidence }}</span>
+                </dd>
+                <dt><span>Ville</span></dt>
+                <dd>
+                    <span>{{ bduAutor.ville }}</span>
+                </dd>
+                <dt><span>Statut Juridique</span></dt>
+                <dd>
+                    <span>{{ bduAutor.statutJuridique }}</span>
+                </dd>
+                <dt><span>Sexe Beneficiaire</span></dt>
+                <dd>
+                    <span>{{ bduAutor.sexeBeneficiaire }}</span>
+                </dd>
+                <dt><span>Secteur Activite</span></dt>
+                <dd>
+                    <span>{{ bduAutor.secteurActivite }}</span>
+                </dd>
+                <dt><span>Taille Entreprise</span></dt>
+                <dd>
+                    <span>{{ bduAutor.tailleEntreprise }}</span>
+                </dd>
+                <dt><span>Montant Max Autorise</span></dt>
+                <dd>
+                    <span>{{ bduAutor.montantMaxAutorise }}</span>
+                </dd>
+                <dt><span>Montant Max Utilise</span></dt>
+                <dd>
+                    <span>{{ bduAutor.montantMaxUtilise }}</span>
+                </dd>
+                <dt><span>Solde Compte</span></dt>
+                <dd>
+                    <span>{{ bduAutor.soldeCompte }}</span>
+                </dd>
+                <dt><span>Taux Interet</span></dt>
+                <dd>
+                    <span>{{ bduAutor.tauxInteret }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bdu-autor', bduAutor.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

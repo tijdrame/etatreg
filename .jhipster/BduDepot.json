@@ -1,0 +1,72 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numEnreg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "natureDepot",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "paysResidence",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "natureDeposant",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "statutJuridique",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sexeDeposant",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "secteurActivite",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tailleEntreprise",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dateDepot",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "termeDepot",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "montantDepot",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "tauxRenumeration",
+      "fieldType": "Double"
+    }
+  ],
+  "changelogDate": "20200614163432",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bdu_depot",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

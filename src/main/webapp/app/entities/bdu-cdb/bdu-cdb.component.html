@@ -1,0 +1,121 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bdu Cdbs</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bdu-cdb" [routerLink]="['/bdu-cdb/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Bdu Cdb
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bduCdbs?.length === 0">
+        <span>No bduCdbs found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bduCdbs && bduCdbs.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="code"><span>Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numEnreg"><span>Num Enreg</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateTraitement"><span>Date Traitement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="typeCredit"><span>Type Credit</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="objetCredit"><span>Objet Credit</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantCreditDemande"><span>Montant Credit Demande</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dureeCreditDemande"><span>Duree Credit Demande</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tauxInteretSouhaite"><span>Taux Interet Souhaite</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="natureDebiteur"><span>Nature Debiteur</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paysResidence"><span>Pays Residence</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ville"><span>Ville</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="statutJuridique"><span>Statut Juridique</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sexeDebiteur"><span>Sexe Debiteur</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="secteurActivite"><span>Secteur Activite</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tailleEntreprise"><span>Taille Entreprise</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="decision"><span>Decision</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="motifRejet"><span>Motif Rejet</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateCredit"><span>Date Credit</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantCreditAccorde"><span>Montant Credit Accorde</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dureeCreditAccorde"><span>Duree Credit Accorde</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="periodiciteRemboursement"><span>Periodicite Remboursement</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tauxInteretApplique"><span>Taux Interet Applique</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantInteret"><span>Montant Interet</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantCharges"><span>Montant Charges</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantCommission"><span>Montant Commission</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="autresCommissions"><span>Autres Commissions</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bduCdb of bduCdbs ;trackBy: trackId">
+                    <td><a [routerLink]="['/bdu-cdb', bduCdb.id, 'view']">{{ bduCdb.id }}</a></td>
+                    <td>{{ bduCdb.code }}</td>
+                    <td>{{ bduCdb.numEnreg }}</td>
+                    <td>{{ bduCdb.dateTraitement | date:'medium' }}</td>
+                    <td>{{ bduCdb.typeCredit }}</td>
+                    <td>{{ bduCdb.objetCredit }}</td>
+                    <td>{{ bduCdb.montantCreditDemande }}</td>
+                    <td>{{ bduCdb.dureeCreditDemande }}</td>
+                    <td>{{ bduCdb.tauxInteretSouhaite }}</td>
+                    <td>{{ bduCdb.natureDebiteur }}</td>
+                    <td>{{ bduCdb.paysResidence }}</td>
+                    <td>{{ bduCdb.ville }}</td>
+                    <td>{{ bduCdb.statutJuridique }}</td>
+                    <td>{{ bduCdb.sexeDebiteur }}</td>
+                    <td>{{ bduCdb.secteurActivite }}</td>
+                    <td>{{ bduCdb.tailleEntreprise }}</td>
+                    <td>{{ bduCdb.decision }}</td>
+                    <td>{{ bduCdb.motifRejet }}</td>
+                    <td>{{ bduCdb.dateCredit | date:'mediumDate' }}</td>
+                    <td>{{ bduCdb.montantCreditAccorde }}</td>
+                    <td>{{ bduCdb.dureeCreditAccorde }}</td>
+                    <td>{{ bduCdb.periodiciteRemboursement }}</td>
+                    <td>{{ bduCdb.tauxInteretApplique }}</td>
+                    <td>{{ bduCdb.montantInteret }}</td>
+                    <td>{{ bduCdb.montantCharges }}</td>
+                    <td>{{ bduCdb.montantCommission }}</td>
+                    <td>{{ bduCdb.autresCommissions }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/bdu-cdb', bduCdb.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/bdu-cdb', bduCdb.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(bduCdb)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bduCdbs && bduCdbs.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

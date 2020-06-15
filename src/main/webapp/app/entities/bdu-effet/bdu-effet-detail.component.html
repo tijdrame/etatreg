@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bduEffet">
+            <h2><span>Bdu Effet</span> {{ bduEffet.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code</span></dt>
+                <dd>
+                    <span>{{ bduEffet.code }}</span>
+                </dd>
+                <dt><span>Num Enreg</span></dt>
+                <dd>
+                    <span>{{ bduEffet.numEnreg }}</span>
+                </dd>
+                <dt><span>Nature Deposant</span></dt>
+                <dd>
+                    <span>{{ bduEffet.natureDeposant }}</span>
+                </dd>
+                <dt><span>Pays Residence</span></dt>
+                <dd>
+                    <span>{{ bduEffet.paysResidence }}</span>
+                </dd>
+                <dt><span>Ville</span></dt>
+                <dd>
+                    <span>{{ bduEffet.ville }}</span>
+                </dd>
+                <dt><span>Montant Effet</span></dt>
+                <dd>
+                    <span>{{ bduEffet.montantEffet }}</span>
+                </dd>
+                <dt><span>Date Escompte</span></dt>
+                <dd>
+                    <span>{{ bduEffet.dateEscompte }}</span>
+                </dd>
+                <dt><span>Date Echeance</span></dt>
+                <dd>
+                    <span>{{ bduEffet.dateEcheance }}</span>
+                </dd>
+                <dt><span>Nbre Jours</span></dt>
+                <dd>
+                    <span>{{ bduEffet.nbreJours }}</span>
+                </dd>
+                <dt><span>Taux Interet</span></dt>
+                <dd>
+                    <span>{{ bduEffet.tauxInteret }}</span>
+                </dd>
+                <dt><span>Montant Charges</span></dt>
+                <dd>
+                    <span>{{ bduEffet.montantCharges }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bdu-effet', bduEffet.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

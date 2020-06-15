@@ -49,20 +49,20 @@
             <column name="passif_cpt_apres_enc" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="date_chargement" type="datetime">
+            <column name="date_chargement" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="date_dechargement" type="datetime">
+            <column name="date_dechargement" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="passif_cli_cpt_vue" type="datetime">
+            <column name="passif_cli_cpt_vue" type="date">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="bp2infos" columnName="date_chargement" columnDataType="datetime"/>
-        <dropDefaultValue tableName="bp2infos" columnName="date_dechargement" columnDataType="datetime"/>
-        <dropDefaultValue tableName="bp2infos" columnName="passif_cli_cpt_vue" columnDataType="datetime"/>
+        <dropDefaultValue tableName="bp2infos" columnName="date_chargement" columnDataType="date"/>
+        <dropDefaultValue tableName="bp2infos" columnName="date_dechargement" columnDataType="date"/>
+        <dropDefaultValue tableName="bp2infos" columnName="passif_cli_cpt_vue" columnDataType="date"/>
     </changeSet>
 
     <changeSet id="20200613230726-1-relations" author="jhipster">
@@ -95,9 +95,9 @@
             <column name="passif_au_tresor" type="numeric"/>
             <column name="passif_cli_cpte_ch" type="numeric"/>
             <column name="passif_cpt_apres_enc" type="numeric"/>
-            <column name="date_chargement" type="datetime"/>
-            <column name="date_dechargement" type="datetime"/>
-            <column name="passif_cli_cpt_vue" type="datetime"/>
+            <column name="date_chargement" type="date"/>
+            <column name="date_dechargement" type="date"/>
+            <column name="passif_cli_cpt_vue" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -1,0 +1,95 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bdu Autors</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bdu-autor" [routerLink]="['/bdu-autor/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Bdu Autor
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bduAutors?.length === 0">
+        <span>No bduAutors found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bduAutors && bduAutors.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="code"><span>Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numEnreg"><span>Num Enreg</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="natureBeneficiaire"><span>Nature Beneficiaire</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paysResidence"><span>Pays Residence</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ville"><span>Ville</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="statutJuridique"><span>Statut Juridique</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sexeBeneficiaire"><span>Sexe Beneficiaire</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="secteurActivite"><span>Secteur Activite</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tailleEntreprise"><span>Taille Entreprise</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantMaxAutorise"><span>Montant Max Autorise</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="montantMaxUtilise"><span>Montant Max Utilise</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="soldeCompte"><span>Solde Compte</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tauxInteret"><span>Taux Interet</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bduAutor of bduAutors ;trackBy: trackId">
+                    <td><a [routerLink]="['/bdu-autor', bduAutor.id, 'view']">{{ bduAutor.id }}</a></td>
+                    <td>{{ bduAutor.code }}</td>
+                    <td>{{ bduAutor.numEnreg }}</td>
+                    <td>{{ bduAutor.natureBeneficiaire }}</td>
+                    <td>{{ bduAutor.paysResidence }}</td>
+                    <td>{{ bduAutor.ville }}</td>
+                    <td>{{ bduAutor.statutJuridique }}</td>
+                    <td>{{ bduAutor.sexeBeneficiaire }}</td>
+                    <td>{{ bduAutor.secteurActivite }}</td>
+                    <td>{{ bduAutor.tailleEntreprise }}</td>
+                    <td>{{ bduAutor.montantMaxAutorise }}</td>
+                    <td>{{ bduAutor.montantMaxUtilise }}</td>
+                    <td>{{ bduAutor.soldeCompte }}</td>
+                    <td>{{ bduAutor.tauxInteret }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/bdu-autor', bduAutor.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/bdu-autor', bduAutor.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(bduAutor)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bduAutors && bduAutors.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

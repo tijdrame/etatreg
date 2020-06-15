@@ -6,7 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 
 /**
  * A Bp2Infos.
@@ -56,13 +56,13 @@ public class Bp2Infos implements Serializable {
     private Double passifCptApresEnc;
 
     @Column(name = "date_chargement")
-    private Instant dateChargement;
+    private LocalDate dateChargement;
 
     @Column(name = "date_dechargement")
-    private Instant dateDechargement;
+    private LocalDate dateDechargement;
 
     @Column(name = "passif_cli_cpt_vue")
-    private Instant passifCliCptVue;
+    private LocalDate passifCliCptVue;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -216,42 +216,42 @@ public class Bp2Infos implements Serializable {
         this.passifCptApresEnc = passifCptApresEnc;
     }
 
-    public Instant getDateChargement() {
+    public LocalDate getDateChargement() {
         return dateChargement;
     }
 
-    public Bp2Infos dateChargement(Instant dateChargement) {
+    public Bp2Infos dateChargement(LocalDate dateChargement) {
         this.dateChargement = dateChargement;
         return this;
     }
 
-    public void setDateChargement(Instant dateChargement) {
+    public void setDateChargement(LocalDate dateChargement) {
         this.dateChargement = dateChargement;
     }
 
-    public Instant getDateDechargement() {
+    public LocalDate getDateDechargement() {
         return dateDechargement;
     }
 
-    public Bp2Infos dateDechargement(Instant dateDechargement) {
+    public Bp2Infos dateDechargement(LocalDate dateDechargement) {
         this.dateDechargement = dateDechargement;
         return this;
     }
 
-    public void setDateDechargement(Instant dateDechargement) {
+    public void setDateDechargement(LocalDate dateDechargement) {
         this.dateDechargement = dateDechargement;
     }
 
-    public Instant getPassifCliCptVue() {
+    public LocalDate getPassifCliCptVue() {
         return passifCliCptVue;
     }
 
-    public Bp2Infos passifCliCptVue(Instant passifCliCptVue) {
+    public Bp2Infos passifCliCptVue(LocalDate passifCliCptVue) {
         this.passifCliCptVue = passifCliCptVue;
         return this;
     }
 
-    public void setPassifCliCptVue(Instant passifCliCptVue) {
+    public void setPassifCliCptVue(LocalDate passifCliCptVue) {
         this.passifCliCptVue = passifCliCptVue;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

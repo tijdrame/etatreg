@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bdu-autor-heading">Create or edit a Bdu Autor</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                           formControlName="code"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_numEnreg">Num Enreg</label>
+                    <input type="text" class="form-control" name="numEnreg" id="field_numEnreg"
+                           formControlName="numEnreg"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_natureBeneficiaire">Nature Beneficiaire</label>
+                    <input type="text" class="form-control" name="natureBeneficiaire" id="field_natureBeneficiaire"
+                           formControlName="natureBeneficiaire"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_paysResidence">Pays Residence</label>
+                    <input type="number" class="form-control" name="paysResidence" id="field_paysResidence"
+                           formControlName="paysResidence"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ville">Ville</label>
+                    <input type="number" class="form-control" name="ville" id="field_ville"
+                           formControlName="ville"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_statutJuridique">Statut Juridique</label>
+                    <input type="number" class="form-control" name="statutJuridique" id="field_statutJuridique"
+                           formControlName="statutJuridique"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sexeBeneficiaire">Sexe Beneficiaire</label>
+                    <input type="text" class="form-control" name="sexeBeneficiaire" id="field_sexeBeneficiaire"
+                           formControlName="sexeBeneficiaire"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_secteurActivite">Secteur Activite</label>
+                    <input type="text" class="form-control" name="secteurActivite" id="field_secteurActivite"
+                           formControlName="secteurActivite"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tailleEntreprise">Taille Entreprise</label>
+                    <input type="text" class="form-control" name="tailleEntreprise" id="field_tailleEntreprise"
+                           formControlName="tailleEntreprise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantMaxAutorise">Montant Max Autorise</label>
+                    <input type="number" class="form-control" name="montantMaxAutorise" id="field_montantMaxAutorise"
+                           formControlName="montantMaxAutorise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_montantMaxUtilise">Montant Max Utilise</label>
+                    <input type="number" class="form-control" name="montantMaxUtilise" id="field_montantMaxUtilise"
+                           formControlName="montantMaxUtilise"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_soldeCompte">Solde Compte</label>
+                    <input type="number" class="form-control" name="soldeCompte" id="field_soldeCompte"
+                           formControlName="soldeCompte"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tauxInteret">Taux Interet</label>
+                    <input type="number" class="form-control" name="tauxInteret" id="field_tauxInteret"
+                           formControlName="tauxInteret"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

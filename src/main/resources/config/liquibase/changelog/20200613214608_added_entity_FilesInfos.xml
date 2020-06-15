@@ -28,16 +28,16 @@
             <column name="output_path" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="date_dernier_chargement" type="datetime">
+            <column name="date_dernier_chargement" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="date_dernier_dechargement" type="datetime">
+            <column name="date_dernier_dechargement" type="date">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="files_infos" columnName="date_dernier_chargement" columnDataType="datetime"/>
-        <dropDefaultValue tableName="files_infos" columnName="date_dernier_dechargement" columnDataType="datetime"/>
+        <dropDefaultValue tableName="files_infos" columnName="date_dernier_chargement" columnDataType="date"/>
+        <dropDefaultValue tableName="files_infos" columnName="date_dernier_dechargement" columnDataType="date"/>
     </changeSet>
 
     <changeSet id="20200613214608-1-relations" author="jhipster">
@@ -63,8 +63,8 @@
             <column name="description" type="string"/>
             <column name="input_path" type="string"/>
             <column name="output_path" type="string"/>
-            <column name="date_dernier_chargement" type="datetime"/>
-            <column name="date_dernier_dechargement" type="datetime"/>
+            <column name="date_dernier_chargement" type="date"/>
+            <column name="date_dernier_dechargement" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

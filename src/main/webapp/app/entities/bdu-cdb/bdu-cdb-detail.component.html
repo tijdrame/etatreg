@@ -1,0 +1,130 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bduCdb">
+            <h2><span>Bdu Cdb</span> {{ bduCdb.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Code</span></dt>
+                <dd>
+                    <span>{{ bduCdb.code }}</span>
+                </dd>
+                <dt><span>Num Enreg</span></dt>
+                <dd>
+                    <span>{{ bduCdb.numEnreg }}</span>
+                </dd>
+                <dt><span>Date Traitement</span></dt>
+                <dd>
+                    <span>{{ bduCdb.dateTraitement }}</span>
+                </dd>
+                <dt><span>Type Credit</span></dt>
+                <dd>
+                    <span>{{ bduCdb.typeCredit }}</span>
+                </dd>
+                <dt><span>Objet Credit</span></dt>
+                <dd>
+                    <span>{{ bduCdb.objetCredit }}</span>
+                </dd>
+                <dt><span>Montant Credit Demande</span></dt>
+                <dd>
+                    <span>{{ bduCdb.montantCreditDemande }}</span>
+                </dd>
+                <dt><span>Duree Credit Demande</span></dt>
+                <dd>
+                    <span>{{ bduCdb.dureeCreditDemande }}</span>
+                </dd>
+                <dt><span>Taux Interet Souhaite</span></dt>
+                <dd>
+                    <span>{{ bduCdb.tauxInteretSouhaite }}</span>
+                </dd>
+                <dt><span>Nature Debiteur</span></dt>
+                <dd>
+                    <span>{{ bduCdb.natureDebiteur }}</span>
+                </dd>
+                <dt><span>Pays Residence</span></dt>
+                <dd>
+                    <span>{{ bduCdb.paysResidence }}</span>
+                </dd>
+                <dt><span>Ville</span></dt>
+                <dd>
+                    <span>{{ bduCdb.ville }}</span>
+                </dd>
+                <dt><span>Statut Juridique</span></dt>
+                <dd>
+                    <span>{{ bduCdb.statutJuridique }}</span>
+                </dd>
+                <dt><span>Sexe Debiteur</span></dt>
+                <dd>
+                    <span>{{ bduCdb.sexeDebiteur }}</span>
+                </dd>
+                <dt><span>Secteur Activite</span></dt>
+                <dd>
+                    <span>{{ bduCdb.secteurActivite }}</span>
+                </dd>
+                <dt><span>Taille Entreprise</span></dt>
+                <dd>
+                    <span>{{ bduCdb.tailleEntreprise }}</span>
+                </dd>
+                <dt><span>Decision</span></dt>
+                <dd>
+                    <span>{{ bduCdb.decision }}</span>
+                </dd>
+                <dt><span>Motif Rejet</span></dt>
+                <dd>
+                    <span>{{ bduCdb.motifRejet }}</span>
+                </dd>
+                <dt><span>Date Credit</span></dt>
+                <dd>
+                    <span>{{ bduCdb.dateCredit }}</span>
+                </dd>
+                <dt><span>Montant Credit Accorde</span></dt>
+                <dd>
+                    <span>{{ bduCdb.montantCreditAccorde }}</span>
+                </dd>
+                <dt><span>Duree Credit Accorde</span></dt>
+                <dd>
+                    <span>{{ bduCdb.dureeCreditAccorde }}</span>
+                </dd>
+                <dt><span>Periodicite Remboursement</span></dt>
+                <dd>
+                    <span>{{ bduCdb.periodiciteRemboursement }}</span>
+                </dd>
+                <dt><span>Taux Interet Applique</span></dt>
+                <dd>
+                    <span>{{ bduCdb.tauxInteretApplique }}</span>
+                </dd>
+                <dt><span>Montant Interet</span></dt>
+                <dd>
+                    <span>{{ bduCdb.montantInteret }}</span>
+                </dd>
+                <dt><span>Montant Charges</span></dt>
+                <dd>
+                    <span>{{ bduCdb.montantCharges }}</span>
+                </dd>
+                <dt><span>Montant Commission</span></dt>
+                <dd>
+                    <span>{{ bduCdb.montantCommission }}</span>
+                </dd>
+                <dt><span>Autres Commissions</span></dt>
+                <dd>
+                    <span>{{ bduCdb.autresCommissions }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bdu-cdb', bduCdb.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
