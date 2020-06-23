@@ -27,6 +27,18 @@
     {
       "fieldName": "dateDernierDechargement",
       "fieldType": "Instant"
+    },
+    {
+      "fieldName": "codeApplication",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeFormat",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeExtension",
+      "fieldType": "String"
     }
   ],
   "changelogDate": "20200613214608",

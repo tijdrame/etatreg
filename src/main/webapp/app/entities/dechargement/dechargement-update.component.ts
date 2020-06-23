@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 import { IDechargement, Dechargement } from 'app/shared/model/dechargement.model';
 import { DechargementService } from './dechargement.service';
+import { FilesInfosService } from '../files-infos/files-infos.service';
 
 @Component({
   selector: 'jhi-dechargement-update',
@@ -14,17 +15,21 @@ import { DechargementService } from './dechargement.service';
 })
 export class DechargementUpdateComponent implements OnInit {
   isSaving = false;
+  folderFiles: String[] = [];
 
   editForm = this.fb.group({
     id: [],
   });
 
-  constructor(protected dechargementService: DechargementService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(protected dechargementService: DechargementService, protected activatedRoute: ActivatedRoute, 
+    protected filesInfosService: FilesInfosService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ dechargement }) => {
       this.updateForm(dechargement);
     });
+    this.filesInfosService.queryQua().subscribe((res: HttpResponse<String[]>) => (this.folderFiles = res.body || []));
+
   }
 
   updateForm(dechargement: IDechargement): void {

@@ -17,6 +17,7 @@ import { FilesInfosService } from 'app/entities/files-infos/files-infos.service'
 export class ChargementUpdateComponent implements OnInit {
   isSaving = false;
   filesinfos: IFilesInfos[] = [];
+  folderFiles: String[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -35,6 +36,7 @@ export class ChargementUpdateComponent implements OnInit {
       this.updateForm(chargement);
 
       this.filesInfosService.query().subscribe((res: HttpResponse<IFilesInfos[]>) => (this.filesinfos = res.body || []));
+      this.filesInfosService.queryTer().subscribe((res: HttpResponse<String[]>) => (this.folderFiles = res.body || []));
     });
   }
 

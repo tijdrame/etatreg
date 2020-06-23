@@ -8,6 +8,9 @@ export interface IFilesInfos {
   outputPath?: string;
   dateDernierChargement?: Moment;
   dateDernierDechargement?: Moment;
+  codeApplication?: string;
+  codeFormat?: string;
+  codeExtension?: string;
 }
 
 export class FilesInfos implements IFilesInfos {
@@ -18,6 +21,9 @@ export class FilesInfos implements IFilesInfos {
     public inputPath?: string,
     public outputPath?: string,
     public dateDernierChargement?: Moment,
-    public dateDernierDechargement?: Moment
+    public dateDernierDechargement?: Moment,
+    public codeApplication?: string,
+    public codeFormat?: string,
+    public codeExtension?: string
   ) {}
 }

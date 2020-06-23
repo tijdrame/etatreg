@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 
 /**
  * A FilesInfos.
@@ -37,10 +37,19 @@ public class FilesInfos implements Serializable {
     private String outputPath;
 
     @Column(name = "date_dernier_chargement")
-    private LocalDate dateDernierChargement;
+    private Instant dateDernierChargement;
 
     @Column(name = "date_dernier_dechargement")
-    private LocalDate dateDernierDechargement;
+    private Instant dateDernierDechargement;
+
+    @Column(name = "code_application")
+    private String codeApplication;
+
+    @Column(name = "code_format")
+    private String codeFormat;
+
+    @Column(name = "code_extension")
+    private String codeExtension;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -103,30 +112,69 @@ public class FilesInfos implements Serializable {
         this.outputPath = outputPath;
     }
 
-    public LocalDate getDateDernierChargement() {
+    public Instant getDateDernierChargement() {
         return dateDernierChargement;
     }
 
-    public FilesInfos dateDernierChargement(LocalDate dateDernierChargement) {
+    public FilesInfos dateDernierChargement(Instant dateDernierChargement) {
         this.dateDernierChargement = dateDernierChargement;
         return this;
     }
 
-    public void setDateDernierChargement(LocalDate dateDernierChargement) {
+    public void setDateDernierChargement(Instant dateDernierChargement) {
         this.dateDernierChargement = dateDernierChargement;
     }
 
-    public LocalDate getDateDernierDechargement() {
+    public Instant getDateDernierDechargement() {
         return dateDernierDechargement;
     }
 
-    public FilesInfos dateDernierDechargement(LocalDate dateDernierDechargement) {
+    public FilesInfos dateDernierDechargement(Instant dateDernierDechargement) {
         this.dateDernierDechargement = dateDernierDechargement;
         return this;
     }
 
-    public void setDateDernierDechargement(LocalDate dateDernierDechargement) {
+    public void setDateDernierDechargement(Instant dateDernierDechargement) {
         this.dateDernierDechargement = dateDernierDechargement;
+    }
+
+    public String getCodeApplication() {
+        return codeApplication;
+    }
+
+    public FilesInfos codeApplication(String codeApplication) {
+        this.codeApplication = codeApplication;
+        return this;
+    }
+
+    public void setCodeApplication(String codeApplication) {
+        this.codeApplication = codeApplication;
+    }
+
+    public String getCodeFormat() {
+        return codeFormat;
+    }
+
+    public FilesInfos codeFormat(String codeFormat) {
+        this.codeFormat = codeFormat;
+        return this;
+    }
+
+    public void setCodeFormat(String codeFormat) {
+        this.codeFormat = codeFormat;
+    }
+
+    public String getCodeExtension() {
+        return codeExtension;
+    }
+
+    public FilesInfos codeExtension(String codeExtension) {
+        this.codeExtension = codeExtension;
+        return this;
+    }
+
+    public void setCodeExtension(String codeExtension) {
+        this.codeExtension = codeExtension;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -157,6 +205,9 @@ public class FilesInfos implements Serializable {
             ", outputPath='" + getOutputPath() + "'" +
             ", dateDernierChargement='" + getDateDernierChargement() + "'" +
             ", dateDernierDechargement='" + getDateDernierDechargement() + "'" +
+            ", codeApplication='" + getCodeApplication() + "'" +
+            ", codeFormat='" + getCodeFormat() + "'" +
+            ", codeExtension='" + getCodeExtension() + "'" +
             "}";
     }
 }

@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -72,4 +75,42 @@ public class FilesInfosService {
         log.debug("Request to delete FilesInfos : {}", id);
         filesInfosRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<FilesInfos> findAllBis() {
+        log.debug("Request to get all FilesInfos");
+        return filesInfosRepository.findAllBis();
+    }
+
+    @Transactional(readOnly = true)
+    public List<FilesInfos> findByCodeFile(String code) {
+        log.debug("Request to get by code FilesInfos");
+        return filesInfosRepository.findByCodeApplication(code);
+    }
+
+    public List<String> getAllFileInFolder(String path){
+        List<String> list = new ArrayList<>();
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                list.add(file.getName());
+                log.info("file [{}]", file.getName());
+            }
+        }
+        return list;
+    }
+    /*public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        File folder = new File("C:\\PROJET\\BPR\\OUT");
+        File[] listOfFiles = folder.listFiles();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                list.add(file.getName());
+                System.out.println("file [{}]"+ file.getName());
+            }
+        }
+    }*/
 }

@@ -15,8 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -45,11 +44,20 @@ public class FilesInfosResourceIT {
     private static final String DEFAULT_OUTPUT_PATH = "AAAAAAAAAA";
     private static final String UPDATED_OUTPUT_PATH = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_DATE_DERNIER_CHARGEMENT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE_DERNIER_CHARGEMENT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_DATE_DERNIER_CHARGEMENT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_DERNIER_CHARGEMENT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_DATE_DERNIER_DECHARGEMENT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE_DERNIER_DECHARGEMENT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_DATE_DERNIER_DECHARGEMENT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_DERNIER_DECHARGEMENT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final String DEFAULT_CODE_APPLICATION = "AAAAAAAAAA";
+    private static final String UPDATED_CODE_APPLICATION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CODE_FORMAT = "AAAAAAAAAA";
+    private static final String UPDATED_CODE_FORMAT = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CODE_EXTENSION = "AAAAAAAAAA";
+    private static final String UPDATED_CODE_EXTENSION = "BBBBBBBBBB";
 
     @Autowired
     private FilesInfosRepository filesInfosRepository;
@@ -78,7 +86,10 @@ public class FilesInfosResourceIT {
             .inputPath(DEFAULT_INPUT_PATH)
             .outputPath(DEFAULT_OUTPUT_PATH)
             .dateDernierChargement(DEFAULT_DATE_DERNIER_CHARGEMENT)
-            .dateDernierDechargement(DEFAULT_DATE_DERNIER_DECHARGEMENT);
+            .dateDernierDechargement(DEFAULT_DATE_DERNIER_DECHARGEMENT)
+            .codeApplication(DEFAULT_CODE_APPLICATION)
+            .codeFormat(DEFAULT_CODE_FORMAT)
+            .codeExtension(DEFAULT_CODE_EXTENSION);
         return filesInfos;
     }
     /**
@@ -94,7 +105,10 @@ public class FilesInfosResourceIT {
             .inputPath(UPDATED_INPUT_PATH)
             .outputPath(UPDATED_OUTPUT_PATH)
             .dateDernierChargement(UPDATED_DATE_DERNIER_CHARGEMENT)
-            .dateDernierDechargement(UPDATED_DATE_DERNIER_DECHARGEMENT);
+            .dateDernierDechargement(UPDATED_DATE_DERNIER_DECHARGEMENT)
+            .codeApplication(UPDATED_CODE_APPLICATION)
+            .codeFormat(UPDATED_CODE_FORMAT)
+            .codeExtension(UPDATED_CODE_EXTENSION);
         return filesInfos;
     }
 
@@ -123,6 +137,9 @@ public class FilesInfosResourceIT {
         assertThat(testFilesInfos.getOutputPath()).isEqualTo(DEFAULT_OUTPUT_PATH);
         assertThat(testFilesInfos.getDateDernierChargement()).isEqualTo(DEFAULT_DATE_DERNIER_CHARGEMENT);
         assertThat(testFilesInfos.getDateDernierDechargement()).isEqualTo(DEFAULT_DATE_DERNIER_DECHARGEMENT);
+        assertThat(testFilesInfos.getCodeApplication()).isEqualTo(DEFAULT_CODE_APPLICATION);
+        assertThat(testFilesInfos.getCodeFormat()).isEqualTo(DEFAULT_CODE_FORMAT);
+        assertThat(testFilesInfos.getCodeExtension()).isEqualTo(DEFAULT_CODE_EXTENSION);
     }
 
     @Test
@@ -180,7 +197,10 @@ public class FilesInfosResourceIT {
             .andExpect(jsonPath("$.[*].inputPath").value(hasItem(DEFAULT_INPUT_PATH)))
             .andExpect(jsonPath("$.[*].outputPath").value(hasItem(DEFAULT_OUTPUT_PATH)))
             .andExpect(jsonPath("$.[*].dateDernierChargement").value(hasItem(DEFAULT_DATE_DERNIER_CHARGEMENT.toString())))
-            .andExpect(jsonPath("$.[*].dateDernierDechargement").value(hasItem(DEFAULT_DATE_DERNIER_DECHARGEMENT.toString())));
+            .andExpect(jsonPath("$.[*].dateDernierDechargement").value(hasItem(DEFAULT_DATE_DERNIER_DECHARGEMENT.toString())))
+            .andExpect(jsonPath("$.[*].codeApplication").value(hasItem(DEFAULT_CODE_APPLICATION)))
+            .andExpect(jsonPath("$.[*].codeFormat").value(hasItem(DEFAULT_CODE_FORMAT)))
+            .andExpect(jsonPath("$.[*].codeExtension").value(hasItem(DEFAULT_CODE_EXTENSION)));
     }
     
     @Test
@@ -199,7 +219,10 @@ public class FilesInfosResourceIT {
             .andExpect(jsonPath("$.inputPath").value(DEFAULT_INPUT_PATH))
             .andExpect(jsonPath("$.outputPath").value(DEFAULT_OUTPUT_PATH))
             .andExpect(jsonPath("$.dateDernierChargement").value(DEFAULT_DATE_DERNIER_CHARGEMENT.toString()))
-            .andExpect(jsonPath("$.dateDernierDechargement").value(DEFAULT_DATE_DERNIER_DECHARGEMENT.toString()));
+            .andExpect(jsonPath("$.dateDernierDechargement").value(DEFAULT_DATE_DERNIER_DECHARGEMENT.toString()))
+            .andExpect(jsonPath("$.codeApplication").value(DEFAULT_CODE_APPLICATION))
+            .andExpect(jsonPath("$.codeFormat").value(DEFAULT_CODE_FORMAT))
+            .andExpect(jsonPath("$.codeExtension").value(DEFAULT_CODE_EXTENSION));
     }
     @Test
     @Transactional
@@ -227,7 +250,10 @@ public class FilesInfosResourceIT {
             .inputPath(UPDATED_INPUT_PATH)
             .outputPath(UPDATED_OUTPUT_PATH)
             .dateDernierChargement(UPDATED_DATE_DERNIER_CHARGEMENT)
-            .dateDernierDechargement(UPDATED_DATE_DERNIER_DECHARGEMENT);
+            .dateDernierDechargement(UPDATED_DATE_DERNIER_DECHARGEMENT)
+            .codeApplication(UPDATED_CODE_APPLICATION)
+            .codeFormat(UPDATED_CODE_FORMAT)
+            .codeExtension(UPDATED_CODE_EXTENSION);
 
         restFilesInfosMockMvc.perform(put("/api/files-infos")
             .contentType(MediaType.APPLICATION_JSON)
@@ -244,6 +270,9 @@ public class FilesInfosResourceIT {
         assertThat(testFilesInfos.getOutputPath()).isEqualTo(UPDATED_OUTPUT_PATH);
         assertThat(testFilesInfos.getDateDernierChargement()).isEqualTo(UPDATED_DATE_DERNIER_CHARGEMENT);
         assertThat(testFilesInfos.getDateDernierDechargement()).isEqualTo(UPDATED_DATE_DERNIER_DECHARGEMENT);
+        assertThat(testFilesInfos.getCodeApplication()).isEqualTo(UPDATED_CODE_APPLICATION);
+        assertThat(testFilesInfos.getCodeFormat()).isEqualTo(UPDATED_CODE_FORMAT);
+        assertThat(testFilesInfos.getCodeExtension()).isEqualTo(UPDATED_CODE_EXTENSION);
     }
 
     @Test

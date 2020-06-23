@@ -21,7 +21,31 @@
                     <span>
                         <fa-icon icon="th-list"></fa-icon>
                         <span>
-                            Mouvement
+                            Chargement
+                        </span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+                <li>
+                    <a class="dropdown-item" routerLink="chargement/chargementBPR" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                        <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                        <span>Chargement des Balances de Paiement</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="dechargement/chargementCDP" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                        <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                        <span>Chargement des Conditions de Banques</span>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+                    <span>
+                        <fa-icon icon="th-list"></fa-icon>
+                        <span>
+                            Génération
                         </span>
                     </span>
                 </a>
@@ -29,13 +53,13 @@
                 <li>
                     <a class="dropdown-item" routerLink="chargement" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                         <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                        <span>Chargement</span>
+                        <span>Génération des Balances de Paiement</span>
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item" routerLink="dechargement" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                         <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                        <span>Déchargement</span>
+                        <span>Génération des Conditions de Banques</span>
                     </a>
                 </li>
                 </ul>
@@ -93,13 +117,13 @@
                             <span>Secteur Activite</span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a class="dropdown-item" routerLink="bp-2-infos" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <li>
+                        <a class="dropdown-item" routerLink="periode" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span>Bp 2 Infos</span>
+                            <span>Periode</span>
                         </a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a class="dropdown-item" routerLink="bp-3-infos" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                             <span>Bp 3 Infos</span>

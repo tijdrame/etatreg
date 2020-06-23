@@ -25,6 +25,9 @@ export class FilesInfosUpdateComponent implements OnInit {
     outputPath: [],
     dateDernierChargement: [],
     dateDernierDechargement: [],
+    codeApplication: [],
+    codeFormat: [],
+    codeExtension: [],
   });
 
   constructor(protected filesInfosService: FilesInfosService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -50,6 +53,9 @@ export class FilesInfosUpdateComponent implements OnInit {
       outputPath: filesInfos.outputPath,
       dateDernierChargement: filesInfos.dateDernierChargement ? filesInfos.dateDernierChargement.format(DATE_TIME_FORMAT) : null,
       dateDernierDechargement: filesInfos.dateDernierDechargement ? filesInfos.dateDernierDechargement.format(DATE_TIME_FORMAT) : null,
+      codeApplication: filesInfos.codeApplication,
+      codeFormat: filesInfos.codeFormat,
+      codeExtension: filesInfos.codeExtension,
     });
   }
 
@@ -81,6 +87,9 @@ export class FilesInfosUpdateComponent implements OnInit {
       dateDernierDechargement: this.editForm.get(['dateDernierDechargement'])!.value
         ? moment(this.editForm.get(['dateDernierDechargement'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      codeApplication: this.editForm.get(['codeApplication'])!.value,
+      codeFormat: this.editForm.get(['codeFormat'])!.value,
+      codeExtension: this.editForm.get(['codeExtension'])!.value,
     };
   }
 

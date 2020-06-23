@@ -26,6 +26,9 @@
                     <th scope="col"  jhiSortBy="description"><span>Description</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="inputPath"><span>Input Path</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="outputPath"><span>Output Path</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="codeApplication"><span>Code Application</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="codeFormat"><span>Code Format</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="codeExtension"><span>Code Extension</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="dateDernierChargement"><span>Date Dernier Chargement</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="dateDernierDechargement"><span>Date Dernier Dechargement</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -37,6 +40,9 @@
                     <td>{{ filesInfos.description }}</td>
                     <td>{{ filesInfos.inputPath }}</td>
                     <td>{{ filesInfos.outputPath }}</td>
+                    <td>{{ filesInfos.codeApplication }}</td>
+                    <td>{{ filesInfos.codeFormat }}</td>
+                    <td>{{ filesInfos.codeExtension }}</td>
                     <td>{{ filesInfos.dateDernierChargement | date:'dd-MM-yyyy' }}</td>
                     <td>{{ filesInfos.dateDernierDechargement | date:'dd-MM-yyyy' }}</td>
                     <td class="text-right">

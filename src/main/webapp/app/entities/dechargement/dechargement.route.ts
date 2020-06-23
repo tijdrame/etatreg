@@ -58,7 +58,7 @@ export const dechargementRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'new',
+    path: 'chargementCDP',
     component: DechargementUpdateComponent,
     resolve: {
       dechargement: DechargementResolve,

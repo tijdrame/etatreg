@@ -24,7 +24,18 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new FilesInfos(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, currentDate);
+      elemDefault = new FilesInfos(
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        currentDate,
+        currentDate,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA'
+      );
     });
 
     describe('Service methods', () => {
@@ -78,6 +89,9 @@ describe('Service Tests', () => {
             outputPath: 'BBBBBB',
             dateDernierChargement: currentDate.format(DATE_TIME_FORMAT),
             dateDernierDechargement: currentDate.format(DATE_TIME_FORMAT),
+            codeApplication: 'BBBBBB',
+            codeFormat: 'BBBBBB',
+            codeExtension: 'BBBBBB',
           },
           elemDefault
         );
@@ -106,6 +120,9 @@ describe('Service Tests', () => {
             outputPath: 'BBBBBB',
             dateDernierChargement: currentDate.format(DATE_TIME_FORMAT),
             dateDernierDechargement: currentDate.format(DATE_TIME_FORMAT),
+            codeApplication: 'BBBBBB',
+            codeFormat: 'BBBBBB',
+            codeExtension: 'BBBBBB',
           },
           elemDefault
         );

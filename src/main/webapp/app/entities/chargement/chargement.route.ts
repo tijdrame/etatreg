@@ -58,7 +58,7 @@ export const chargementRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'new',
+    path: 'chargementBPR',
     component: ChargementUpdateComponent,
     resolve: {
       chargement: ChargementResolve,

@@ -10,6 +10,7 @@ import { IFilesInfos } from 'app/shared/model/files-infos.model';
 
 type EntityResponseType = HttpResponse<IFilesInfos>;
 type EntityArrayResponseType = HttpResponse<IFilesInfos[]>;
+type StringArrayResponseType = HttpResponse<String[]>;
 
 @Injectable({ providedIn: 'root' })
 export class FilesInfosService {
@@ -42,6 +43,29 @@ export class FilesInfosService {
     return this.http
       .get<IFilesInfos[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryBis(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IFilesInfos[]>(this.resourceUrl+"-code", { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryTer(req?: any): Observable<StringArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<String[]>(this.resourceUrl+"-BPR", { params: options, observe: 'response' })
+      // .pipe(map((res: StringArrayResponseType) => this.convertDateArrayFromServer(res)))
+      ;
+  }
+
+  queryQua(req?: any): Observable<StringArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<String[]>(this.resourceUrl+"-CDP", { params: options, observe: 'response' })
+      // .pipe(map((res: StringArrayResponseType) => this.convertDateArrayFromServer(res)))
+      ;
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

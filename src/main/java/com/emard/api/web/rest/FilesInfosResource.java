@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,6 +97,40 @@ public class FilesInfosResource {
         Page<FilesInfos> page = filesInfosService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/files-infos-bis")
+    public ResponseEntity<List<FilesInfos>> getAllFilesInfos() {
+        log.debug("REST request to get a page of FilesInfos");
+        List<FilesInfos> page = filesInfosService.findAllBis();
+        return ResponseEntity.ok().body(page);
+    }
+
+    @GetMapping(path = "/files-infos-code", params = {"code"})
+    public ResponseEntity<List<FilesInfos>>findByCodeFile (@RequestParam String code) {
+        log.debug("REST request to get a page of FilesInfos");
+        List<FilesInfos> page = filesInfosService.findByCodeFile(code);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
+    @GetMapping(path = "/files-infos-BPR")
+    public ResponseEntity<List<String>>findFileInFolderBPR () {
+        log.debug("REST request to get file of BPR");
+        List<FilesInfos> list = filesInfosService.findByCodeFile("BPR");
+        List<String> page = new ArrayList();
+        if(list!=null && !list.isEmpty())
+            page = filesInfosService.getAllFileInFolder(list.get(0).getInputPath());
+        return ResponseEntity.ok().body(page);
+    }
+    @GetMapping(path = "/files-infos-CDP")
+    public ResponseEntity<List<String>>findFileInFolderCDP () {
+        log.debug("REST request to get file of CDP");
+        List<FilesInfos> list = filesInfosService.findByCodeFile("CDP");
+        List<String> page = new ArrayList();
+        if(list!=null && !list.isEmpty())
+            page = filesInfosService.getAllFileInFolder(list.get(0).getInputPath());
+        return ResponseEntity.ok().body(page);
     }
 
     /**

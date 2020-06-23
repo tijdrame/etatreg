@@ -1,51 +1,110 @@
 <div>
+    <div class="col-8">
+        
+        <form name="editForm" role="form" novalidate (ngSubmit)="generate()" #editForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <select [(ngModel)]="fileInfo"  name="fileInfo" id="fileInfo" 
+                        class="form-control" required>
+                        <!-- <option [ngValue]="" selected>Code Fichier</option> -->
+                            <option *ngFor="let p of filesInfos; let i = index" [ngValue]="p" selected>
+                              {{p.codeFile}}
+                            </option>
+                          </select>
+                </div>
+                
+                <div class="col">
+                    <div class="col">
+                        <select [(ngModel)]="periode"  name="paysDestination" id="paysDestination" 
+                        class="form-control" required>
+                        <option [ngValue]="" selected>Périodicité</option>
+                            <option *ngFor="let p of periodes; let i = index" [ngValue]="p" >
+                              {{p.code}}
+                            </option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">                
+                <div class="col">
+                    <input type="date" class="form-control" name="dateFin2" [(ngModel)]="dateGen"  required/>
+                </div>
+                <div class="col">
+                    <input type="text"  name="version" id="version" [(ngModel)]="version"
+                    placeholder="Version" class="form-control" required>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col">
+                <!-- <button type="submit"  class="btn btn-primary" style="align-content:right;"
+                [disabled]="!editForm.valid">
+                    <span class="fa fa-search"></span>&nbsp;<span >Générer Balance Paiement</span>
+                </button> -->
+                </div>
+                
+            </div>
+            <h2 id="page-heading">
+            <button type="submit" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-chargement" >
+                <fa-icon icon="plus"></fa-icon>
+                <span>
+                    Générer Condition Banque
+                </span>
+            </button>
+            </h2>
+        </form>
+    </div>
     <h2 id="page-heading">
-        <span>Dechargements</span>
+        <!-- <span>Chargements</span> -->
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-dechargement" [routerLink]="['/dechargement/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span>
-            Create a new Dechargement
-            </span>
-        </button>
+        
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="dechargements?.length === 0">
-        <span>No dechargements found</span>
+    <!-- <div class="alert alert-warning" id="no-result" *ngIf="chargements?.length === 0">
+        <span>No chargements found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="dechargements && dechargements.length > 0">
+    <div class="table-responsive" id="entities" *ngIf="chargements && chargements.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="filesInfos.id"><span>Files Infos</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let dechargement of dechargements ;trackBy: trackId">
-                    <td><a [routerLink]="['/dechargement', dechargement.id, 'view']">{{ dechargement.id }}</a></td>
+                <tr *ngFor="let chargement of chargements ;trackBy: trackId">
+                    <td><a [routerLink]="['/chargement', chargement.id, 'view']">{{ chargement.id }}</a></td>
+                    <td>
+                        <div *ngIf="chargement.filesInfos">
+                            <a [routerLink]="['/files-infos', chargement.filesInfos?.id, 'view']" >{{ chargement.filesInfos?.id }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
-                                    [routerLink]="['/dechargement', dechargement.id, 'view']"
+                                    [routerLink]="['/chargement', chargement.id, 'view']"
                                     class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline">View</span>
                             </button>
 
                             <button type="submit"
-                                    [routerLink]="['/dechargement', dechargement.id, 'edit']"
+                                    [routerLink]="['/chargement', chargement.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline">Edit</span>
                             </button>
 
-                            <button type="submit" (click)="delete(dechargement)"
+                            <button type="submit" (click)="delete(chargement)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline">Delete</span>
@@ -57,7 +116,7 @@
         </table>
     </div>
 
-    <div *ngIf="dechargements && dechargements.length > 0">
+    <div *ngIf="chargements && chargements.length > 0">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
@@ -65,5 +124,5 @@
         <div class="row justify-content-center">
             <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
         </div>
-    </div>
+    </div> -->
 </div>

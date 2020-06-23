@@ -10,6 +10,10 @@ import { IDechargement } from 'app/shared/model/dechargement.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { DechargementService } from './dechargement.service';
 import { DechargementDeleteDialogComponent } from './dechargement-delete-dialog.component';
+import { IPeriode } from 'app/shared/model/periode.model';
+import { PeriodeService } from '../periode/periode.service';
+import { IFilesInfos } from 'app/shared/model/files-infos.model';
+import { FilesInfosService } from '../files-infos/files-infos.service';
 
 @Component({
   selector: 'jhi-dechargement',
@@ -24,16 +28,25 @@ export class DechargementComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  periodes: IPeriode[] = [];
+  codeFichier = "";
+  periode : IPeriode = {};
+  dateGen = '';
+  version = "";
+  filesInfos: IFilesInfos[] = [];
+  fileInfo : IFilesInfos = {};
 
   constructor(
     protected dechargementService: DechargementService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected periodeService: PeriodeService,
+    protected filesInfosService: FilesInfosService
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
+  /* loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
 
     this.dechargementService
@@ -46,14 +59,42 @@ export class DechargementComponent implements OnInit, OnDestroy {
         (res: HttpResponse<IDechargement[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
         () => this.onError()
       );
-  }
+  } */
 
   ngOnInit(): void {
-    this.handleNavigation();
-    this.registerChangeInDechargements();
+    // this.handleNavigation();
+    // this.registerChangeInDechargements();
+    this.periodeService
+      .query({
+        page: 0,
+        size: 50,
+      })
+      .subscribe(
+        (res: HttpResponse<IPeriode[]>) => this.periodes = res.body!
+      ); 
+      this.filesInfosService
+      .queryBis({
+        page: 0,
+        size: 50,
+        code: 'CDB'
+      })
+      .subscribe(
+        (res: HttpResponse<IFilesInfos[]>) => this.filesInfos = res.body!,
+      ); 
   }
 
-  protected handleNavigation(): void {
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
+  }
+
+  generate(): void {
+    alert('date='+this.dateGen+" codeFic="+this.fileInfo?.codeFile+" period="+
+    this.periode?.code+" version="+this.version)
+  }
+
+  /* protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
       const pageNumber = page !== null ? +page : 1;
@@ -68,11 +109,7 @@ export class DechargementComponent implements OnInit, OnDestroy {
     }).subscribe();
   }
 
-  ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
-  }
+  
 
   trackId(index: number, item: IDechargement): number {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
@@ -114,5 +151,5 @@ export class DechargementComponent implements OnInit, OnDestroy {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
-  }
+  } */
 }

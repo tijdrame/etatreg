@@ -24,13 +24,25 @@
                 <dd>
                     <span>{{ filesInfos.outputPath }}</span>
                 </dd>
+                <dt><span>Code Application</span></dt>
+                <dd>
+                    <span>{{ filesInfos.codeApplication }}</span>
+                </dd>
+                <dt><span>Code Format</span></dt>
+                <dd>
+                    <span>{{ filesInfos.codeFormat }}</span>
+                </dd>
+                <dt><span>Code Extension</span></dt>
+                <dd>
+                    <span>{{ filesInfos.codeExtension }}</span>
+                </dd>
                 <dt><span>Date Dernier Chargement</span></dt>
                 <dd>
-                    <span>{{ filesInfos.dateDernierChargement | date:'dd-MM-yyyy' }}</span>
+                    <span>{{ filesInfos.dateDernierChargement|date:'dd-MM-yyyy' }}</span>
                 </dd>
                 <dt><span>Date Dernier Dechargement</span></dt>
                 <dd>
-                    <span>{{ filesInfos.dateDernierDechargement | date:'dd-MM-yyyy'}}</span>
+                    <span>{{ filesInfos.dateDernierDechargement|date:'dd-MM-yyyy' }}</span>
                 </dd>
             </dl>
 

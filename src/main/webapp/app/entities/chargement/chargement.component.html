@@ -1,13 +1,69 @@
 <div>
+    <div class="col-8">
+        
+        <form name="editForm" role="form" novalidate (ngSubmit)="generate()" #editForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <select [(ngModel)]="fileInfo"  name="fileInfo" id="fileInfo" 
+                        class="form-control" required>
+                        <option [ngValue]="" selected>Code Fichier</option>
+                            <option *ngFor="let p of filesInfos; let i = index" [ngValue]="p">
+                              {{p.codeFile}}
+                            </option>
+                          </select>
+                </div>
+                
+                <div class="col">
+                    <div class="col">
+                        <select [(ngModel)]="periode"  name="paysDestination" id="paysDestination" 
+                        class="form-control" required>
+                        <option [ngValue]="" selected>Périodicité</option>
+                            <option *ngFor="let p of periodes; let i = index" 
+                             [ngValue]="p" >
+                              {{p.code}}
+                            </option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">                
+                <div class="col">
+                    <input type="date" class="form-control" name="dateFin2" 
+                    [(ngModel)]="dateGen"  required/>
+                </div>
+                <div class="col">
+                    <input type="text"  name="version" id="version" [(ngModel)]="version"
+                    placeholder="Version" class="form-control" required>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col">
+                <!-- <button type="submit"  class="btn btn-primary" style="align-content:right;"
+                [disabled]="!editForm.valid">
+                    <span class="fa fa-search"></span>&nbsp;<span >Générer Balance Paiement</span>
+                </button> -->
+                </div>
+                
+            </div>
+            <h2 id="page-heading">
+            <button id="jh-create-entity" type="submit" [disabled]="!editForm.valid"
+            class="btn btn-primary float-right jh-create-entity create-chargement" >
+                <fa-icon icon="plus"></fa-icon>
+                <span>
+                    Générer Balance Paiement
+                </span>
+            </button>
+            </h2>
+        </form>
+    </div>
     <h2 id="page-heading">
-        <span>Chargements</span>
+        <!-- <span>Chargements</span> -->
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-chargement" [routerLink]="['/chargement/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span>
-            Create a new Chargement
-            </span>
-        </button>
+        
     </h2>
 
     <jhi-alert-error></jhi-alert-error>

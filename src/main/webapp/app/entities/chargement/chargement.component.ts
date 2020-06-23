@@ -10,6 +10,10 @@ import { IChargement } from 'app/shared/model/chargement.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ChargementService } from './chargement.service';
 import { ChargementDeleteDialogComponent } from './chargement-delete-dialog.component';
+import { IPeriode } from 'app/shared/model/periode.model';
+import { PeriodeService } from '../periode/periode.service';
+import { FilesInfosService } from '../files-infos/files-infos.service';
+import { IFilesInfos } from 'app/shared/model/files-infos.model';
 
 @Component({
   selector: 'jhi-chargement',
@@ -24,50 +28,53 @@ export class ChargementComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  periodes: IPeriode[] = [];
+  codeFichier = "";
+  periode : IPeriode = {};
+  filesInfos: IFilesInfos[] = [];
+  fileInfo : IFilesInfos = {};
+  dateGen = '';
+  version = "";
 
   constructor(
     protected chargementService: ChargementService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected periodeService: PeriodeService,
+    protected filesInfosService: FilesInfosService
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
+  
 
-    /* this.chargementService
+  ngOnInit(): void {
+    // this.handleNavigation();
+    // this.registerChangeInChargements();
+    this.periodeService
       .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
+        page: 0,
+        size: 50,
         sort: this.sort(),
       })
       .subscribe(
-        (res: HttpResponse<IChargement[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+        (res: HttpResponse<IPeriode[]>) => this.periodes = res.body!,
         () => this.onError()
-      ); */
+      );
+      this.filesInfosService
+      .queryBis({
+        page: 0,
+        size: 50,
+        sort: this.sort(),
+        code: 'BPR'
+      })
+      .subscribe(
+        (res: HttpResponse<IFilesInfos[]>) => this.filesInfos = res.body!,
+        () => this.onError()
+      ); 
   }
 
-  ngOnInit(): void {
-    this.handleNavigation();
-    this.registerChangeInChargements();
-  }
-
-  protected handleNavigation(): void {
-    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
-      const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
-      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
-    }).subscribe();
-  }
-
+  
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);
@@ -79,9 +86,9 @@ export class ChargementComponent implements OnInit, OnDestroy {
     return item.id!;
   }
 
-  registerChangeInChargements(): void {
+  /* registerChangeInChargements(): void {
     this.eventSubscriber = this.eventManager.subscribe('chargementListModification', () => this.loadPage());
-  }
+  } */
 
   delete(chargement: IChargement): void {
     const modalRef = this.modalService.open(ChargementDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
@@ -114,5 +121,10 @@ export class ChargementComponent implements OnInit, OnDestroy {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+
+  generate(): void {
+    alert('date='+this.dateGen+" codeFic="+this.fileInfo?.codeFile+" period="+
+    this.periode?.code+" version="+this.version)
   }
 }
