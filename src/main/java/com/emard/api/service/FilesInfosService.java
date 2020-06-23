@@ -93,6 +93,7 @@ public class FilesInfosService {
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
 
+        if(listOfFiles==null || listOfFiles.length==0) return list;
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 list.add(file.getName());

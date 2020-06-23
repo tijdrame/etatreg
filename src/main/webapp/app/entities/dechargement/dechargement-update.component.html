@@ -1,7 +1,36 @@
 <div class="row justify-content-center">
     <div class="col-8">
+        <p class="lead">Chargement des Conditions de Banque</p>
+        <div class="alert alert-warning" id="no-result" *ngIf="folderFiles?.length === 0">
+            <span>No Files found</span>
+        </div>
+    
+        <div class="table-responsive" id="entities" *ngIf="folderFiles && folderFiles.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                    <tr jhiSort  >
+                        <th scope="col"  ><span>Fichier</span> <fa-icon icon="sort"></fa-icon></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ff of folderFiles">
+                        <td>{{ ff }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
            
+            <h2 id="page-heading" *ngIf="folderFiles && folderFiles.length > 0">
+                <button id="jh-create-entity" type="submit" [disabled]="!editForm.valid"
+                class="btn btn-primary float-right jh-create-entity create-chargement" >
+                    <fa-icon icon="plus"></fa-icon>
+                    <span>
+                        Charger Conditions de Banque
+                    </span>
+                </button>
+                </h2>
+            
         </form>
     </div>
 </div>

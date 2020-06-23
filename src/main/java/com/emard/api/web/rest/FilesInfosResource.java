@@ -125,8 +125,8 @@ public class FilesInfosResource {
     }
     @GetMapping(path = "/files-infos-CDP")
     public ResponseEntity<List<String>>findFileInFolderCDP () {
-        log.debug("REST request to get file of CDP");
-        List<FilesInfos> list = filesInfosService.findByCodeFile("CDP");
+        log.debug("REST request to get file of CDB");
+        List<FilesInfos> list = filesInfosService.findByCodeFile("CDB");
         List<String> page = new ArrayList();
         if(list!=null && !list.isEmpty())
             page = filesInfosService.getAllFileInFolder(list.get(0).getInputPath());
