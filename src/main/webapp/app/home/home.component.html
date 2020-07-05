@@ -4,9 +4,28 @@
     </div>
 
     <div class="col-md-9">
-        <h1 class="display-4">ETATS REGLEMENTES</h1>
+        <h1 class="display-4">DECLARATION DES ETATS REGLEMENTAIRES DE LA BANQUE CENTRALE</h1>
 
-        <p class="lead">Génération des états comptables</p>
+
+        <div class="jumbotron" style="background-color: yellow;">
+            <h1>DECLARATION DES BALANCES DE PAIEMENT </h1>
+            <p align="justify">Dispositif d’élaboration de la balance de paiements en termes de règlement tel que recommandé par la banque centrale dans la nouvelle règlementation :
+                <br>BP1 : Déclaration des mouvements en compte de correspondants étrangers
+                <br>BP2 : Déclaration de l’Etat des soldes en monnaie étrangers figurant à la situation de la banque déclarante
+                <br>BP3 : Déclaration des Achats et ventes de change manuel
+                <br>BP4 : Déclaration de l’utilisation des cartes bancaires pour les résidents UEMOA à l'étranger et des non-résidents dans l'UEMOA 
+                <br>CRP : Déclaration des Comptes rendus de paiement
+                <br>ATR : Déclaration des Avis de transferts reçus
+            </p>
+          </div>
+
+          <div class="jumbotron" style="background-color: greenyellow;">
+            <h1>DECLARATION DES CONDITIONS DE BANQUE</h1>
+            <p align="justify">Dispositif d’automatisation de la collecte des données sur les conditions de banques via la plateforme de reporting de la Banque Centrale:
+                <br>Déclaration des Crédits, escomptes, dépôts.
+                <br>Déclaration des Autorisations de découvert.
+                </p>
+          </div>
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">

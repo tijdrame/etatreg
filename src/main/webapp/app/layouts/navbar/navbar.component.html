@@ -19,7 +19,7 @@
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
-                        <fa-icon icon="th-list"></fa-icon>
+                        <fa-icon icon="upload"></fa-icon>
                         <span>
                             Chargement
                         </span>
@@ -43,7 +43,7 @@
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
-                        <fa-icon icon="th-list"></fa-icon>
+                        <fa-icon [icon]="'download'"></fa-icon>
                         <span>
                             Génération
                         </span>
