@@ -126,5 +126,10 @@ export class ChargementComponent implements OnInit, OnDestroy {
   generate(): void {
     alert('date='+this.dateGen+" codeFic="+this.fileInfo?.codeFile+" period="+
     this.periode?.code+" version="+this.version)
+    this.chargementService.generate(this.fileInfo?.id!, '31072019' , this.version)
+    .subscribe(
+      /* (res: HttpResponse<[]>) => /* this.filesInfos = res.body!, 
+      () => this.onError() */
+    );
   }
 }

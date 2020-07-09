@@ -11,7 +11,7 @@ type EntityArrayResponseType = HttpResponse<IChargement[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ChargementService {
-  public resourceUrl = SERVER_API_URL + 'api/chargements';
+  public resourceUrl = SERVER_API_URL + 'api/bpr/generated/';
 
   constructor(protected http: HttpClient) {}
 
@@ -34,5 +34,9 @@ export class ChargementService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  generate(idFile: number, dateRef: string, version: string): Observable<EntityResponseType> {
+    return this.http.get<IChargement>(`${this.resourceUrl+'bp2file'}/${idFile}/${dateRef}/${version}`, { observe: 'response' });
   }
 }
