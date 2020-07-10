@@ -62,37 +62,40 @@ public class BprGeneratorServices {
 
     @Autowired
     Bp1InfosService bp1Service;
-    
+
     @Autowired
     Bp2InfosService bp2Service;
-    
+
     @Autowired
     Bp3InfosService bp3Service;
-    
+
     @Autowired
     Bp4InfosService bp4Service;
-    
+
     @Autowired
     FilesInfosRepository fileinfosService;
-    
+
     @Autowired
     BankInfosService bankInfoService;
 
     @GetMapping(value = "/generated/bp2file/{idFile}/{dateRef}/{version}")
-    public ResponseEntity<InputStreamResource> excelBP2Report(@PathVariable("idFile") Long idFile, @PathVariable("dateRef") String dateRef, @PathVariable("version") String version) throws IOException, ParseException {
-        //Iterable<Long>itrbl = null
-        System.out.println("AVANT "+idFile+ "dateref = "+dateRef);
+    public ResponseEntity<InputStreamResource> excelBP2Report(@PathVariable("idFile") Long idFile,
+            @PathVariable("dateRef") String dateRef, @PathVariable("version") String version)
+            throws IOException, ParseException {
+        // Iterable<Long>itrbl = null
+        System.out.println("AVANT " + idFile + "dateref = " + dateRef);
         Pageable pag = PageRequest.of(0, 100);
         Optional<FilesInfos> fileInfos = fileinfosService.findById(idFile);
         Optional<BankInfos> bankInfos = bankInfoService.findOne(1l);
-        
-        
+
         ByteArrayInputStream in = null;
-        if (fileInfos!=null) {
-            String pathOutPutFile = fileInfos.get().getOutputPath()+"/"+fileInfos.get().getCodeApplication()+"_"+bankInfos.get().getSigle()+"_"+dateRef+"_M_"+fileInfos.get().getCodeFile()+"_"+version+"_"+fileInfos.get().getCodeFormat()+"."+fileInfos.get().getCodeExtension();
+        if (fileInfos != null) {
+            String pathOutPutFile = fileInfos.get().getOutputPath() + "/" + fileInfos.get().getCodeApplication() + "_"
+                    + bankInfos.get().getSigle() + "_" + dateRef + "_M_" + fileInfos.get().getCodeFile() + "_" + version
+                    + "_" + fileInfos.get().getCodeFormat() + "." + fileInfos.get().getCodeExtension();
             File bpFile = new File(pathOutPutFile);
-            String codeIdBank = bankInfos.get().getCodeId(); 
-            String dateDebutPeriode = dateDebutPeriode(dateRef); 
+            String codeIdBank = bankInfos.get().getCodeId();
+            String dateDebutPeriode = dateDebutPeriode(dateRef);
             String dateFinPeriode = dateFinPeriode(dateRef);
 
             switch (fileInfos.get().getCodeFile()) {
@@ -101,68 +104,73 @@ public class BprGeneratorServices {
                     File templateFileBp1 = new File(urlBp1.getPath());
                     copyFile(templateFileBp1, bpFile);
                     Iterable<Bp1Infos> bp1infos = bp1Service.findAll(pag);
-                    in = BP1infosGenerator.bp1infosToExcel(bp1infos,bpFile,codeIdBank,dateDebutPeriode,dateFinPeriode);
+                    in = BP1infosGenerator.bp1infosToExcel(bp1infos, bpFile, codeIdBank, dateDebutPeriode,
+                            dateFinPeriode);
                     break;
                 case "BP2":
-                    System.out.println("Path "+getClass().getClassLoader().getResource(""));
+                    System.out.println("Path " + getClass().getClassLoader().getResource(""));
                     URL urlBp2 = getClass().getClassLoader().getResource("fichierstemplate/BPR_BP2_INFOS_XLS.XLS");
                     File templatefileBp2 = new File(urlBp2.getPath());
                     copyFile(templatefileBp2, bpFile);
                     Iterable<Bp2Infos> bp2infos = bp2Service.findAll(pag);
-                    in = BP2infosGenerator.bp2infosToExcel(bp2infos,bpFile,codeIdBank,dateDebutPeriode,dateFinPeriode);
+                    in = BP2infosGenerator.bp2infosToExcel(bp2infos, bpFile, codeIdBank, dateDebutPeriode,
+                            dateFinPeriode);
+                    //templatefileBp2.setWritable(true);
                     break;
-                case "BP3" :
+                case "BP3":
                     URL urlBp3 = getClass().getClassLoader().getResource("fichierstemplate/BPR_BP3_INFOS_XLS.XLS");
                     File templatefileBp3 = new File(urlBp3.getPath());
                     copyFile(templatefileBp3, bpFile);
                     Iterable<Bp3Infos> bp3infos = bp3Service.findAll(pag);
-                    in = BP3infosGenerator.bp3infosToExcel(bp3infos,bpFile,codeIdBank,dateDebutPeriode,dateFinPeriode);
+                    in = BP3infosGenerator.bp3infosToExcel(bp3infos, bpFile, codeIdBank, dateDebutPeriode,
+                            dateFinPeriode);
                     break;
-                case "BP4" :
+                case "BP4":
                     URL urlBp4 = getClass().getClassLoader().getResource("fichierstemplate/BPR_BP4_INFOS_XLS.XLS");
                     File templatefileBp4 = new File(urlBp4.getPath());
                     copyFile(templatefileBp4, bpFile);
                     Iterable<Bp4Infos> bp4infos = bp4Service.findAll(pag);
-                    in = BP4infosGenerator.bp4infosToExcel(bp4infos,templatefileBp4,codeIdBank,dateDebutPeriode,dateFinPeriode);
+                    in = BP4infosGenerator.bp4infosToExcel(bp4infos, templatefileBp4, codeIdBank, dateDebutPeriode,
+                            dateFinPeriode);
                     break;
                 default:
                     System.out.println("Fichier inexistant ");
             }
         } else {
-        System.out.println("Aucun fichier sélectionné");
+            System.out.println("Aucun fichier sélectionné");
         }
+        in.close();
+        //in.nullInputStream()
         // return IOUtils.toByteArray(in);
-        /*BP2infosGenerator.Tableau("C:\\Users\\Bouna\\Documents\\PERSO\\DOC BPR\\ORAGW\\GROUPE1\\ExtractionsCI\\bkcom_0619.xlsx");*/
+        /*
+         * BP2infosGenerator.
+         * Tableau("C:\\Users\\Bouna\\Documents\\PERSO\\DOC BPR\\ORAGW\\GROUPE1\\ExtractionsCI\\bkcom_0619.xlsx"
+         * );
+         */
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
-return new ResponseEntity<>(new InputStreamResource(in), headers, HttpStatus.OK);
-        //headers.add("Content-Disposition", "attachment; filename=customers.xlsx");
-
-        /*return ResponseEntity
-                .ok()
-                //.headers(HeaderUtil.)
-                .body(new InputStreamResource(in));*/
+        return new ResponseEntity<>(new InputStreamResource(in), headers, HttpStatus.OK);
     }
-    
-    public static void copyFile(File afile, File bfile)
-    {
+
+    public static void copyFile(File afile, File bfile) {
 
         InputStream inStream = null;
         OutputStream outStream = null;
 
-        try{
+        try {
 
-            /*afile =new File("Afile.txt");
-            bfile =new File("Bfile.txt");*/
+            /*
+             * afile =new File("Afile.txt"); bfile =new File("Bfile.txt");
+             */
 
             inStream = new FileInputStream(afile);
             outStream = new FileOutputStream(bfile);
 
-            byte[]buffer = new byte[1024];
+            byte[] buffer = new byte[1024];
 
             int length;
-           //copy the file content in bytes
-            while ((length = inStream.read(buffer)) > 0){
+            // copy the file content in bytes
+            while ((length = inStream.read(buffer)) > 0) {
 
                 outStream.write(buffer, 0, length);
 
@@ -173,36 +181,37 @@ return new ResponseEntity<>(new InputStreamResource(in), headers, HttpStatus.OK)
 
             System.out.println("File is copied successful!");
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public static String dateDebutPeriode (String dateRef) throws ParseException {
-        
+
+    public static String dateDebutPeriode(String dateRef) throws ParseException {
+
         DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date dt = sdf .parse("31/07/2019");
-       Calendar c = Calendar.getInstance();
-       c.setTime(dt);
-       c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
-       String firstDate = sdf.format(c.getTime());
-       System.out.println("firstDate "+firstDate);
-       return firstDate;
+        Date dt = sdf.parse("31/07/2019");
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
+        String firstDate = sdf.format(c.getTime());
+        System.out.println("firstDate " + firstDate);
+        return firstDate;
     }
-    
-    public static String dateFinPeriode (String dateRef) throws ParseException {
-        
-       DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-       Date dt = sdf .parse("31/07/2019");
-       Calendar c = Calendar.getInstance();
-       c.setTime(dt);         
-       //get last day of the month - add month, substract a day.
-       /*c.add(Calendar.MONTH, 0);
-       c.add(Calendar.DAY_OF_MONTH, 0);*/
-       c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
-       String lastDate = sdf.format(c.getTime());
-       System.out.println("lastDate "+lastDate);
-       return lastDate;
+
+    public static String dateFinPeriode(String dateRef) throws ParseException {
+
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dt = sdf.parse("31/07/2019");
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        // get last day of the month - add month, substract a day.
+        /*
+         * c.add(Calendar.MONTH, 0); c.add(Calendar.DAY_OF_MONTH, 0);
+         */
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        String lastDate = sdf.format(c.getTime());
+        System.out.println("lastDate " + lastDate);
+        return lastDate;
     }
 
 }
