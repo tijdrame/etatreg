@@ -29,12 +29,12 @@ export class ChargementComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   periodes: IPeriode[] = [];
-  codeFichier = "";
-  periode : IPeriode = {};
+  codeFichier = '';
+  periode: IPeriode = {};
   filesInfos: IFilesInfos[] = [];
-  fileInfo : IFilesInfos = {};
+  fileInfo: IFilesInfos = {};
   dateGen = '';
-  version = "";
+  version = '';
 
   constructor(
     protected chargementService: ChargementService,
@@ -46,8 +46,6 @@ export class ChargementComponent implements OnInit, OnDestroy {
     protected filesInfosService: FilesInfosService
   ) {}
 
-  
-
   ngOnInit(): void {
     // this.handleNavigation();
     // this.registerChangeInChargements();
@@ -58,23 +56,22 @@ export class ChargementComponent implements OnInit, OnDestroy {
         sort: this.sort(),
       })
       .subscribe(
-        (res: HttpResponse<IPeriode[]>) => this.periodes = res.body!,
+        (res: HttpResponse<IPeriode[]>) => (this.periodes = res.body!),
         () => this.onError()
       );
-      this.filesInfosService
+    this.filesInfosService
       .queryBis({
         page: 0,
         size: 50,
         sort: this.sort(),
-        code: 'BPR'
+        code: 'BPR',
       })
       .subscribe(
-        (res: HttpResponse<IFilesInfos[]>) => this.filesInfos = res.body!,
+        (res: HttpResponse<IFilesInfos[]>) => (this.filesInfos = res.body!),
         () => this.onError()
-      ); 
+      );
   }
 
-  
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);
@@ -124,12 +121,10 @@ export class ChargementComponent implements OnInit, OnDestroy {
   }
 
   generate(): void {
-    alert('date='+this.dateGen+" codeFic="+this.fileInfo?.codeFile+" period="+
-    this.periode?.code+" version="+this.version)
-    this.chargementService.generate(this.fileInfo?.id!, '31072019' , this.version)
-    .subscribe(
-      /* (res: HttpResponse<[]>) => /* this.filesInfos = res.body!, 
-      () => this.onError() */
+    alert('date=' + this.dateGen + ' codeFic=' + this.fileInfo?.codeFile + ' period=' + this.periode?.code + ' version=' + this.version);
+    this.chargementService.generate(this.fileInfo?.id!, '31072019', this.version).subscribe(
+      (res: any) => alert('resp =' + JSON.stringify(res))
+      // () => this.onError()
     );
   }
 }

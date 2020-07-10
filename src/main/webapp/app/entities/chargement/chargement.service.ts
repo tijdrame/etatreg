@@ -37,6 +37,6 @@ export class ChargementService {
   }
 
   generate(idFile: number, dateRef: string, version: string): Observable<EntityResponseType> {
-    return this.http.get<IChargement>(`${this.resourceUrl+'bp2file'}/${idFile}/${dateRef}/${version}`, { observe: 'response' });
+    return this.http.get<any>(`${this.resourceUrl + 'bp2file'}/${idFile}/${dateRef}/${version}`, { observe: 'response' });
   }
 }

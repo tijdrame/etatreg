@@ -42,11 +42,15 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.github.jhipster.web.util.HeaderUtil;
 
 /**
  *
@@ -130,12 +134,14 @@ public class BprGeneratorServices {
         // return IOUtils.toByteArray(in);
         /*BP2infosGenerator.Tableau("C:\\Users\\Bouna\\Documents\\PERSO\\DOC BPR\\ORAGW\\GROUPE1\\ExtractionsCI\\bkcom_0619.xlsx");*/
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
+return new ResponseEntity<>(new InputStreamResource(in), headers, HttpStatus.OK);
         //headers.add("Content-Disposition", "attachment; filename=customers.xlsx");
 
-        return ResponseEntity
+        /*return ResponseEntity
                 .ok()
-                .headers(headers)
-                .body(new InputStreamResource(in));
+                //.headers(HeaderUtil.)
+                .body(new InputStreamResource(in));*/
     }
     
     public static void copyFile(File afile, File bfile)

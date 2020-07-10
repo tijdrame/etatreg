@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
-import { Subscription, combineLatest } from 'rxjs';
+import { /* HttpHeaders, */ HttpResponse } from '@angular/common/http';
+import { ActivatedRoute, /* ParamMap, */ Router /*, Data */ } from '@angular/router';
+import { Subscription /*, combineLatest */ } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,7 +9,7 @@ import { IDechargement } from 'app/shared/model/dechargement.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { DechargementService } from './dechargement.service';
-import { DechargementDeleteDialogComponent } from './dechargement-delete-dialog.component';
+// import { DechargementDeleteDialogComponent } from './dechargement-delete-dialog.component';
 import { IPeriode } from 'app/shared/model/periode.model';
 import { PeriodeService } from '../periode/periode.service';
 import { IFilesInfos } from 'app/shared/model/files-infos.model';
@@ -29,12 +29,12 @@ export class DechargementComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   periodes: IPeriode[] = [];
-  codeFichier = "";
-  periode : IPeriode = {};
+  codeFichier = '';
+  periode: IPeriode = {};
   dateGen = '';
-  version = "";
+  version = '';
   filesInfos: IFilesInfos[] = [];
-  fileInfo : IFilesInfos = {};
+  fileInfo: IFilesInfos = {};
 
   constructor(
     protected dechargementService: DechargementService,
@@ -69,18 +69,14 @@ export class DechargementComponent implements OnInit, OnDestroy {
         page: 0,
         size: 50,
       })
-      .subscribe(
-        (res: HttpResponse<IPeriode[]>) => this.periodes = res.body!
-      ); 
-      this.filesInfosService
+      .subscribe((res: HttpResponse<IPeriode[]>) => (this.periodes = res.body!));
+    this.filesInfosService
       .queryBis({
         page: 0,
         size: 50,
-        code: 'CDB'
+        code: 'CDB',
       })
-      .subscribe(
-        (res: HttpResponse<IFilesInfos[]>) => this.filesInfos = res.body!,
-      ); 
+      .subscribe((res: HttpResponse<IFilesInfos[]>) => (this.filesInfos = res.body!));
   }
 
   ngOnDestroy(): void {
@@ -90,8 +86,7 @@ export class DechargementComponent implements OnInit, OnDestroy {
   }
 
   generate(): void {
-    alert('date='+this.dateGen+" codeFic="+this.fileInfo?.codeFile+" period="+
-    this.periode?.code+" version="+this.version)
+    alert('date=' + this.dateGen + ' codeFic=' + this.fileInfo?.codeFile + ' period=' + this.periode?.code + ' version=' + this.version);
   }
 
   /* protected handleNavigation(): void {
