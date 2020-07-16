@@ -19,7 +19,8 @@ public class Bp2Infos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "code_iso_devise")
@@ -62,7 +63,7 @@ public class Bp2Infos implements Serializable {
     private LocalDate dateDechargement;
 
     @Column(name = "passif_cli_cpt_vue")
-    private LocalDate passifCliCptVue;
+    private Double passifCliCptVue;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -242,16 +243,16 @@ public class Bp2Infos implements Serializable {
         this.dateDechargement = dateDechargement;
     }
 
-    public LocalDate getPassifCliCptVue() {
+    public Double getPassifCliCptVue() {
         return passifCliCptVue;
     }
 
-    public Bp2Infos passifCliCptVue(LocalDate passifCliCptVue) {
+    public Bp2Infos passifCliCptVue(Double passifCliCptVue) {
         this.passifCliCptVue = passifCliCptVue;
         return this;
     }
 
-    public void setPassifCliCptVue(LocalDate passifCliCptVue) {
+    public void setPassifCliCptVue(Double passifCliCptVue) {
         this.passifCliCptVue = passifCliCptVue;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
