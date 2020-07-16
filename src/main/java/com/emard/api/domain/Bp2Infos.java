@@ -70,7 +70,7 @@ public class Bp2Infos implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id) { 
         this.id = id;
     }
 
