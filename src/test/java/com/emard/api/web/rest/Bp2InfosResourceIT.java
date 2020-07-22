@@ -72,8 +72,8 @@ public class Bp2InfosResourceIT {
     private static final LocalDate DEFAULT_DATE_DECHARGEMENT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_DECHARGEMENT = LocalDate.now(ZoneId.systemDefault());
 
-    private static final LocalDate DEFAULT_PASSIF_CLI_CPT_VUE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_PASSIF_CLI_CPT_VUE = LocalDate.now(ZoneId.systemDefault());
+    private static final Double DEFAULT_PASSIF_CLI_CPT_VUE = 1D;
+    private static final Double UPDATED_PASSIF_CLI_CPT_VUE = 2D;
 
     @Autowired
     private Bp2InfosRepository bp2InfosRepository;
