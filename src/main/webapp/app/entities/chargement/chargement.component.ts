@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { saveAs } from 'file-saver';
 
 import { IChargement } from 'app/shared/model/chargement.model';
 
@@ -121,9 +122,18 @@ export class ChargementComponent implements OnInit, OnDestroy {
   }
 
   generate(): void {
-    alert('date=' + this.dateGen + ' codeFic=' + this.fileInfo?.codeFile + ' period=' + this.periode?.code + ' version=' + this.version);
-    this.chargementService.generate(this.fileInfo?.id!, '31072019', this.version).subscribe(
-      (res: any) => alert('resp =' + JSON.stringify(res))
+    // alert('date=' + this.dateGen + ' codeFic=' + this.fileInfo?.codeFile + ' period=' + this.periode?.code + ' version=' + this.version);
+    this.chargementService.generate(this.fileInfo?.id!, this.dateGen, this.version).subscribe(
+      (res: any) => res
+      /* {
+        alert('resp =' + JSON.stringify(res.blob))
+
+        const blob = new Blob([res.blob],
+          { type: 'application/vnd.openxmlformat-officedocument.spreadsheetml.sheet;' });
+        saveAs(blob, "fileName.XLS");
+
+      } */
+
       // () => this.onError()
     );
   }
