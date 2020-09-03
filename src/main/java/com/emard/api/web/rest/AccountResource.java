@@ -6,6 +6,7 @@ import com.emard.api.security.SecurityUtils;
 import com.emard.api.service.MailService;
 import com.emard.api.service.UserService;
 import com.emard.api.service.dto.PasswordChangeDTO;
+import com.emard.api.service.dto.ResetPasswordDTO;
 import com.emard.api.service.dto.UserDTO;
 import com.emard.api.web.rest.errors.*;
 import com.emard.api.web.rest.vm.KeyAndPasswordVM;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -140,6 +142,15 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+    }
+
+    @PostMapping(path = "/account/reset-password")
+    public ResponseEntity<Boolean> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+        if (!checkPasswordLength(resetPasswordDTO.getNewPassword())) {
+            throw new InvalidPasswordException();
+        }
+        Boolean result = userService.resetPassword(resetPasswordDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**

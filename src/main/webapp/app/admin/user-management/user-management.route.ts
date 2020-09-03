@@ -7,6 +7,7 @@ import { UserService } from 'app/core/user/user.service';
 import { UserManagementComponent } from './user-management.component';
 import { UserManagementDetailComponent } from './user-management-detail.component';
 import { UserManagementUpdateComponent } from './user-management-update.component';
+import { UserManagementResetComponent } from './user-management-reset.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementResolve implements Resolve<IUser> {
@@ -46,6 +47,13 @@ export const userManagementRoute: Routes = [
   {
     path: ':login/edit',
     component: UserManagementUpdateComponent,
+    resolve: {
+      user: UserManagementResolve,
+    },
+  },
+  {
+    path: ':login/reset',
+    component: UserManagementResetComponent,
     resolve: {
       user: UserManagementResolve,
     },

@@ -60,6 +60,11 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.user = user;
   }
 
+  resetPwd(user: User): void {
+    const modalRef = this.modalService.open(UserManagementDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.user = user;
+  }
+
   transition(): void {
     this.router.navigate(['./'], {
       relativeTo: this.activatedRoute.parent,

@@ -5,10 +5,12 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption, Pagination } from 'app/shared/util/request-util';
 import { IUser } from './user.model';
+import { IResetPassord } from 'app/shared/model/reset-password';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   public resourceUrl = SERVER_API_URL + 'api/users';
+  public resourceUrlAcc = SERVER_API_URL + 'api/account/reset-password';
 
   constructor(private http: HttpClient) {}
 
@@ -31,6 +33,10 @@ export class UserService {
 
   delete(login: string): Observable<{}> {
     return this.http.delete(`${this.resourceUrl}/${login}`);
+  }
+
+  reset(req: IResetPassord): Observable<IUser> {
+    return this.http.post<IResetPassord>(this.resourceUrlAcc, req);
   }
 
   authorities(): Observable<string[]> {

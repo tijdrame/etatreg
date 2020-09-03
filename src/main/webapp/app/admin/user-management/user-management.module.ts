@@ -7,6 +7,7 @@ import { UserManagementDetailComponent } from './user-management-detail.componen
 import { UserManagementUpdateComponent } from './user-management-update.component';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
 import { userManagementRoute } from './user-management.route';
+import { UserManagementResetComponent } from './user-management-reset.component';
 
 @NgModule({
   imports: [EtatregSharedModule, RouterModule.forChild(userManagementRoute)],
@@ -15,6 +16,7 @@ import { userManagementRoute } from './user-management.route';
     UserManagementDetailComponent,
     UserManagementUpdateComponent,
     UserManagementDeleteDialogComponent,
+    UserManagementResetComponent,
   ],
   entryComponents: [UserManagementDeleteDialogComponent],
 })

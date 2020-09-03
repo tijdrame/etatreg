@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form #f="ngForm" (ngSubmit)="save()" >
+            <jhi-alert></jhi-alert>
+            <jhi-alert-error></jhi-alert-error>
+            <h2 id="myUserLabel">
+                Réinitialiser le mot de passe de <b>{{user.login}}</b>
+            </h2>
+            
+            <div *ngIf="user">
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group">
+                    <label class="form-control-label">Login</label>
+                    <input type="text" class="form-control" [value]="login" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label">Mot de passe</label>
+                    <input type="password" class="form-control" [(ngModel)]="newPassword"  name="newPassword" required>
+                </div>
+            </div>
+            <div *ngIf="user">
+                <button type="button" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" [disabled]="!f.form.valid" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
