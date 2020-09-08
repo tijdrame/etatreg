@@ -15,6 +15,7 @@ import com.emard.api.generator.BP1infosGenerator;
 import com.emard.api.generator.BP2infosGenerator;
 import com.emard.api.generator.BP3infosGenerator;
 import com.emard.api.generator.BP4infosGenerator;
+import com.emard.api.generator.CRPinfosGenerator;
 import com.emard.api.repository.Bp2InfosRepository;
 import com.emard.api.repository.FilesInfosRepository;
 import com.emard.api.service.BankInfosService;
@@ -24,9 +25,11 @@ import com.emard.api.service.Bp3InfosService;
 import com.emard.api.service.Bp4InfosService;
 import com.emard.api.service.FilesInfosService;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -57,7 +60,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 /**
  *
@@ -146,13 +149,30 @@ public class BprGeneratorServices {
                     
                     in = BP4infosGenerator.bp4infosToExcel(bp4infos,bpFile, codeIdBank,dateDebutPeriode,dateFinPeriode);
                     break;
+                case "CRP" :
+                    resource = new ClassPathResource("fichierstemplate/BPR_CRP_INFOS_CSV.CSV");
+                    InputStream templatefileCrp = resource.getInputStream();
+                    copyFile(templatefileCrp, bpFile);
+                    Iterable<Bp4Infos> crpinfos = bp4Service.findAll(pag);
+                    
+                    in = CRPinfosGenerator.crpInfosToCsv(crpinfos,bpFile, codeIdBank,dateDebutPeriode,dateFinPeriode);
+                    break;
+                case "ATR" :
+                    resource = new ClassPathResource("fichierstemplate/BPR_ATR_INFOS_CSV.CSV");
+                    InputStream templatefileAtr = resource.getInputStream();
+                    copyFile(templatefileAtr, bpFile);
+                    Iterable<Bp4Infos> atrinfos = bp4Service.findAll(pag);
+                    
+                    in = CRPinfosGenerator.atrInfosToCsv(atrinfos,bpFile, codeIdBank,dateDebutPeriode,dateFinPeriode);
+                     break; 
                 default:
                     log.info("Fichier inexistant ");
             }
         } else {
             log.info("Aucun fichier sélectionné");
         }
-        in.close();
+        if (in!=null) 
+            in.close();
         // return IOUtils.toByteArray(in);
         /*BP2infosGenerator.Tableau("C:\\Users\\Bouna\\Documents\\PERSO\\DOC BPR\\ORAGW\\GROUPE1\\ExtractionsCI\\bkcom_0619.xlsx");*/
         
