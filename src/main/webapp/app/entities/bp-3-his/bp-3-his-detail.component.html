@@ -1,0 +1,86 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bp3His">
+            <h2><span>Bp 3 His</span> {{ bp3His.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Dco</span></dt>
+                <dd>
+                    <span>{{ bp3His.dco }}</span>
+                </dd>
+                <dt><span>Age</span></dt>
+                <dd>
+                    <span>{{ bp3His.age }}</span>
+                </dd>
+                <dt><span>Dev</span></dt>
+                <dd>
+                    <span>{{ bp3His.dev }}</span>
+                </dd>
+                <dt><span>Ncp</span></dt>
+                <dd>
+                    <span>{{ bp3His.ncp }}</span>
+                </dd>
+                <dt><span>Ope</span></dt>
+                <dd>
+                    <span>{{ bp3His.ope }}</span>
+                </dd>
+                <dt><span>Lib</span></dt>
+                <dd>
+                    <span>{{ bp3His.lib }}</span>
+                </dd>
+                <dt><span>Mon</span></dt>
+                <dd>
+                    <span>{{ bp3His.mon }}</span>
+                </dd>
+                <dt><span>Sen</span></dt>
+                <dd>
+                    <span>{{ bp3His.sen }}</span>
+                </dd>
+                <dt><span>Pie</span></dt>
+                <dd>
+                    <span>{{ bp3His.pie }}</span>
+                </dd>
+                <dt><span>Ncc</span></dt>
+                <dd>
+                    <span>{{ bp3His.ncc }}</span>
+                </dd>
+                <dt><span>Uti</span></dt>
+                <dd>
+                    <span>{{ bp3His.uti }}</span>
+                </dd>
+                <dt><span>Utf</span></dt>
+                <dd>
+                    <span>{{ bp3His.utf }}</span>
+                </dd>
+                <dt><span>Nat</span></dt>
+                <dd>
+                    <span>{{ bp3His.nat }}</span>
+                </dd>
+                <dt><span>Nom Fic</span></dt>
+                <dd>
+                    <span>{{ bp3His.nomFic }}</span>
+                </dd>
+                <dt><span>Date Arrete</span></dt>
+                <dd>
+                    <span>{{ bp3His.dateArrete }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bp-3-his', bp3His.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

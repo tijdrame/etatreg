@@ -1,0 +1,91 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bp 1 Coms</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bp-1-com" [routerLink]="['/bp-1-com/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Bp 1 Com
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bp1Coms?.length === 0">
+        <span>No bp1Coms found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bp1Coms && bp1Coms.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="age"><span>Age</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dev"><span>Dev</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ncp"><span>Ncp</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="inti"><span>Inti</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sde"><span>Sde</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cha"><span>Cha</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dou"><span>Dou</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ddd"><span>Ddd</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ddc"><span>Ddc</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nomFic"><span>Nom Fic</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateArrete"><span>Date Arrete</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bp1Com of bp1Coms ;trackBy: trackId">
+                    <td><a [routerLink]="['/bp-1-com', bp1Com.id, 'view']">{{ bp1Com.id }}</a></td>
+                    <td>{{ bp1Com.age }}</td>
+                    <td>{{ bp1Com.dev }}</td>
+                    <td>{{ bp1Com.ncp }}</td>
+                    <td>{{ bp1Com.inti }}</td>
+                    <td>{{ bp1Com.sde }}</td>
+                    <td>{{ bp1Com.cha }}</td>
+                    <td>{{ bp1Com.dou | date:'mediumDate' }}</td>
+                    <td>{{ bp1Com.ddd | date:'mediumDate' }}</td>
+                    <td>{{ bp1Com.ddc | date:'mediumDate' }}</td>
+                    <td>{{ bp1Com.nomFic }}</td>
+                    <td>{{ bp1Com.dateArrete | date:'mediumDate' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/bp-1-com', bp1Com.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/bp-1-com', bp1Com.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(bp1Com)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bp1Coms && bp1Coms.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

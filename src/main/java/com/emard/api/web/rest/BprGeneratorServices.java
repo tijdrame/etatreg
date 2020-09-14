@@ -101,7 +101,11 @@ public class BprGeneratorServices {
         try{
         
         if (fileInfos!=null) {
-            String pathOutPutFile = fileInfos.get().getOutputPath()+"/"+fileInfos.get().getCodeApplication()+"_"+bankInfos.get().getSigle()+"_"+dateRef+"_M_"+fileInfos.get().getCodeFile()+"_"+version+"_"+fileInfos.get().getCodeFormat()+"."+fileInfos.get().getCodeExtension();
+            String dateDebutPeriode = dateDebutPeriode(dateRef); 
+            String dateFinPeriode = dateFinPeriode(dateRef);
+            String [] formatD = dateRef.split("-");
+            String deb = formatD[2]+formatD[1]+formatD[0];
+            String pathOutPutFile = fileInfos.get().getOutputPath()+"/"+fileInfos.get().getCodeApplication()+"_"+bankInfos.get().getSigle()+"_"+deb+"_M_"+fileInfos.get().getCodeFile()+"_"+version+"_"+fileInfos.get().getCodeFormat()+"."+fileInfos.get().getCodeExtension();
             
             File bpFile = new File(pathOutPutFile);
             
@@ -110,8 +114,7 @@ public class BprGeneratorServices {
             //formatter = formatter.withLocale(Locale.getDefault());  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
             //LocalDate dateFormater = LocalDate.parse(dateRef, formatter);
             //System.out.println("formater="+dateFormater);
-            String dateDebutPeriode = dateDebutPeriode(dateRef); 
-            String dateFinPeriode = dateFinPeriode(dateRef);
+            
             Resource resource = null;
 //System.out.println("dateDebutPeriode = "+dateDebutPeriode+ "dateFinPeriode = "+dateFinPeriode);
             switch (fileInfos.get().getCodeFile()) {

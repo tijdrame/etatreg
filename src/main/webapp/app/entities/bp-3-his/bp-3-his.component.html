@@ -1,0 +1,99 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bp 3 His</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bp-3-his" [routerLink]="['/bp-3-his/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Bp 3 His
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bp3His?.length === 0">
+        <span>No bp3His found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bp3His && bp3His.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dco"><span>Dco</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="age"><span>Age</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dev"><span>Dev</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ncp"><span>Ncp</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ope"><span>Ope</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lib"><span>Lib</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="mon"><span>Mon</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sen"><span>Sen</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="pie"><span>Pie</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ncc"><span>Ncc</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="uti"><span>Uti</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="utf"><span>Utf</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nat"><span>Nat</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nomFic"><span>Nom Fic</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateArrete"><span>Date Arrete</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bp3His of bp3His ;trackBy: trackId">
+                    <td><a [routerLink]="['/bp-3-his', bp3His.id, 'view']">{{ bp3His.id }}</a></td>
+                    <td>{{ bp3His.dco | date:'mediumDate' }}</td>
+                    <td>{{ bp3His.age }}</td>
+                    <td>{{ bp3His.dev }}</td>
+                    <td>{{ bp3His.ncp }}</td>
+                    <td>{{ bp3His.ope }}</td>
+                    <td>{{ bp3His.lib }}</td>
+                    <td>{{ bp3His.mon }}</td>
+                    <td>{{ bp3His.sen }}</td>
+                    <td>{{ bp3His.pie }}</td>
+                    <td>{{ bp3His.ncc }}</td>
+                    <td>{{ bp3His.uti }}</td>
+                    <td>{{ bp3His.utf }}</td>
+                    <td>{{ bp3His.nat }}</td>
+                    <td>{{ bp3His.nomFic }}</td>
+                    <td>{{ bp3His.dateArrete | date:'mediumDate' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/bp-3-his', bp3His.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/bp-3-his', bp3His.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(bp3His)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bp3His && bp3His.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

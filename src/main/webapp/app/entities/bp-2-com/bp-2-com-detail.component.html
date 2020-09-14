@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bp2Com">
+            <h2><span>Bp 2 Com</span> {{ bp2Com.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Age</span></dt>
+                <dd>
+                    <span>{{ bp2Com.age }}</span>
+                </dd>
+                <dt><span>Dev</span></dt>
+                <dd>
+                    <span>{{ bp2Com.dev }}</span>
+                </dd>
+                <dt><span>Ncp</span></dt>
+                <dd>
+                    <span>{{ bp2Com.ncp }}</span>
+                </dd>
+                <dt><span>Inti</span></dt>
+                <dd>
+                    <span>{{ bp2Com.inti }}</span>
+                </dd>
+                <dt><span>Sde</span></dt>
+                <dd>
+                    <span>{{ bp2Com.sde }}</span>
+                </dd>
+                <dt><span>Cha</span></dt>
+                <dd>
+                    <span>{{ bp2Com.cha }}</span>
+                </dd>
+                <dt><span>Dou</span></dt>
+                <dd>
+                    <span>{{ bp2Com.dou }}</span>
+                </dd>
+                <dt><span>Ddd</span></dt>
+                <dd>
+                    <span>{{ bp2Com.ddd }}</span>
+                </dd>
+                <dt><span>Ddc</span></dt>
+                <dd>
+                    <span>{{ bp2Com.ddc }}</span>
+                </dd>
+                <dt><span>Nom Fic</span></dt>
+                <dd>
+                    <span>{{ bp2Com.nomFic }}</span>
+                </dd>
+                <dt><span>Date Arrete</span></dt>
+                <dd>
+                    <span>{{ bp2Com.dateArrete }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/bp-2-com', bp2Com.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

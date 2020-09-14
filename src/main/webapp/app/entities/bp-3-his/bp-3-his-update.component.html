@@ -1,0 +1,124 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-bp-3-his-heading">Create or edit a Bp 3 His</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dco">Dco</label>
+                    <div class="input-group">
+                        <input id="field_dco" type="text" class="form-control" name="dco" ngbDatepicker #dcoDp="ngbDatepicker" formControlName="dco"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dcoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_age">Age</label>
+                    <input type="text" class="form-control" name="age" id="field_age"
+                           formControlName="age"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dev">Dev</label>
+                    <input type="text" class="form-control" name="dev" id="field_dev"
+                           formControlName="dev"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ncp">Ncp</label>
+                    <input type="text" class="form-control" name="ncp" id="field_ncp"
+                           formControlName="ncp"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ope">Ope</label>
+                    <input type="text" class="form-control" name="ope" id="field_ope"
+                           formControlName="ope"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_lib">Lib</label>
+                    <input type="text" class="form-control" name="lib" id="field_lib"
+                           formControlName="lib"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mon">Mon</label>
+                    <input type="number" class="form-control" name="mon" id="field_mon"
+                           formControlName="mon"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sen">Sen</label>
+                    <input type="text" class="form-control" name="sen" id="field_sen"
+                           formControlName="sen"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_pie">Pie</label>
+                    <input type="text" class="form-control" name="pie" id="field_pie"
+                           formControlName="pie"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ncc">Ncc</label>
+                    <input type="text" class="form-control" name="ncc" id="field_ncc"
+                           formControlName="ncc"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_uti">Uti</label>
+                    <input type="text" class="form-control" name="uti" id="field_uti"
+                           formControlName="uti"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_utf">Utf</label>
+                    <input type="text" class="form-control" name="utf" id="field_utf"
+                           formControlName="utf"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nat">Nat</label>
+                    <input type="text" class="form-control" name="nat" id="field_nat"
+                           formControlName="nat"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nomFic">Nom Fic</label>
+                    <input type="text" class="form-control" name="nomFic" id="field_nomFic"
+                           formControlName="nomFic"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateArrete">Date Arrete</label>
+                    <div class="input-group">
+                        <input id="field_dateArrete" type="text" class="form-control" name="dateArrete" ngbDatepicker #dateArreteDp="ngbDatepicker" formControlName="dateArrete"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateArreteDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

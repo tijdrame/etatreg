@@ -72,6 +72,30 @@ import { RouterModule } from '@angular/router';
         path: 'periode',
         loadChildren: () => import('./periode/periode.module').then(m => m.EtatregPeriodeModule),
       },
+      {
+        path: 'charge-file',
+        loadChildren: () => import('./charge-file/charge-file.module').then(m => m.EtatregChargeFileModule),
+      },
+      {
+        path: 'bp-1-com',
+        loadChildren: () => import('./bp-1-com/bp-1-com.module').then(m => m.EtatregBp1ComModule),
+      },
+      {
+        path: 'bp-1-his',
+        loadChildren: () => import('./bp-1-his/bp-1-his.module').then(m => m.EtatregBp1HisModule),
+      },
+      {
+        path: 'bp-2-com',
+        loadChildren: () => import('./bp-2-com/bp-2-com.module').then(m => m.EtatregBp2ComModule),
+      },
+      {
+        path: 'bp-3-his',
+        loadChildren: () => import('./bp-3-his/bp-3-his.module').then(m => m.EtatregBp3HisModule),
+      },
+      {
+        path: 'crp-atr',
+        loadChildren: () => import('./crp-atr/crp-atr.module').then(m => m.EtatregCrpAtrModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

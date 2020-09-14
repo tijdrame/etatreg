@@ -1,0 +1,194 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-crp-atr-heading">Create or edit a Crp Atr</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cenr">Cenr</label>
+                    <input type="text" class="form-control" name="cenr" id="field_cenr"
+                           formControlName="cenr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_refint">Refint</label>
+                    <input type="text" class="form-control" name="refint" id="field_refint"
+                           formControlName="refint"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_num">Num</label>
+                    <input type="text" class="form-control" name="num" id="field_num"
+                           formControlName="num"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nobor">Nobor</label>
+                    <input type="text" class="form-control" name="nobor" id="field_nobor"
+                           formControlName="nobor"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_typenr">Typenr</label>
+                    <input type="text" class="form-control" name="typenr" id="field_typenr"
+                           formControlName="typenr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_idAtr">Id Atr</label>
+                    <input type="text" class="form-control" name="idAtr" id="field_idAtr"
+                           formControlName="idAtr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_demAtr">Dem Atr</label>
+                    <div class="input-group">
+                        <input id="field_demAtr" type="text" class="form-control" name="demAtr" ngbDatepicker #demAtrDp="ngbDatepicker" formControlName="demAtr"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="demAtrDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_numAtr">Num Atr</label>
+                    <input type="text" class="form-control" name="numAtr" id="field_numAtr"
+                           formControlName="numAtr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nomRes">Nom Res</label>
+                    <input type="text" class="form-control" name="nomRes" id="field_nomRes"
+                           formControlName="nomRes"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cpayIso">Cpay Iso</label>
+                    <input type="text" class="form-control" name="cpayIso" id="field_cpayIso"
+                           formControlName="cpayIso"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_datope">Datope</label>
+                    <div class="input-group">
+                        <input id="field_datope" type="text" class="form-control" name="datope" ngbDatepicker #datopeDp="ngbDatepicker" formControlName="datope"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="datopeDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_regt">Regt</label>
+                    <input type="text" class="form-control" name="regt" id="field_regt"
+                           formControlName="regt"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nomEtr">Nom Etr</label>
+                    <input type="text" class="form-control" name="nomEtr" id="field_nomEtr"
+                           formControlName="nomEtr"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nocli">Nocli</label>
+                    <input type="text" class="form-control" name="nocli" id="field_nocli"
+                           formControlName="nocli"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_catRes">Cat Res</label>
+                    <input type="text" class="form-control" name="catRes" id="field_catRes"
+                           formControlName="catRes"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ceco">Ceco</label>
+                    <input type="text" class="form-control" name="ceco" id="field_ceco"
+                           formControlName="ceco"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cpayEtg">Cpay Etg</label>
+                    <input type="text" class="form-control" name="cpayEtg" id="field_cpayEtg"
+                           formControlName="cpayEtg"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_natcpt">Natcpt</label>
+                    <input type="text" class="form-control" name="natcpt" id="field_natcpt"
+                           formControlName="natcpt"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sens">Sens</label>
+                    <input type="text" class="form-control" name="sens" id="field_sens"
+                           formControlName="sens"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_devn">Devn</label>
+                    <input type="text" class="form-control" name="devn" id="field_devn"
+                           formControlName="devn"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mdev">Mdev</label>
+                    <input type="number" class="form-control" name="mdev" id="field_mdev"
+                           formControlName="mdev"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_taux">Taux</label>
+                    <input type="number" class="form-control" name="taux" id="field_taux"
+                           formControlName="taux"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mnat">Mnat</label>
+                    <input type="number" class="form-control" name="mnat" id="field_mnat"
+                           formControlName="mnat"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_etab">Etab</label>
+                    <input type="text" class="form-control" name="etab" id="field_etab"
+                           formControlName="etab"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nomFic">Nom Fic</label>
+                    <input type="text" class="form-control" name="nomFic" id="field_nomFic"
+                           formControlName="nomFic"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateArrete">Date Arrete</label>
+                    <div class="input-group">
+                        <input id="field_dateArrete" type="text" class="form-control" name="dateArrete" ngbDatepicker #dateArreteDp="ngbDatepicker" formControlName="dateArrete"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateArreteDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

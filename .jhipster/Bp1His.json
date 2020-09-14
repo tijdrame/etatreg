@@ -1,0 +1,76 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "dco",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dev",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ncp",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ope",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lib",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mon",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sen",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pie",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ncc",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "uti",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "utf",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nat",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomFic",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateArrete",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "changelogDate": "20200912150846",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bp1his",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

@@ -1,0 +1,130 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="crpAtr">
+            <h2><span>Crp Atr</span> {{ crpAtr.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Cenr</span></dt>
+                <dd>
+                    <span>{{ crpAtr.cenr }}</span>
+                </dd>
+                <dt><span>Refint</span></dt>
+                <dd>
+                    <span>{{ crpAtr.refint }}</span>
+                </dd>
+                <dt><span>Num</span></dt>
+                <dd>
+                    <span>{{ crpAtr.num }}</span>
+                </dd>
+                <dt><span>Nobor</span></dt>
+                <dd>
+                    <span>{{ crpAtr.nobor }}</span>
+                </dd>
+                <dt><span>Typenr</span></dt>
+                <dd>
+                    <span>{{ crpAtr.typenr }}</span>
+                </dd>
+                <dt><span>Id Atr</span></dt>
+                <dd>
+                    <span>{{ crpAtr.idAtr }}</span>
+                </dd>
+                <dt><span>Dem Atr</span></dt>
+                <dd>
+                    <span>{{ crpAtr.demAtr }}</span>
+                </dd>
+                <dt><span>Num Atr</span></dt>
+                <dd>
+                    <span>{{ crpAtr.numAtr }}</span>
+                </dd>
+                <dt><span>Nom Res</span></dt>
+                <dd>
+                    <span>{{ crpAtr.nomRes }}</span>
+                </dd>
+                <dt><span>Cpay Iso</span></dt>
+                <dd>
+                    <span>{{ crpAtr.cpayIso }}</span>
+                </dd>
+                <dt><span>Datope</span></dt>
+                <dd>
+                    <span>{{ crpAtr.datope }}</span>
+                </dd>
+                <dt><span>Regt</span></dt>
+                <dd>
+                    <span>{{ crpAtr.regt }}</span>
+                </dd>
+                <dt><span>Nom Etr</span></dt>
+                <dd>
+                    <span>{{ crpAtr.nomEtr }}</span>
+                </dd>
+                <dt><span>Nocli</span></dt>
+                <dd>
+                    <span>{{ crpAtr.nocli }}</span>
+                </dd>
+                <dt><span>Cat Res</span></dt>
+                <dd>
+                    <span>{{ crpAtr.catRes }}</span>
+                </dd>
+                <dt><span>Ceco</span></dt>
+                <dd>
+                    <span>{{ crpAtr.ceco }}</span>
+                </dd>
+                <dt><span>Cpay Etg</span></dt>
+                <dd>
+                    <span>{{ crpAtr.cpayEtg }}</span>
+                </dd>
+                <dt><span>Natcpt</span></dt>
+                <dd>
+                    <span>{{ crpAtr.natcpt }}</span>
+                </dd>
+                <dt><span>Sens</span></dt>
+                <dd>
+                    <span>{{ crpAtr.sens }}</span>
+                </dd>
+                <dt><span>Devn</span></dt>
+                <dd>
+                    <span>{{ crpAtr.devn }}</span>
+                </dd>
+                <dt><span>Mdev</span></dt>
+                <dd>
+                    <span>{{ crpAtr.mdev }}</span>
+                </dd>
+                <dt><span>Taux</span></dt>
+                <dd>
+                    <span>{{ crpAtr.taux }}</span>
+                </dd>
+                <dt><span>Mnat</span></dt>
+                <dd>
+                    <span>{{ crpAtr.mnat }}</span>
+                </dd>
+                <dt><span>Etab</span></dt>
+                <dd>
+                    <span>{{ crpAtr.etab }}</span>
+                </dd>
+                <dt><span>Nom Fic</span></dt>
+                <dd>
+                    <span>{{ crpAtr.nomFic }}</span>
+                </dd>
+                <dt><span>Date Arrete</span></dt>
+                <dd>
+                    <span>{{ crpAtr.dateArrete }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/crp-atr', crpAtr.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

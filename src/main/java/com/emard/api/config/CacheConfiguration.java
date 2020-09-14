@@ -63,6 +63,12 @@ public class CacheConfiguration {
             createCache(cm, com.emard.api.domain.BduEffet.class.getName());
             createCache(cm, com.emard.api.domain.BduAutor.class.getName());
             createCache(cm, com.emard.api.domain.Periode.class.getName());
+            createCache(cm, com.emard.api.domain.ChargeFile.class.getName());
+            createCache(cm, com.emard.api.domain.Bp1Com.class.getName());
+            createCache(cm, com.emard.api.domain.Bp1His.class.getName());
+            createCache(cm, com.emard.api.domain.Bp2Com.class.getName());
+            createCache(cm, com.emard.api.domain.Bp3His.class.getName());
+            createCache(cm, com.emard.api.domain.CrpAtr.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,121 @@
+<div>
+    <h2 id="page-heading">
+        <span>Crp Atrs</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-crp-atr" [routerLink]="['/crp-atr/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Crp Atr
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="crpAtrs?.length === 0">
+        <span>No crpAtrs found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="crpAtrs && crpAtrs.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cenr"><span>Cenr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="refint"><span>Refint</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="num"><span>Num</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nobor"><span>Nobor</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="typenr"><span>Typenr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="idAtr"><span>Id Atr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="demAtr"><span>Dem Atr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numAtr"><span>Num Atr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nomRes"><span>Nom Res</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cpayIso"><span>Cpay Iso</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="datope"><span>Datope</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="regt"><span>Regt</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nomEtr"><span>Nom Etr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nocli"><span>Nocli</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="catRes"><span>Cat Res</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ceco"><span>Ceco</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cpayEtg"><span>Cpay Etg</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="natcpt"><span>Natcpt</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sens"><span>Sens</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="devn"><span>Devn</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="mdev"><span>Mdev</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="taux"><span>Taux</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="mnat"><span>Mnat</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="etab"><span>Etab</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nomFic"><span>Nom Fic</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateArrete"><span>Date Arrete</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let crpAtr of crpAtrs ;trackBy: trackId">
+                    <td><a [routerLink]="['/crp-atr', crpAtr.id, 'view']">{{ crpAtr.id }}</a></td>
+                    <td>{{ crpAtr.cenr }}</td>
+                    <td>{{ crpAtr.refint }}</td>
+                    <td>{{ crpAtr.num }}</td>
+                    <td>{{ crpAtr.nobor }}</td>
+                    <td>{{ crpAtr.typenr }}</td>
+                    <td>{{ crpAtr.idAtr }}</td>
+                    <td>{{ crpAtr.demAtr | date:'mediumDate' }}</td>
+                    <td>{{ crpAtr.numAtr }}</td>
+                    <td>{{ crpAtr.nomRes }}</td>
+                    <td>{{ crpAtr.cpayIso }}</td>
+                    <td>{{ crpAtr.datope | date:'mediumDate' }}</td>
+                    <td>{{ crpAtr.regt }}</td>
+                    <td>{{ crpAtr.nomEtr }}</td>
+                    <td>{{ crpAtr.nocli }}</td>
+                    <td>{{ crpAtr.catRes }}</td>
+                    <td>{{ crpAtr.ceco }}</td>
+                    <td>{{ crpAtr.cpayEtg }}</td>
+                    <td>{{ crpAtr.natcpt }}</td>
+                    <td>{{ crpAtr.sens }}</td>
+                    <td>{{ crpAtr.devn }}</td>
+                    <td>{{ crpAtr.mdev }}</td>
+                    <td>{{ crpAtr.taux }}</td>
+                    <td>{{ crpAtr.mnat }}</td>
+                    <td>{{ crpAtr.etab }}</td>
+                    <td>{{ crpAtr.nomFic }}</td>
+                    <td>{{ crpAtr.dateArrete | date:'mediumDate' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/crp-atr', crpAtr.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/crp-atr', crpAtr.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(crpAtr)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="crpAtrs && crpAtrs.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

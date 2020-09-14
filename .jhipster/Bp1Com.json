@@ -1,0 +1,60 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "age",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dev",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ncp",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "inti",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sde",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cha",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dou",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "ddd",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "ddc",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "nomFic",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateArrete",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "changelogDate": "20200912145658",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "bp1com",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

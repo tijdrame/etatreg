@@ -1,0 +1,120 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "cenr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "refint",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "num",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nobor",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "typenr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "idAtr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "demAtr",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "numAtr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomRes",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cpayIso",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datope",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "regt",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomEtr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nocli",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "catRes",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ceco",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cpayEtg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "natcpt",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sens",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "devn",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mdev",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "taux",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "mnat",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "etab",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomFic",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateArrete",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "changelogDate": "20200912155037",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "crp_atr",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}
