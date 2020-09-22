@@ -1,0 +1,168 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="tijdr (generated)" id="1600780872751-1">
+        <dropForeignKeyConstraint baseTableName="JHI_USER_AUTHORITY" constraintName="FK_AUTHORITY_NAME"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-2">
+        <dropForeignKeyConstraint baseTableName="JHI_PERSISTENT_AUDIT_EVT_DATA" constraintName="FK_EVT_PERS_AUDIT_EVT_DATA"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-3">
+        <dropForeignKeyConstraint baseTableName="JHI_USER_AUTHORITY" constraintName="FK_USER_ID"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-4">
+        <dropUniqueConstraint constraintName="UX_USER_EMAIL" tableName="JHI_USER"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-5">
+        <dropUniqueConstraint constraintName="UX_USER_LOGIN" tableName="JHI_USER"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-6">
+        <dropTable tableName="ACHETEUR_VENDEUR"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-7">
+        <dropTable tableName="BANK_INFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-8">
+        <dropTable tableName="BDUNATDEBITEUR_CB"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-9">
+        <dropTable tableName="BDUNATDEPOT_CB"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-10">
+        <dropTable tableName="BDUOBJCRED_CB"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-11">
+        <dropTable tableName="BDUSECTACT_CB"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-12">
+        <dropTable tableName="BDU_AUTOR"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-13">
+        <dropTable tableName="BDU_CDB"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-14">
+        <dropTable tableName="BDU_DEPOT"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-15">
+        <dropTable tableName="BDU_EFFET"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-16">
+        <dropTable tableName="BP1COM"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-17">
+        <dropTable tableName="BP1HIS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-18">
+        <dropTable tableName="BP1INFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-19">
+        <dropTable tableName="BP2COM"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-20">
+        <dropTable tableName="BP2INFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-21">
+        <dropTable tableName="BP3HIS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-22">
+        <dropTable tableName="BP3INFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-23">
+        <dropTable tableName="BP4INFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-24">
+        <dropTable tableName="CHARGE_FILE"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-25">
+        <dropTable tableName="CRP_ATR"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-26">
+        <dropTable tableName="FILESINFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-27">
+        <dropTable tableName="FILES_INFOS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-28">
+        <dropTable tableName="HIBERNATE_SEQUENCE"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-29">
+        <dropTable tableName="HIBERNATE_SEQUENCES"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-30">
+        <dropTable tableName="JHI_AUTHORITY"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-31">
+        <dropTable tableName="JHI_PERSISTENT_AUDIT_EVENT"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-32">
+        <dropTable tableName="JHI_PERSISTENT_AUDIT_EVT_DATA"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-33">
+        <dropTable tableName="JHI_USER"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-34">
+        <dropTable tableName="JHI_USER_AUTHORITY"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-35">
+        <dropTable tableName="NATURE_DEBITEUR"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-36">
+        <dropTable tableName="NATURE_DEPOT"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-37">
+        <dropTable tableName="OBJET_CREDIT"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-38">
+        <dropTable tableName="PERIODE"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-39">
+        <dropTable tableName="SECTEUR_ACTIVITE"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-40">
+        <dropSequence sequenceName="ACHETEUR_VENDEUR_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-41">
+        <dropSequence sequenceName="BANK_INFOS_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-42">
+        <dropSequence sequenceName="BDU_AUTOR_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-43">
+        <dropSequence sequenceName="BDU_CDB_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-44">
+        <dropSequence sequenceName="BDU_DEPOT_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-45">
+        <dropSequence sequenceName="BDU_EFFET_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-46">
+        <dropSequence sequenceName="BP2INFOS_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-47">
+        <dropSequence sequenceName="BP3INFOS_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-48">
+        <dropSequence sequenceName="BP4INFOS_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-49">
+        <dropSequence sequenceName="FILES_INFOS_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-50">
+        <dropSequence sequenceName="NATURE_DEBITEUR_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-51">
+        <dropSequence sequenceName="NATURE_DEPOT_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-52">
+        <dropSequence sequenceName="OBJET_CREDIT_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-53">
+        <dropSequence sequenceName="PERIODE_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-54">
+        <dropSequence sequenceName="SECTEUR_ACTIVITE_ID_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1600780872751-55">
+        <dropSequence sequenceName="SEQUENCE_GENERATOR"/>
+    </changeSet>
+</databaseChangeLog>

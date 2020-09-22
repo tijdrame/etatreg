@@ -44,8 +44,8 @@ public class Bp2ComResourceIT {
     private static final String DEFAULT_INTI = "AAAAAAAAAA";
     private static final String UPDATED_INTI = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_SDE = 1;
-    private static final Integer UPDATED_SDE = 2;
+    private static final Double DEFAULT_SDE = 1d;
+    private static final Double UPDATED_SDE = 2d;
 
     private static final String DEFAULT_CHA = "AAAAAAAAAA";
     private static final String UPDATED_CHA = "BBBBBBBBBB";

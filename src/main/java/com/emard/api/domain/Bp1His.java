@@ -19,7 +19,8 @@ public class Bp1His implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "dco")
@@ -41,7 +42,7 @@ public class Bp1His implements Serializable {
     private String lib;
 
     @Column(name = "mon")
-    private Integer mon;
+    private Double mon;
 
     @Column(name = "sen")
     private String sen;
@@ -154,16 +155,16 @@ public class Bp1His implements Serializable {
         this.lib = lib;
     }
 
-    public Integer getMon() {
+    public Double getMon() {
         return mon;
     }
 
-    public Bp1His mon(Integer mon) {
+    public Bp1His mon(Double mon) {
         this.mon = mon;
         return this;
     }
 
-    public void setMon(Integer mon) {
+    public void setMon(Double mon) {
         this.mon = mon;
     }
 

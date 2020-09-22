@@ -52,13 +52,14 @@ export class ChargementUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
+    /* this.isSaving = true;
     const chargement = this.createFromForm();
     if (chargement.id !== undefined) {
       this.subscribeToSaveResponse(this.chargementService.update(chargement));
     } else {
       this.subscribeToSaveResponse(this.chargementService.create(chargement));
-    }
+    } */
+    this.chargementService.doChargementBalPaiemt().subscribe((res: any) => res);
   }
 
   private createFromForm(): IChargement {

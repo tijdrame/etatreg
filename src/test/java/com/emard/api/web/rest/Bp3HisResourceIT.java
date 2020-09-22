@@ -50,8 +50,8 @@ public class Bp3HisResourceIT {
     private static final String DEFAULT_LIB = "AAAAAAAAAA";
     private static final String UPDATED_LIB = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_MON = 1;
-    private static final Integer UPDATED_MON = 2;
+    private static final Double DEFAULT_MON = 1d;
+    private static final Double UPDATED_MON = 2d;
 
     private static final String DEFAULT_SEN = "AAAAAAAAAA";
     private static final String UPDATED_SEN = "BBBBBBBBBB";

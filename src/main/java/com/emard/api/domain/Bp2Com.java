@@ -19,7 +19,8 @@ public class Bp2Com implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "age")
@@ -35,7 +36,7 @@ public class Bp2Com implements Serializable {
     private String inti;
 
     @Column(name = "sde")
-    private Integer sde;
+    private Double sde;
 
     @Column(name = "cha")
     private String cha;
@@ -116,16 +117,16 @@ public class Bp2Com implements Serializable {
         this.inti = inti;
     }
 
-    public Integer getSde() {
+    public Double getSde() {
         return sde;
     }
 
-    public Bp2Com sde(Integer sde) {
+    public Bp2Com sde(Double sde) {
         this.sde = sde;
         return this;
     }
 
-    public void setSde(Integer sde) {
+    public void setSde(Double sde) {
         this.sde = sde;
     }
 

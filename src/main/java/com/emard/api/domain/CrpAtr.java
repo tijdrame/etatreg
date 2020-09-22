@@ -19,7 +19,8 @@ public class CrpAtr implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "cenr")
@@ -83,13 +84,13 @@ public class CrpAtr implements Serializable {
     private String devn;
 
     @Column(name = "mdev")
-    private Integer mdev;
+    private Double mdev;
 
     @Column(name = "taux")
     private Integer taux;
 
     @Column(name = "mnat")
-    private Integer mnat;
+    private Double mnat;
 
     @Column(name = "etab")
     private String etab;
@@ -369,16 +370,16 @@ public class CrpAtr implements Serializable {
         this.devn = devn;
     }
 
-    public Integer getMdev() {
+    public Double getMdev() {
         return mdev;
     }
 
-    public CrpAtr mdev(Integer mdev) {
+    public CrpAtr mdev(Double mdev) {
         this.mdev = mdev;
         return this;
     }
 
-    public void setMdev(Integer mdev) {
+    public void setMdev(Double mdev) {
         this.mdev = mdev;
     }
 
@@ -395,16 +396,16 @@ public class CrpAtr implements Serializable {
         this.taux = taux;
     }
 
-    public Integer getMnat() {
+    public Double getMnat() {
         return mnat;
     }
 
-    public CrpAtr mnat(Integer mnat) {
+    public CrpAtr mnat(Double mnat) {
         this.mnat = mnat;
         return this;
     }
 
-    public void setMnat(Integer mnat) {
+    public void setMnat(Double mnat) {
         this.mnat = mnat;
     }
 

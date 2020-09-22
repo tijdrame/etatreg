@@ -92,14 +92,14 @@ public class CrpAtrResourceIT {
     private static final String DEFAULT_DEVN = "AAAAAAAAAA";
     private static final String UPDATED_DEVN = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_MDEV = 1;
-    private static final Integer UPDATED_MDEV = 2;
+    private static final Double DEFAULT_MDEV = 1d;
+    private static final Double UPDATED_MDEV = 2d;
 
     private static final Integer DEFAULT_TAUX = 1;
     private static final Integer UPDATED_TAUX = 2;
 
-    private static final Integer DEFAULT_MNAT = 1;
-    private static final Integer UPDATED_MNAT = 2;
+    private static final Double DEFAULT_MNAT = 1d;
+    private static final Double UPDATED_MNAT = 2d;
 
     private static final String DEFAULT_ETAB = "AAAAAAAAAA";
     private static final String UPDATED_ETAB = "BBBBBBBBBB";
