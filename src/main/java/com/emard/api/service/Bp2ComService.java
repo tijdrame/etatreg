@@ -2,6 +2,7 @@ package com.emard.api.service;
 
 import com.emard.api.domain.Bp2Com;
 import com.emard.api.repository.Bp2ComRepository;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,4 +73,52 @@ public class Bp2ComService {
         log.debug("Request to delete Bp2Com : {}", id);
         bp2ComRepository.deleteById(id);
     }
+    
+        /**
+     * Get all the bp2Coms.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<Bp2Com> findByDev(String dev) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findByDev(dev);
+    }
+    
+        @Transactional(readOnly = true)
+    public List<Bp2Com> findLikeCha(String cha, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findLikeCha(cha, devise);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Bp2Com> findLikeChaAndSdeNeg(String cha, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findLikeChaAndSdeNeg(cha,devise);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Bp2Com> findLikeChaAndSdePos(String cha, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findLikeChaAndSdePos(cha, devise);
+    }
+    
+        @Transactional(readOnly = true)
+    public List<Bp2Com> findLikeCha1OrCha2(String cha1, String cha2, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findLikeCha1OrCha2(cha1,cha2,devise);
+    } 
+    
+    @Transactional(readOnly = true)
+    public List<Bp2Com> findLikeCha1OrCha2AndSdeNeg(String cha1, String cha2,String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findLikeCha1OrCha2AndSdeNeg(cha1,cha2, devise);
+    } 
+    
+    @Transactional(readOnly = true)
+    public List<Bp2Com> findByChapitres(List<String> chapitres, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findByChapitres(chapitres, devise);
+    } 
 }

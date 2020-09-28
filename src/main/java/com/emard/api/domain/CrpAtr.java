@@ -87,7 +87,7 @@ public class CrpAtr implements Serializable {
     private Double mdev;
 
     @Column(name = "taux")
-    private Integer taux;
+    private Double taux;
 
     @Column(name = "mnat")
     private Double mnat;
@@ -383,16 +383,16 @@ public class CrpAtr implements Serializable {
         this.mdev = mdev;
     }
 
-    public Integer getTaux() {
+    public Double getTaux() {
         return taux;
     }
 
-    public CrpAtr taux(Integer taux) {
+    public CrpAtr taux(Double taux) {
         this.taux = taux;
         return this;
     }
 
-    public void setTaux(Integer taux) {
+    public void setTaux(Double taux) {
         this.taux = taux;
     }
 

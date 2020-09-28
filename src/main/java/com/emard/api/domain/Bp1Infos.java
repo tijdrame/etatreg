@@ -275,7 +275,7 @@ public class Bp1Infos implements Serializable {
         this.d260 = d260;
     }
 
-    protected Bp1Infos() {
+    public Bp1Infos() {
     }
 
     @Override

@@ -95,8 +95,8 @@ public class CrpAtrResourceIT {
     private static final Double DEFAULT_MDEV = 1d;
     private static final Double UPDATED_MDEV = 2d;
 
-    private static final Integer DEFAULT_TAUX = 1;
-    private static final Integer UPDATED_TAUX = 2;
+    private static final Double DEFAULT_TAUX = 1d;
+    private static final Double UPDATED_TAUX = 2d;
 
     private static final Double DEFAULT_MNAT = 1d;
     private static final Double UPDATED_MNAT = 2d;

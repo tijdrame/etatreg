@@ -10,6 +10,7 @@ import com.emard.api.domain.Bp1Infos;
 import com.emard.api.domain.Bp2Infos;
 import com.emard.api.domain.Bp3Infos;
 import com.emard.api.domain.Bp4Infos;
+import com.emard.api.domain.CrpAtr;
 import com.emard.api.domain.FilesInfos;
 import com.emard.api.generator.BP1infosGenerator;
 import com.emard.api.generator.BP2infosGenerator;
@@ -23,6 +24,7 @@ import com.emard.api.service.Bp1InfosService;
 import com.emard.api.service.Bp2InfosService;
 import com.emard.api.service.Bp3InfosService;
 import com.emard.api.service.Bp4InfosService;
+import com.emard.api.service.CrpAtrService;
 import com.emard.api.service.FilesInfosService;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -89,6 +91,9 @@ public class BprGeneratorServices {
     
     @Autowired
     BankInfosService bankInfoService;
+    
+    @Autowired
+    CrpAtrService crpAtrService;
 
     @GetMapping(value = "/generated/bp2file/{idFile}/{dateRef}/{version}")
     public ResponseEntity<InputStreamResource> excelBP2Report(@PathVariable("idFile") Long idFile, @PathVariable("dateRef") String dateRef, @PathVariable("version") String version) throws IOException, ParseException {
@@ -101,11 +106,7 @@ public class BprGeneratorServices {
         try{
         
         if (fileInfos!=null) {
-            String dateDebutPeriode = dateDebutPeriode(dateRef); 
-            String dateFinPeriode = dateFinPeriode(dateRef);
-            String [] formatD = dateRef.split("-");
-            String deb = formatD[2]+formatD[1]+formatD[0];
-            String pathOutPutFile = fileInfos.get().getOutputPath()+"/"+fileInfos.get().getCodeApplication()+"_"+bankInfos.get().getSigle()+"_"+deb+"_M_"+fileInfos.get().getCodeFile()+"_"+version+"_"+fileInfos.get().getCodeFormat()+"."+fileInfos.get().getCodeExtension();
+            String pathOutPutFile = fileInfos.get().getOutputPath()+"/"+fileInfos.get().getCodeApplication()+"_"+bankInfos.get().getSigle()+"_"+dateRef+"_M_"+fileInfos.get().getCodeFile()+"_"+version+"_"+fileInfos.get().getCodeFormat()+"."+fileInfos.get().getCodeExtension();
             
             File bpFile = new File(pathOutPutFile);
             
@@ -114,7 +115,8 @@ public class BprGeneratorServices {
             //formatter = formatter.withLocale(Locale.getDefault());  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
             //LocalDate dateFormater = LocalDate.parse(dateRef, formatter);
             //System.out.println("formater="+dateFormater);
-            
+            String dateDebutPeriode = dateDebutPeriode(dateRef); 
+            String dateFinPeriode = dateFinPeriode(dateRef);
             Resource resource = null;
 //System.out.println("dateDebutPeriode = "+dateDebutPeriode+ "dateFinPeriode = "+dateFinPeriode);
             switch (fileInfos.get().getCodeFile()) {
@@ -156,7 +158,7 @@ public class BprGeneratorServices {
                     resource = new ClassPathResource("fichierstemplate/BPR_CRP_INFOS_CSV.CSV");
                     InputStream templatefileCrp = resource.getInputStream();
                     copyFile(templatefileCrp, bpFile);
-                    Iterable<Bp4Infos> crpinfos = bp4Service.findAll(pag);
+                    Iterable<CrpAtr> crpinfos = crpAtrService.findAll(pag);
                     
                     in = CRPinfosGenerator.crpInfosToCsv(crpinfos,bpFile, codeIdBank,dateDebutPeriode,dateFinPeriode);
                     break;
@@ -164,9 +166,9 @@ public class BprGeneratorServices {
                     resource = new ClassPathResource("fichierstemplate/BPR_ATR_INFOS_CSV.CSV");
                     InputStream templatefileAtr = resource.getInputStream();
                     copyFile(templatefileAtr, bpFile);
-                    Iterable<Bp4Infos> atrinfos = bp4Service.findAll(pag);
+                    Iterable<CrpAtr> atrInfos = crpAtrService.findAll(pag);
                     
-                    in = CRPinfosGenerator.atrInfosToCsv(atrinfos,bpFile, codeIdBank,dateDebutPeriode,dateFinPeriode);
+                    in = CRPinfosGenerator.atrInfosToCsv(atrInfos,bpFile, bankInfos.get(),dateDebutPeriode,dateFinPeriode);
                      break; 
                 default:
                     log.info("Fichier inexistant ");
@@ -177,7 +179,7 @@ public class BprGeneratorServices {
         if (in!=null) 
             in.close();
         // return IOUtils.toByteArray(in);
-        /*BP2infosGenerator.Tableau("C:\\Users\\Bouna\\Documents\\PERSO\\DOC BPR\\ORAGW\\GROUPE1\\ExtractionsCI\\bkcom_0619.xlsx");*/
+        //BP2infosGenerator.Tableau("C:\\Users\\Bouna\\Documents\\PERSO\\DOC BPR\\ORAGW\\GROUPE1\\ExtractionsCI\\bkcom_0619.xlsx");
         
         //headers.add("Content-Disposition", "attachment; filename=customers.xlsx");
 

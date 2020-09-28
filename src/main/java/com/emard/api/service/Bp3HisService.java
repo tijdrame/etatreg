@@ -2,6 +2,7 @@ package com.emard.api.service;
 
 import com.emard.api.domain.Bp3His;
 import com.emard.api.repository.Bp3HisRepository;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,4 +73,17 @@ public class Bp3HisService {
         log.debug("Request to delete Bp3His : {}", id);
         bp3HisRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public Double findSumMonByDevAndNatAndMonPos(String nat, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp3HisRepository.findSumMonByDevAndNatAndMonPos(nat,devise);
+    } 
+    
+    @Transactional(readOnly = true)
+    public Double findSumMonByDevAndNatAndMonNeg(String nat, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp3HisRepository.findSumMonByDevAndNatAndMonNeg(nat,devise);
+    } 
+
 }
