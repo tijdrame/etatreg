@@ -217,7 +217,7 @@ public class BprIntegratorServices {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
-        return new ResponseEntity<String>("Chargement effectué : " + HttpStatus.OK.name(), HttpStatus.OK);
+        return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     public static void copyFile(InputStream inStream, File bfile) {

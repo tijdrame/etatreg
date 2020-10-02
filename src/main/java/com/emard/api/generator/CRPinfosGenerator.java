@@ -55,7 +55,7 @@ public class CRPinfosGenerator {
             i=i+1;
             if(crp!=null && crp.getCenr().equals("CRP")) {
             String prefixe = crp.getCenr();
-            String numDos  = crp.getNum();
+            String numDos  = crp.getRefint();
             String numSeq  = ""+i;//++
             String numEnr  = ""+i;
             String typCrp  = "1";
@@ -125,7 +125,7 @@ public class CRPinfosGenerator {
             String numEnr  = ""+i;
             String typCrp  = "1";
             String numAtr  = "GW"+i;
-            String numCrp  = "";
+            String numCrp  = ""+i+2;
             String refInt  = crp.getRefint();
             String datOpe  = String.valueOf(crp.getDatope());
             String nomDon  = crp.getNomEtr();

@@ -9,6 +9,7 @@ import { IChargement, Chargement } from 'app/shared/model/chargement.model';
 import { ChargementService } from './chargement.service';
 import { IFilesInfos } from 'app/shared/model/files-infos.model';
 import { FilesInfosService } from 'app/entities/files-infos/files-infos.service';
+import { JhiAlertService } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-chargement-update',
@@ -28,7 +29,8 @@ export class ChargementUpdateComponent implements OnInit {
     protected chargementService: ChargementService,
     protected filesInfosService: FilesInfosService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private jhiAlertService: JhiAlertService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +61,12 @@ export class ChargementUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.chargementService.create(chargement));
     } */
-    this.chargementService.doChargementBalPaiemt().subscribe((res: any) => res);
+    console.log('before saving ');
+    this.chargementService.doChargementBalPaiemt().subscribe((res: any) => {
+      console.log('res = ', res['status']);
+      if (res['status'] === 200) this.jhiAlertService.info('Chargement effectué avec succés');
+    });
+    console.log('after saving');
   }
 
   private createFromForm(): IChargement {

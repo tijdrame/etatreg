@@ -4,7 +4,7 @@
         <div class="alert alert-warning" id="no-result" *ngIf="folderFiles?.length === 0">
             <span>No Files found</span>
         </div>
-    
+        <jhi-alert></jhi-alert>
         <div class="table-responsive" id="entities" *ngIf="folderFiles && folderFiles.length > 0">
             <table class="table table-striped" aria-describedby="page-heading">
                 <thead>
