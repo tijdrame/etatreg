@@ -85,5 +85,11 @@ public class Bp3HisService {
         log.debug("Request to get all Bp2Coms");
         return bp3HisRepository.findSumMonByDevAndNatAndMonNeg(nat,devise);
     } 
+    
+    @Transactional(readOnly = false)
+    public void viderBp3His(String nomFic) {
+        log.debug("Request to get all Bp2Coms");
+        bp3HisRepository.viderBp3His(nomFic);
+    } 
 
 }

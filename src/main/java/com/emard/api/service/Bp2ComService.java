@@ -121,4 +121,10 @@ public class Bp2ComService {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findByChapitres(chapitres, devise);
     } 
+    
+        @Transactional(readOnly = false)
+    public void viderBp2Com(String nomFic) {
+        log.debug("Request to get all Bp2Coms");
+        bp2ComRepository.viderBp2Com(nomFic);
+    } 
 }

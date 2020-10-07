@@ -72,4 +72,10 @@ public class Bp1ComService {
         log.debug("Request to delete Bp1Com : {}", id);
         bp1ComRepository.deleteById(id);
     }
+    
+         @Transactional(readOnly = false)
+    public void viderBp1Com(String nomFic) {
+        log.debug("Request to delete all Bp1His by filename");
+        bp1ComRepository.viderBp1Com(nomFic);
+    } 
 }

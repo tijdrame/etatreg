@@ -363,16 +363,18 @@ public class BprIntegratorServices {
          */
         Pageable pag = PageRequest.of(0, 100000);
         LocalDate dateArrete = LocalDate.now();
-        Bp1Infos bp1infos = new Bp1Infos();
-        Iterable<Bp1Com> bp1Coms = bp1ComService.findAll(pag);
+        //Bp1Infos bp1infos = new Bp1Infos();
+        /*Iterable<Bp1Com> bp1Coms = bp1ComService.findAll(pag);
         for (Bp1Com bp1 : bp1Coms) {
             if (bp1.getNomFic() != null && bp1.getNomFic().equals(fileName)) {
                 log.info("BP1 ID {}", bp1.getId());
                 bp1ComService.delete(bp1.getId());
                 log.info("AFTER DELETE BP1COM ");
             }
-        }
-
+        }*/
+       log.info("BEFORE DELETE BP1COM "+fileName);
+       bp1ComService.viderBp1Com(fileName);
+       log.info("AFTER DELETE BP1COM "+fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -431,15 +433,17 @@ public class BprIntegratorServices {
          * Initialisation de la table BP2COM si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
-        Iterable<Bp2Com> bp2Coms = bp2ComService.findAll(pag);
+       /* Iterable<Bp2Com> bp2Coms = bp2ComService.findAll(pag);
         for (Bp2Com bp2Com : bp2Coms) {
             if (bp2Com.getNomFic() != null && bp2Com.getNomFic().equals(fileName)) {
                 log.info("BP2COM ID {}",bp2Com.getId());
                 bp2ComService.delete(bp2Com.getId());
                 log.info("AFTER DELETE BP2COM ");
             }
-        }
-
+        }*/
+       log.info("BEFORE DELETE BP2COM "+fileName);
+       bp2ComService.viderBp2Com(fileName);
+       log.info("AFTER DELETE BP2COM "+fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -487,14 +491,17 @@ public class BprIntegratorServices {
          * Initialisation de la table BP1HIS si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
-        Iterable<Bp1His> bp1Hiss = bp1HisService.findAll(pag);
+    /*    Iterable<Bp1His> bp1Hiss = bp1HisService.findAll(pag);
         for (Bp1His bp1His : bp1Hiss) {
             if (bp1His.getNomFic() != null && bp1His.getNomFic().equals(fileName)) {
                 log.info("BP1HIS ID {}", bp1His.getId());
                 bp1HisService.delete(bp1His.getId());
                 log.info("AFTER DELETE BP1HIS ");
             }
-        }
+        }*/
+        log.info("BEFORE DELETE BP1HIS "+fileName);
+        bp1HisService.viderBp1His(fileName);
+        log.info("AFTER DELETE BP1HIS "+fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -538,14 +545,17 @@ public class BprIntegratorServices {
          * Initialisation de la table BP1 si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
-        Iterable<Bp3His> bp3Hiss = bp3HisService.findAll(pag);
+        /*Iterable<Bp3His> bp3Hiss = bp3HisService.findAll(pag);
         for (Bp3His bp3His : bp3Hiss) {
             if (bp3His.getNomFic() != null && bp3His.getNomFic().equals(fileName)) {
                 log.info("BP3HIS ID {}", bp3His.getId());
                 bp3HisService.delete(bp3His.getId());
                 log.info("AFTER DELETE BP3HIS ");
             }
-        }
+        }*/
+        log.info("BEFORE DELETE BP3HIS "+fileName);
+        bp3HisService.viderBp3His(fileName);
+        log.info("AFTER DELETE BP3HIS "+fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -599,6 +609,9 @@ public class BprIntegratorServices {
                 log.info("AFTER DELETE crpAtr ");
             }
         }
+        /*log.info("BEFORE DELETE CRPATR "+fileName);
+        crpAtrService.viderCrpAtr(fileName);
+        log.info("AFTER DELETE CRPATR "+fileName);      */  
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -695,7 +708,7 @@ public class BprIntegratorServices {
             cellformat.setCellValue(monNat);
             // cellformat.setCellStyle(style);
             crpAtr.setMnat(Double.parseDouble(line.getCell(23) != null ? String.valueOf(monLongNat) : "0"));
-            crpAtr.setEtab(line.getCell(23) != null
+            crpAtr.setEtab(line.getCell(24) != null
                     ? (!line.getCell(24).getStringCellValue().equals("") ? line.getCell(24).getStringCellValue() : "")
                     : "");
             crpAtr.setDateArrete(dateArrete);

@@ -27,4 +27,7 @@ public interface Bp2ComRepository extends JpaRepository<Bp2Com, Long> {
     List<Bp2Com> findLikeCha1OrCha2AndSdeNeg (String cha1, String cha2, String devise);
     @Query("select od from Bp2Com od where od.cha IN (:chapitres) and dev = :devise")     
     List<Bp2Com> findByChapitres(@Param("chapitres")List<String> chapitres, @Param("devise")String devise);
+    @Modifying
+    @Query("delete Bp2Com where nom_fic like :nomFic")     
+    public void viderBp2Com(@Param("nomFic") String nomFic);
 }
