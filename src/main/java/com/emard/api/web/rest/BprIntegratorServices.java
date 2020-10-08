@@ -602,16 +602,16 @@ public class BprIntegratorServices {
         Pageable pag = PageRequest.of(0, 100000);
         Iterable<CrpAtr> crpATrs = crpAtrService.findAll(pag);
         dateformat = DateTimeFormatter.ofPattern("dd/MM/yy");
-        for (CrpAtr crpAtr : crpATrs) {
+        /*for (CrpAtr crpAtr : crpATrs) {
             if (crpAtr.getNomFic() != null && crpAtr.getNomFic().equals(fileName)) {
                 log.info("crpAtr ID {}", crpAtr.getId());
                 crpAtrService.delete(crpAtr.getId());
                 log.info("AFTER DELETE crpAtr ");
             }
-        }
-        /*log.info("BEFORE DELETE CRPATR "+fileName);
+        }*/
+        log.info("BEFORE DELETE CRPATR "+fileName);
         crpAtrService.viderCrpAtr(fileName);
-        log.info("AFTER DELETE CRPATR "+fileName);      */  
+        log.info("AFTER DELETE CRPATR "+fileName); 
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -663,36 +663,39 @@ public class BprIntegratorServices {
             crpAtr.setRegt(line.getCell(12) != null
                     ? (!line.getCell(12).getStringCellValue().equals("") ? line.getCell(12).getStringCellValue() : "")
                     : "");
-            crpAtr.setNocli(line.getCell(13) != null
+            crpAtr.setNomEtr(line.getCell(13) != null
                     ? (!line.getCell(13).getStringCellValue().equals("") ? line.getCell(13).getStringCellValue() : "")
                     : "");
-            crpAtr.setCatRes(line.getCell(14) != null
+            crpAtr.setNocli(line.getCell(14) != null
                     ? (!line.getCell(14).getStringCellValue().equals("") ? line.getCell(14).getStringCellValue() : "")
                     : "");
-            crpAtr.setCeco(line.getCell(15) != null
+            crpAtr.setCatRes(line.getCell(15) != null
                     ? (!line.getCell(15).getStringCellValue().equals("") ? line.getCell(15).getStringCellValue() : "")
                     : "");
-            crpAtr.setCpayEtg(line.getCell(16) != null
+            crpAtr.setCeco(line.getCell(16) != null
                     ? (!line.getCell(16).getStringCellValue().equals("") ? line.getCell(16).getStringCellValue() : "")
                     : "");
-            crpAtr.setNatcpt(line.getCell(17) != null
+            crpAtr.setCpayEtg(line.getCell(17) != null
                     ? (!line.getCell(17).getStringCellValue().equals("") ? line.getCell(17).getStringCellValue() : "")
                     : "");
-            crpAtr.setSens(line.getCell(18) != null
+            crpAtr.setNatcpt(line.getCell(18) != null
                     ? (!line.getCell(18).getStringCellValue().equals("") ? line.getCell(18).getStringCellValue() : "")
                     : "");
-            crpAtr.setDevn(line.getCell(19) != null
+            crpAtr.setSens(line.getCell(19) != null
                     ? (!line.getCell(19).getStringCellValue().equals("") ? line.getCell(19).getStringCellValue() : "")
                     : "");
-            Cell cellformat = line.getCell(20);
+            crpAtr.setDevn(line.getCell(20) != null
+                    ? (!line.getCell(20).getStringCellValue().equals("") ? line.getCell(20).getStringCellValue() : "")
+                    : "");
+            Cell cellformat = line.getCell(21);
             String mon = new DataFormatter().formatCellValue(cellformat);// Double.toString(cellformat.getNumericCellValue()).equals("0.0")
                                                                          // ? "0" :
                                                                          // Double.toString(cellformat.getNumericCellValue());
-            log.info("Monstr CRP {}, MON {}", Double.valueOf(mon), Double.valueOf(mon).longValue());
-            long monLong = Double.valueOf(mon).longValue();
+            log.info("Monstr CRP {}, MON {}", mon);
+            ///long monLong = Double.valueOf(mon).longValue();
             cellformat.setCellValue(mon);
             // cellformat.setCellStyle(style);
-            crpAtr.setMdev(Double.parseDouble(line.getCell(21) != null ? String.valueOf(monLong) : "0"));
+            crpAtr.setMdev(Double.parseDouble(line.getCell(21) != null ? mon.replace(',', '.') : "0"));
             String taux = "";
             Cell cell_22 = line.getCell(22);
             taux = new DataFormatter().formatCellValue(cell_22);
@@ -712,6 +715,7 @@ public class BprIntegratorServices {
                     ? (!line.getCell(24).getStringCellValue().equals("") ? line.getCell(24).getStringCellValue() : "")
                     : "");
             crpAtr.setDateArrete(dateArrete);
+            crpAtr.setNomFic(fileName);
             crpAtrService.save(crpAtr);
 
         }

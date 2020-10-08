@@ -12,7 +12,7 @@ import java.time.LocalDate;
  * A CrpAtr.
  */
 @Entity
-@Table(name = "crp_atr")
+@Table(name = "CrpAtr")// crp_atr
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CrpAtr implements Serializable {
 

@@ -43,6 +43,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -99,7 +100,7 @@ public class BprGeneratorServices {
     public ResponseEntity<InputStreamResource> excelBP2Report(@PathVariable("idFile") Long idFile, @PathVariable("dateRef") String dateRef, @PathVariable("version") String version) throws IOException, ParseException {
         //Iterable<Long>itrbl = null
         //System.out.println("AVANT "+idFile+ "dateref = "+dateRef);
-        Pageable pag = PageRequest.of(0, 100);
+        Pageable pag = PageRequest.of(0, 10000000);
         Optional<FilesInfos> fileInfos = fileinfosService.findById(idFile);
         Optional<BankInfos> bankInfos = bankInfoService.findOne(1l);
         ByteArrayInputStream in = null;
@@ -166,8 +167,8 @@ public class BprGeneratorServices {
                     resource = new ClassPathResource("fichierstemplate/BPR_ATR_INFOS_CSV.CSV");
                     InputStream templatefileAtr = resource.getInputStream();
                     copyFile(templatefileAtr, bpFile);
-                    Iterable<CrpAtr> atrInfos = crpAtrService.findAll(pag);
-                    
+                    //Iterable<CrpAtr> atrInfos = crpAtrService.findAll(pag);
+                    List<CrpAtr> atrInfos = crpAtrService.findByCenr("ATR");
                     in = CRPinfosGenerator.atrInfosToCsv(atrInfos,bpFile, bankInfos.get(),dateDebutPeriode,dateFinPeriode);
                      break; 
                 default:

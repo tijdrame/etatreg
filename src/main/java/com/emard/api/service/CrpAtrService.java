@@ -2,6 +2,7 @@ package com.emard.api.service;
 
 import com.emard.api.domain.CrpAtr;
 import com.emard.api.repository.CrpAtrRepository;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,4 +73,16 @@ public class CrpAtrService {
         log.debug("Request to delete CrpAtr : {}", id);
         crpAtrRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public List<CrpAtr> findByCenr(String cenr) {
+        log.debug("Request to get all Bp2Coms");
+        return crpAtrRepository.findByCenr(cenr);
+    }
+    
+    @Transactional(readOnly = false)
+    public void viderCrpAtr(String nomFic) {
+        log.debug("Request to delete all crpatr by filename");
+        crpAtrRepository.viderCrpAtr(nomFic);
+    } 
 }

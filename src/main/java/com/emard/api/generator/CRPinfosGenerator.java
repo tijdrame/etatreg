@@ -12,17 +12,12 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.List;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 
 /**
  *
@@ -76,9 +71,9 @@ public class CRPinfosGenerator {
             String natCpt  = "";
             String sensOpe = "";
             String devReg  = crp.getDevn();
-            String mntOpe  = String.valueOf(crp.getMnat());
+            String mntOpe  = BigDecimal.valueOf(crp.getMnat().longValue()).toPlainString();
             String txChang = String.valueOf(crp.getTaux());
-            String mntCfa  = String.valueOf(crp.getMnat() * crp.getTaux());
+            String mntCfa  = BigDecimal.valueOf(crp.getMnat() * crp.getTaux()).toPlainString();
             String codItrs = crp.getCeco();
             String dom     = "1";
             String modTrf  = "1";
@@ -116,11 +111,15 @@ public class CRPinfosGenerator {
       String codIdRec= bankInfos.getSigle();
       String nomIdTe = bankInfos.getRaisonSociale();
       String codIdTe = bankInfos.getCodeId();
-   
+     
       int i = 0;
       for(CrpAtr crp : crpAtr) {
-          if(crp!=null && crp.getCenr().equals("ATR")) {
-          i=i+1;
+          System.out.println("atr "+crp.getCenr());
+                 
+          String line ="";
+         // if(crp!=null && crp.getCenr().equals("ATR")) {
+            i=i+1; 
+            System.out.println("i = "+i);
             String prefixe = crp.getCenr();
             String numEnr  = ""+i;
             String typCrp  = "1";
@@ -133,14 +132,17 @@ public class CRPinfosGenerator {
             String nomBen  = crp.getNomRes();
             String codenam = "X";
             String devReg  = crp.getDevn();
-            String mntOpe  = String.valueOf(crp.getMnat());
-            String mntCfa  = String.valueOf(crp.getMnat() * crp.getTaux());
-            
-            String line = String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",prefixe ,numEnr  ,typCrp  ,numAtr  ,numCrp  ,codIdRec,refInt  ,datOpe  ,nomIdTe ,codIdTe ,nomDon  ,payProv ,nomBen  ,codenam ,devReg  ,mntOpe  ,mntCfa);
+            String mntOpe  = BigDecimal.valueOf(crp.getMnat().longValue()).toPlainString();
+            String mntCfa  = BigDecimal.valueOf(Double.valueOf(mntOpe) * crp.getTaux().longValue()).toPlainString();
+              //DecimalFormat formatter = new DecimalFormat("0.00");
+            //System.out.println(formatter.format(Double.valueOf(Double.valueOf(mntOpe) * crp.getTaux().longValue())));
+            line = String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",prefixe ,numEnr  ,typCrp  ,numAtr  ,codIdRec  ,refInt  ,datOpe  ,nomIdTe ,codIdTe ,nomDon  ,payProv ,nomBen  ,codenam ,devReg  ,mntOpe  ,mntCfa);
             bw.write(line);
             bw.newLine();
+            System.out.println("ii = "+i);
           }
-      }
+ 
+      //}
       bw.close();
       out.close();
       output.close();
