@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface ObjetCreditRepository extends JpaRepository<ObjetCredit, Long> {
+    @Query("select od.codeCb from ObjetCredit od where od.codeBdu = ?1")
+    public String findCodeBceaoByCodeInterne (String codeInterne);
 }

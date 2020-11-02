@@ -12,7 +12,7 @@ import java.time.LocalDate;
  * A CrpAtr.
  */
 @Entity
-@Table(name = "CrpAtr")// crp_atr
+@Table(name = "CrpAtr")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CrpAtr implements Serializable {
 
@@ -100,6 +100,12 @@ public class CrpAtr implements Serializable {
 
     @Column(name = "date_arrete")
     private LocalDate dateArrete;
+    
+    @Column(name = "sectInst")
+    private String sectInst;
+    
+    @Column(name = "codenaema")
+    private String codenaema;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -447,6 +453,32 @@ public class CrpAtr implements Serializable {
     public void setDateArrete(LocalDate dateArrete) {
         this.dateArrete = dateArrete;
     }
+    
+    public String getSectInst() {
+        return sectInst;
+    }
+
+    public CrpAtr sectInst(String sectInst) {
+        this.sectInst = sectInst;
+        return this;
+    }
+        
+    public void setSectInst(String sectInst) {
+        this.sectInst = sectInst;
+    }
+
+    public String getCodenaema() {
+        return codenaema;
+    }
+
+    public CrpAtr codenaema(String codenaema) {
+        this.codenaema = codenaema;
+        return this;
+    }
+        
+    public void setCodenaema(String codenaema) {
+        this.codenaema = codenaema;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -496,6 +528,8 @@ public class CrpAtr implements Serializable {
             ", etab='" + getEtab() + "'" +
             ", nomFic='" + getNomFic() + "'" +
             ", dateArrete='" + getDateArrete() + "'" +
+            ", sectInst='" + getSectInst() + "'" +
+            ", codenaema='" + getCodenaema() + "'" +
             "}";
     }
 }

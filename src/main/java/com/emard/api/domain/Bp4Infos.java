@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A Bp4Infos.
@@ -33,6 +34,15 @@ public class Bp4Infos implements Serializable {
 
     @Column(name = "mnt_cartes_etr")
     private Double mntCartesEtr;
+    
+    @Column(name = "dco")
+    private LocalDate dco;
+	
+    @Column(name = "datearrete")
+    private LocalDate datearrete;
+	
+    @Column(name = "nom_fic")
+    private String nomfic;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -96,6 +106,32 @@ public class Bp4Infos implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
+    public LocalDate getDco() {
+        return dco;
+    }
+
+    public void setDco(LocalDate dco) {
+        this.dco = dco;
+    }
+
+    public LocalDate getDatearrete() {
+        return datearrete;
+    }
+
+    public void setDatearrete(LocalDate datearrete) {
+        this.datearrete = datearrete;
+    }
+
+    public String getNomfic() {
+        return nomfic;
+    }
+
+    public void setNomfic(String nomfic) {
+        this.nomfic = nomfic;
+    }
+    
+    
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -121,6 +157,9 @@ public class Bp4Infos implements Serializable {
             ", libellePays='" + getLibellePays() + "'" +
             ", mntnosCartes=" + getMntnosCartes() +
             ", mntCartesEtr=" + getMntCartesEtr() +
+            ", nom_fic='" + getNomfic() + "'" +
+            ", dco=" + getDco() +
+            ", date_arrete=" + getDatearrete() +
             "}";
     }
 }

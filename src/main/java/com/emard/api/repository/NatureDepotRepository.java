@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface NatureDepotRepository extends JpaRepository<NatureDepot, Long> {
+      @Query("select od.codeCb from NatureDepot od where od.codeBdu = ?1")
+    public String findCodeItrsByCodeInterne (String codeInterne);
 }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Service Implementation for managing {@link Bp2Com}.
@@ -87,42 +89,64 @@ public class Bp2ComService {
     }
     
         @Transactional(readOnly = true)
-    public List<Bp2Com> findLikeCha(String cha, String devise) {
+    public Double findLikeCha(String cha, String devise) {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findLikeCha(cha, devise);
     }
     
     @Transactional(readOnly = true)
-    public List<Bp2Com> findLikeChaAndSdeNeg(String cha, String devise) {
+    public Double findLikeChaAndSdeNeg(String cha, String devise) {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findLikeChaAndSdeNeg(cha,devise);
     }
     
     @Transactional(readOnly = true)
-    public List<Bp2Com> findLikeChaAndSdePos(String cha, String devise) {
+    public Double findLikeChaAndSdePos(String cha, String devise) {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findLikeChaAndSdePos(cha, devise);
     }
     
-        @Transactional(readOnly = true)
-    public List<Bp2Com> findLikeCha1OrCha2(String cha1, String cha2, String devise) {
+    @Transactional(readOnly = true)
+    public Double findLikeCha1OrCha2(String cha1, String cha2, String devise) {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findLikeCha1OrCha2(cha1,cha2,devise);
     } 
     
     @Transactional(readOnly = true)
-    public List<Bp2Com> findLikeCha1OrCha2AndSdeNeg(String cha1, String cha2,String devise) {
+    public Double findLikeCha1OrCha2AndSdeNeg(String cha1, String cha2,String devise) {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findLikeCha1OrCha2AndSdeNeg(cha1,cha2, devise);
     } 
     
     @Transactional(readOnly = true)
-    public List<Bp2Com> findByChapitres(List<String> chapitres, String devise) {
+    public Double findByChapitres(List<String> chapitres, String devise) {
         log.debug("Request to get all Bp2Coms");
         return bp2ComRepository.findByChapitres(chapitres, devise);
     } 
     
-        @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
+    public Double findByChapitresAndSdeNeg(List<String> chapitres, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findByChapitresAndSdeNeg(chapitres, devise);
+    } 
+    
+    @Transactional(readOnly = true)
+    public Double findByChapitresAndSdePos(List<String> chapitres, String devise) {
+        log.debug("Request to get all Bp2Coms");
+        return bp2ComRepository.findByChapitresAndSdePos(chapitres, devise);
+    } 
+    
+    @Transactional(readOnly = true)
+    public Double findByChapitres4And5AndSdeNeg(List<String> chapitres4, List<String> chapitres5, String devise) {
+        return bp2ComRepository.findByChapitres4And5AndSdeNeg(chapitres4, chapitres5, devise);
+    }
+    
+    @Transactional(readOnly = true)
+    public Double findByChapitres4And5AndSdePos(List<String> chapitres4, List<String> chapitres5, String devise){
+        return bp2ComRepository.findByChapitres4And5AndSdePos(chapitres4, chapitres5, devise);
+    }
+    
+    @Transactional(readOnly = false)
     public void viderBp2Com(String nomFic) {
         log.debug("Request to get all Bp2Coms");
         bp2ComRepository.viderBp2Com(nomFic);

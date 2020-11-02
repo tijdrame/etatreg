@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
 public interface Bp3HisRepository extends JpaRepository<Bp3His, Long> {
     
     
-    @Query("select sum(od.mon) from Bp3His od where od.nat = ?1 and od.dev = ?2 and od.mon>0")     
+    @Query("select sum(od.mon) from Bp3His od where od.nat = ?1 and od.dev = ?2 and od.sen='C'")     
     public Double findSumMonByDevAndNatAndMonPos(String nat, String devise);
     
-    @Query("select sum(od.mon) from Bp3His od where od.nat = ?1 and od.dev = ?2 and od.mon<0")     
+    @Query("select sum(od.mon) from Bp3His od where od.nat = ?1 and od.dev = ?2 and od.sen='D'")     
     public Double findSumMonByDevAndNatAndMonNeg(String nat, String devise);
     
     @Modifying

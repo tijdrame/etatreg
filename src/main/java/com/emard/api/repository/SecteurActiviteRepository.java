@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface SecteurActiviteRepository extends JpaRepository<SecteurActivite, Long> {
+    @Query("select od.codeCb from SecteurActivite od where od.codeBdu = ?1")
+    public String findCodeNaemaByCodeInterne (String codeInterne);
 }

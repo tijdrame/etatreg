@@ -50,7 +50,6 @@ public class Bp1ComService {
         return bp1ComRepository.findAll(pageable);
     }
 
-
     /**
      * Get one bp1Com by id.
      *
@@ -72,10 +71,34 @@ public class Bp1ComService {
         log.debug("Request to delete Bp1Com : {}", id);
         bp1ComRepository.deleteById(id);
     }
-    
-         @Transactional(readOnly = false)
+
+    @Transactional(readOnly = false)
     public void viderBp1Com(String nomFic) {
         log.debug("Request to delete all Bp1His by filename");
         bp1ComRepository.viderBp1Com(nomFic);
-    } 
+    }
+
+    @Transactional(readOnly = true)
+    public Double findSumSoldeDebutBySoldeDebutPos() {
+        log.debug("Request to all Bp1Com by sde > 0");
+        return bp1ComRepository.findSumSoldeDebutBySoldeDebutPos();
+    }
+
+    @Transactional(readOnly = true)
+    public Double findSumSoldeDebutBySoldeDebutNeg() {
+        log.debug("Request to all Bp1Com by sde < 0");
+        return bp1ComRepository.findSumSoldeDebutBySoldeDebutNeg();
+    }
+
+    @Transactional(readOnly = true)
+    public Double findSumSoldeFinBySoldeFinPos() {
+        log.debug("Request to all Bp1Com by sdefin > 0");
+        return bp1ComRepository.findSumSoldeFinBySoldeFinPos();
+    }
+
+    @Transactional(readOnly = true)
+    public Double findSumSoldeFinBySoldeFinNeg() {
+        log.debug("Request to all Bp1Com by sdefin < 0");
+        return bp1ComRepository.findSumSoldeFinBySoldeFinNeg();
+    }
 }

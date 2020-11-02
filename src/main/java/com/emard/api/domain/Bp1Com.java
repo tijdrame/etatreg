@@ -55,6 +55,12 @@ public class Bp1Com implements Serializable {
 
     @Column(name = "date_arrete")
     private LocalDate dateArrete;
+    
+    @Column(name = "datedebutarrete")
+    private LocalDate dateDebutArrete;
+    
+    @Column(name = "sdefin")
+    private Double sdeFin;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -207,6 +213,33 @@ public class Bp1Com implements Serializable {
     public void setDateArrete(LocalDate dateArrete) {
         this.dateArrete = dateArrete;
     }
+
+    public LocalDate getDateDebutArrete() {
+        return dateDebutArrete;
+    }
+    
+    public Bp1Com dateDebutArrete(LocalDate dateDebutArrete) {
+        this.dateDebutArrete = dateDebutArrete;
+        return this;
+    }
+
+    public void setDateDebutArrete(LocalDate dateDebutArrete) {
+        this.dateDebutArrete = dateDebutArrete;
+    }
+
+    public Double getSdeFin() {
+        return sdeFin;
+    }
+
+    public Bp1Com sdeFin(Double sdeFin) {
+        this.sdeFin = sdeFin;
+        return this;
+    }
+    public void setSdeFin(Double sdeFin) {
+        this.sdeFin = sdeFin;
+    }
+    
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -241,6 +274,8 @@ public class Bp1Com implements Serializable {
             ", ddc='" + getDdc() + "'" +
             ", nomFic='" + getNomFic() + "'" +
             ", dateArrete='" + getDateArrete() + "'" +
+            ", dateDebutArrete='" + getDateDebutArrete() + "'" +
+            ", sdeFin='" + getSdeFin() + "'" +
             "}";
     }
 }

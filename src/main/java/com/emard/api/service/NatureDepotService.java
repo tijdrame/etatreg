@@ -72,4 +72,10 @@ public class NatureDepotService {
         log.debug("Request to delete NatureDepot : {}", id);
         natureDepotRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public String findCodeItrsByCodeInterne (String codeInterne){
+        log.debug("Request to get Code Itrs : {}", codeInterne);
+        return natureDepotRepository.findCodeItrsByCodeInterne(codeInterne);
+    }
 }

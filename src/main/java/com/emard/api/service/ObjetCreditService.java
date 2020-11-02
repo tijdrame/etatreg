@@ -72,4 +72,10 @@ public class ObjetCreditService {
         log.debug("Request to delete ObjetCredit : {}", id);
         objetCreditRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public String findCodeBceaoByCodeInterne (String codeInterne){
+        log.debug("Request to get CodeItrs : {}", codeInterne);
+        return objetCreditRepository.findCodeBceaoByCodeInterne(codeInterne);
+    }
 }

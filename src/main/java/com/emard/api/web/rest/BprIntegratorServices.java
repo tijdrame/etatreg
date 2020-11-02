@@ -17,12 +17,7 @@ import com.emard.api.domain.Bp4Infos;
 import com.emard.api.domain.ChargeFile;
 import com.emard.api.domain.CrpAtr;
 import com.emard.api.domain.FilesInfos;
-import com.emard.api.generator.BP1infosGenerator;
-import com.emard.api.generator.BP2infosGenerator;
-import com.emard.api.generator.BP3infosGenerator;
-import com.emard.api.generator.BP4infosGenerator;
-import com.emard.api.generator.CRPinfosGenerator;
-import com.emard.api.repository.Bp2InfosRepository;
+import com.emard.api.generator.CountryCode;
 import com.emard.api.repository.FilesInfosRepository;
 import com.emard.api.service.BankInfosService;
 import com.emard.api.service.Bp1ComService;
@@ -35,19 +30,16 @@ import com.emard.api.service.Bp3InfosService;
 import com.emard.api.service.Bp4InfosService;
 import com.emard.api.service.ChargeFileService;
 import com.emard.api.service.CrpAtrService;
-import com.emard.api.service.FilesInfosService;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -58,8 +50,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import javax.persistence.Convert;
-
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -70,12 +60,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -84,7 +71,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -131,12 +117,15 @@ public class BprIntegratorServices {
 
     @Autowired
     Bp3InfosService bp3InfosService;
+    
+    @Autowired
+    Bp4InfosService bp4InfosService;
 
     @GetMapping(value = "/generated/file2Bp/")
     public ResponseEntity<String> importExcelFiles() throws IOException, ParseException {
         // Iterable<Long>itrbl = null
         // System.out.println("AVANT "+idFile+ "dateref = "+dateRef);
-        Pageable pag = PageRequest.of(0, 100);
+        Pageable pag = PageRequest.of(0, 1000);
         Optional<FilesInfos> fileInfos = fileinfosService.findById(2l);
         Optional<BankInfos> bankInfos = bankInfoService.findOne(1l);
 
@@ -149,12 +138,7 @@ public class BprIntegratorServices {
             File repArch = new File(pathOutPutFile + "\\archives");
             repArch.mkdir();
             String codeIdBank = bankInfos.get().getCodeId();
-            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-            // formatter = formatter.withLocale(Locale.getDefault()); // Locale specifies
-            // human language for translating, and cultural norms for lowercase/uppercase
-            // and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
-            // LocalDate dateFormater = LocalDate.parse(dateRef, formatter);
-            // System.out.println("formater="+dateFormater);
+
             File[] matchingFiles = bpFile.listFiles();
             Resource resource = null;
             Bp1Com bp1Com = new Bp1Com();
@@ -180,16 +164,7 @@ public class BprIntegratorServices {
                 if (item.isFile()) {
                     nomfic = item.getName();
                     log.info("Nom du fichier: [{}]", nomfic);
-                    /* Initialisation */
 
-                    /*
-                     * for (ChargeFile chFile : chargeFiles) { if (chFile.getNomFic() != null &&
-                     * chFile.getNomFic().equals(item.getName())) { System.out.println("FILE ID " +
-                     * chFile.getId()); chargeFileService.delete(chFile.getId());
-                     * System.out.println("AFTER DELETE CHARGEFILE"); } }
-                     */
-
-                    /* Fin Initialisation */
                     Tableau(item.getAbsolutePath(), nomfic);
                     ChargeFile chf = new ChargeFile();
                     chf.setDateCharge(LocalDate.now());
@@ -197,22 +172,12 @@ public class BprIntegratorServices {
                     chargeFileService.save(chf);
                     log.info("AFTER SAVE [{}]" + chf.getNomFic());
                 }
-                /*
-                 * else if(item.isDirectory()) { System.out.format("Nom du répertoir: %s%n",
-                 * item.getName()); }
-                 */
+
             }
-            /*
-             * File[] matches = bpFile.listFiles(new FilenameFilter() { public boolean
-             * accept(File dir, String name) { return (name.startsWith("BP1_COM_") ||
-             * name.startsWith("BP1_HIS_") || name.startsWith("BP2_COM_") ||
-             * name.startsWith("BP3_HIS_") || name.startsWith("CRP_ATR_")) &&
-             * (name.endsWith(".xlsx")); } });
-             */
+
+            /*saveBp1Infos();
             saveBp2Infos();
-            saveBp1Infos();
-            saveBp2Infos();
-            saveBp3Infos();
+            saveBp3Infos();*/
         }
 
         HttpHeaders headers = new HttpHeaders();
@@ -227,10 +192,6 @@ public class BprIntegratorServices {
 
         try {
 
-            /*
-             * afile =new File("Afile.txt"); bfile =new File("Bfile.txt");
-             */
-            // inStream = new FileInputStream(afile);
             outStream = new FileOutputStream(bfile);
 
             byte[] buffer = new byte[1024];
@@ -254,35 +215,21 @@ public class BprIntegratorServices {
 
     public static String dateDebutPeriode(String dateRef) throws ParseException {
 
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");// yyyy-MM-dd
-        // Date dt = sdf .parse(dateRef.substring(0,1)+"/"+dateRef.substring(2,
-        // 3)+"/"+dateRef.substring(4, 7));
-        /*
-         * System.out.println("jj = "+dateRef.substring(6));
-         * System.out.println("mm = "+dateRef.substring(2,4));
-         * System.out.println("yyyy = "+dateRef.substring(0,4));
-         */
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dt = sdf.parse(dateRef);
         Calendar c = Calendar.getInstance();
         c.setTime(dt);
         c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
         String firstDate = sdf.format(c.getTime());
         String[] tab = firstDate.split("-");
-        // System.out.println("firstDate "+firstDate);
-        // System.out.println("date deb ret =
-        // "+firstDate.substring(6)+"/"+firstDate.substring(2,
-        // 4)+"/"+firstDate.substring(0,4));
-        // return firstDate.substring(4)+"/"+firstDate.substring(2,
-        // 4)+"/"+firstDate.substring(0,2);
+
         return tab[2] + "/" + tab[1] + "/" + tab[0];
     }
 
     public static String dateFinPeriode(String dateRef) throws ParseException {
 
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");// ddMMyyyy
-        // System.out.println("jj = [{}]"+dateRef.substring(6));
-        // System.out.println("mm = "+dateRef.substring(2,4));
-        // System.out.println("yyyy = "+dateRef.substring(5));
+
         Date dt = sdf.parse(dateRef);
         // Date dt = sdf .parse(dateRef);
         Calendar c = Calendar.getInstance();
@@ -293,17 +240,13 @@ public class BprIntegratorServices {
          */
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
         String lastDate = sdf.format(c.getTime());
-        // System.out.println("lastDate "+lastDate);
-        // System.out.println("date fin ret =
-        // "+lastDate.substring(6)+"/"+lastDate.substring(2,
-        // 4)+"/"+lastDate.substring(0,4));
+
         String[] tab = lastDate.split("-");
-        // return lastDate.substring(0,2)+"/"+lastDate.substring(2,
-        // 4)+"/"+lastDate.substring(4);
+
         return tab[2] + "/" + tab[1] + "/" + tab[0];
     }
 
-    public void Tableau(String fileString, String fileName) {
+    public void Tableau(String fileString, String fileName) throws ParseException{
 
         try {
 
@@ -324,8 +267,9 @@ public class BprIntegratorServices {
             DataFormat format = workbook.createDataFormat();
             style = workbook.createCellStyle();
             style.setDataFormat(format.getFormat("0.0##############"));
-            LocalDate dateArrete = LocalDate.now();
-            log.info("start = {}, end = {}, length = {}, top= {}, bottom = {}", start, end, length, top, bottom );
+
+            LocalDate dateArrete = recupDateArrete(fileName);//LocalDate.now();
+            log.info("start = {}, end = {}, length = {}, top= {}, bottom = {}", start, end, length, top, bottom);
             while (length == 0) {
                 top++;
                 line = sheet.getRow(top);
@@ -333,13 +277,13 @@ public class BprIntegratorServices {
                 end = line.getLastCellNum();
                 length = end - start;
             }
-            log.info("AFTER WHILE length = {}" , length);
+            log.info("AFTER WHILE length = {}", length);
             int hight = bottom - top;
-            log.info("AFTER WHILE hight = {}" ,hight);
+            log.info("AFTER WHILE hight = {}", hight);
 
-            log.info("Nom {}",fileName);
+            log.info("Nom {}", fileName);
             if (fileName.startsWith("BP1_COM")) {
-                dateArrete = chargeBP1Com(fileName, sheet, line, top, hight, dateformat);
+                chargeBP1Com(fileName, sheet, line, top, hight, dateformat, dateArrete);
             } else if (fileName.startsWith("BP2_COM")) {
                 chargeBP2Com(fileName, sheet, line, top, hight, dateformat, dateArrete);
             } else if (fileName.startsWith("BP1_HIS")) {
@@ -348,6 +292,8 @@ public class BprIntegratorServices {
                 chargeBP3His(fileName, sheet, line, top, hight, dateformat, dateArrete);
             } else if (fileName.startsWith("CRP_ATR")) {
                 chargeCrpAtr(fileName, sheet, line, top, hight, dateformat, dateArrete);
+            }else if (fileName.startsWith("BP4_EMI") || fileName.startsWith("BP4_ACQ")) {
+                chargeAndSaveBp4InfosEmisAcq(fileName, sheet, line, top, hight, dateformat, dateArrete);
             }
             workbook.close();
             file.close();
@@ -356,75 +302,75 @@ public class BprIntegratorServices {
         }
     }
 
-    public LocalDate chargeBP1Com(String fileName, Sheet sheet, Row line, int top, int hight,
-            DateTimeFormatter dateformat) {
+    public void chargeBP1Com(String fileName, Sheet sheet, Row line, int top, int hight,
+            DateTimeFormatter dateformat, LocalDate dateArrete) {
         /**
          * Initialisation de la table BP1 si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
-        LocalDate dateArrete = LocalDate.now();
-        //Bp1Infos bp1infos = new Bp1Infos();
-        /*Iterable<Bp1Com> bp1Coms = bp1ComService.findAll(pag);
-        for (Bp1Com bp1 : bp1Coms) {
-            if (bp1.getNomFic() != null && bp1.getNomFic().equals(fileName)) {
-                log.info("BP1 ID {}", bp1.getId());
-                bp1ComService.delete(bp1.getId());
-                log.info("AFTER DELETE BP1COM ");
-            }
-        }*/
-       log.info("BEFORE DELETE BP1COM "+fileName);
-       bp1ComService.viderBp1Com(fileName);
-       log.info("AFTER DELETE BP1COM "+fileName);
+
+        log.info("BEFORE DELETE BP1COM " + fileName);
+        bp1ComService.viderBp1Com(fileName);
+        log.info("AFTER DELETE BP1COM " + fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
             log.info("index + top + 1 = {}", z);
             // System.out.println("line = "+line);
-            log.info("cellule {}, line {}",z , line.getCell(4));
-            log.info("devise {}, {}" ,z, line.getCell(1));
-            log.info("age {}" ,line.getCell(0).getStringCellValue());
+            log.info("cellule {}, line {}", z, line.getCell(4));
+            log.info("devise {}, {}", z, line.getCell(1));
+            log.info("age {}", line.getCell(0).getStringCellValue());
             Bp1Com bp1Com = new Bp1Com();
             bp1Com.setAge(line.getCell(0) != null ? line.getCell(0).getStringCellValue() : "");
-            log.info("Dev {}",line.getCell(1).getStringCellValue());
+            log.info("Dev {}", line.getCell(1).getStringCellValue());
             bp1Com.setDev(line.getCell(1) != null ? line.getCell(1).getStringCellValue() : "");
-            log.info("Ncp {}" ,line.getCell(2).getStringCellValue());
+            log.info("Ncp {}", line.getCell(2).getStringCellValue());
             bp1Com.setNcp(line.getCell(2) != null ? line.getCell(2).getStringCellValue() : "");
-            log.info("Inti {}" ,line.getCell(3).getStringCellValue());
+            log.info("Inti {}", line.getCell(3) != null ? line.getCell(3).getStringCellValue() : "");
             bp1Com.setInti(line.getCell(3) != null ? line.getCell(3).getStringCellValue() : "");
-            log.info("Sde {}" ,line.getCell(4).getNumericCellValue());
+            log.info("Sde {}", line.getCell(4).getNumericCellValue());
             Cell cellformat = line.getCell(4);
             String sde = Double.toString(cellformat.getNumericCellValue()).equals("0.0") ? "0"
                     : Double.toString(cellformat.getNumericCellValue());
             log.info("Sdestr {}, SDE {}", Double.valueOf(sde), Double.valueOf(sde).longValue());
-            long sdeLong = Double.valueOf(sde).longValue();
+            BigDecimal sdeLong = BigDecimal.valueOf(Double.valueOf(sde));
             cellformat.setCellValue(sde);
             // cellformat.setCellStyle(style);
-            bp1Com.setSde(Double.parseDouble(line.getCell(4) != null ? String.valueOf(sdeLong) : "0"));
+            bp1Com.setSde(Double.parseDouble(line.getCell(4) != null ? String.valueOf(sdeLong.toPlainString()) : "0"));
             bp1Com.setCha(line.getCell(5) != null ? line.getCell(5).getStringCellValue() : "");
-            bp1Com.setDou(LocalDate.parse((line.getCell(6) != null)
+            /*bp1Com.setDou(LocalDate.parse((line.getCell(6) != null)
                     ? (!line.getCell(6).getStringCellValue().equals("") ? line.getCell(6).getStringCellValue()
-                            : "01/01/1999")
+                    : "01/01/1999")
                     : "01/01/1999", dateformat));
             bp1Com.setDdd(LocalDate.parse((line.getCell(7) != null)
                     ? (!line.getCell(7).getStringCellValue().equals("") ? line.getCell(7).getStringCellValue()
-                            : "01/01/1999")
+                    : "01/01/1999")
                     : "01/01/1999", dateformat));
             bp1Com.setDdc(LocalDate.parse((line.getCell(8) != null)
                     ? (!line.getCell(8).getStringCellValue().equals("") ? line.getCell(8).getStringCellValue()
-                            : "01/01/1999")
+                    : "01/01/1999")
+                    : "01/01/1999", dateformat));*/
+            Cell cell_10 = line.getCell(10);
+            String monSdeFin = Double.toString(cell_10.getNumericCellValue()).equals("0.0") ? "0"
+                    : Double.toString(cell_10.getNumericCellValue());
+            BigDecimal sdeFinLong = BigDecimal.valueOf(Double.valueOf(monSdeFin));
+            log.info("SdeFin CRP {}", sdeFinLong);
+            cellformat.setCellValue(monSdeFin);
+            bp1Com.setSdeFin(Double.parseDouble(line.getCell(10) != null ? String.valueOf(sdeFinLong.toPlainString()) : "0"));
+            bp1Com.setDateDebutArrete(LocalDate.parse((line.getCell(11) != null)
+                    ? (!line.getCell(11).getStringCellValue().equals("") ? line.getCell(11).getStringCellValue()
+                    : "01/01/1999")
                     : "01/01/1999", dateformat));
-            bp1Com.setDateArrete(LocalDate.parse(
-                    (line.getCell(9) != null) ? (line.getCell(9).getStringCellValue()) : "01/01/1999", dateformat));
-            log.info("age {}", line.getCell(0).getStringCellValue());
-            log.info("Dev {}", line.getCell(1).getStringCellValue());
-            log.info("Ncp {}", line.getCell(2).getStringCellValue());
+            bp1Com.setDateArrete(dateArrete);
+            log.info("age {}", bp1Com.getAge());
+            log.info("Dev {}", bp1Com.getDev());
+            log.info("Ncp {}", bp1Com.getNcp());
             bp1Com.setNomFic(fileName);
             bp1ComService.save(bp1Com);
-            log.info("AFTER SAVE bp1Com {}",fileName);
-            dateArrete = (bp1Com.getDateArrete() != null ? bp1Com.getDateArrete() : dateArrete);
-
+            log.info("AFTER SAVE bp1Com {}", fileName);
+            //dateArrete = (bp1Com.getDateArrete() != null ? bp1Com.getDateArrete() : dateArrete);
         }
-        return dateArrete;
+        
     }
 
     public void chargeBP2Com(String fileName, Sheet sheet, Row line, int top, int hight, DateTimeFormatter dateformat,
@@ -433,7 +379,7 @@ public class BprIntegratorServices {
          * Initialisation de la table BP2COM si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
-       /* Iterable<Bp2Com> bp2Coms = bp2ComService.findAll(pag);
+        /* Iterable<Bp2Com> bp2Coms = bp2ComService.findAll(pag);
         for (Bp2Com bp2Com : bp2Coms) {
             if (bp2Com.getNomFic() != null && bp2Com.getNomFic().equals(fileName)) {
                 log.info("BP2COM ID {}",bp2Com.getId());
@@ -441,16 +387,16 @@ public class BprIntegratorServices {
                 log.info("AFTER DELETE BP2COM ");
             }
         }*/
-       log.info("BEFORE DELETE BP2COM "+fileName);
-       bp2ComService.viderBp2Com(fileName);
-       log.info("AFTER DELETE BP2COM "+fileName);
+        log.info("BEFORE DELETE BP2COM " + fileName);
+        bp2ComService.viderBp2Com(fileName);
+        log.info("AFTER DELETE BP2COM " + fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
             log.info("index + top + 1 = {} ", z);
             // System.out.println("line = "+line);
             log.info("cellule {} line {}", z, line.getCell(4));
-            log.info("devise {}, line {}",z, line.getCell(1));
+            log.info("devise {}, line {}", z, line.getCell(1));
             Bp2Com bp2com = new Bp2Com();
             bp2com.setAge(line.getCell(0) != null ? line.getCell(0).getStringCellValue() : "");
             bp2com.setDev(line.getCell(1) != null ? line.getCell(1).getStringCellValue() : "");
@@ -460,23 +406,23 @@ public class BprIntegratorServices {
             String sde = Double.toString(cellformat.getNumericCellValue()).equals("0.0") ? "0"
                     : Double.toString(cellformat.getNumericCellValue());
             log.info("Sdestr {}, SDE {}, ", Double.valueOf(sde), Double.valueOf(sde).longValue());
-            long sdeLong = Double.valueOf(sde).longValue();
+            BigDecimal sdeLong = BigDecimal.valueOf(Double.valueOf(sde));
             cellformat.setCellValue(sde);
             // cellformat.setCellStyle(style);
-            bp2com.setSde(Double.parseDouble(line.getCell(4) != null ? String.valueOf(sdeLong) : "0"));
+            bp2com.setSde(Double.parseDouble(line.getCell(4) != null ? String.valueOf(sdeLong.toPlainString()) : "0"));
             bp2com.setCha(line.getCell(5) != null ? line.getCell(5).getStringCellValue() : "");
-            bp2com.setDou(LocalDate.parse(
-                    (line.getCell(6) != null || !line.getCell(6).equals("")) ? (line.getCell(6).getStringCellValue())
-                            : "01/01/1999",
-                    dateformat));
+            /*bp2com.setDou(LocalDate.parse((line.getCell(6) != null)
+                    ? (!line.getCell(6).getStringCellValue().equals("") ? line.getCell(6).getStringCellValue()
+                    : "01/01/1999")
+                    : "01/01/1999", dateformat));
             bp2com.setDdc(LocalDate.parse((line.getCell(7) != null)
                     ? (!line.getCell(7).getStringCellValue().equals("") ? line.getCell(7).getStringCellValue()
-                            : "01/01/1999")
+                    : "01/01/1999")
                     : "01/01/1999", dateformat));
             bp2com.setDdd(LocalDate.parse((line.getCell(8) != null)
                     ? (!line.getCell(8).getStringCellValue().equals("") ? line.getCell(8).getStringCellValue()
-                            : "01/01/1999")
-                    : "01/01/1999", dateformat));
+                    : "01/01/1999")
+                    : "01/01/1999", dateformat));*/
             bp2com.setDateArrete(dateArrete);
             bp2com.setNomFic(fileName);
             bp2ComService.save(bp2com);
@@ -491,7 +437,7 @@ public class BprIntegratorServices {
          * Initialisation de la table BP1HIS si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
-    /*    Iterable<Bp1His> bp1Hiss = bp1HisService.findAll(pag);
+        /*    Iterable<Bp1His> bp1Hiss = bp1HisService.findAll(pag);
         for (Bp1His bp1His : bp1Hiss) {
             if (bp1His.getNomFic() != null && bp1His.getNomFic().equals(fileName)) {
                 log.info("BP1HIS ID {}", bp1His.getId());
@@ -499,9 +445,9 @@ public class BprIntegratorServices {
                 log.info("AFTER DELETE BP1HIS ");
             }
         }*/
-        log.info("BEFORE DELETE BP1HIS "+fileName);
+        log.info("BEFORE DELETE BP1HIS " + fileName);
         bp1HisService.viderBp1His(fileName);
-        log.info("AFTER DELETE BP1HIS "+fileName);
+        log.info("AFTER DELETE BP1HIS " + fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -521,10 +467,10 @@ public class BprIntegratorServices {
             String mon = Double.toString(cellformat.getNumericCellValue()).equals("0.0") ? "0"
                     : Double.toString(cellformat.getNumericCellValue());
             log.info("Monstr {}, MON {}", Double.valueOf(mon), Double.valueOf(mon).longValue());
-            long monLong = Double.valueOf(mon).longValue();
+            BigDecimal monLong = BigDecimal.valueOf(Double.valueOf(mon));
             cellformat.setCellValue(mon);
             // cellformat.setCellStyle(style);
-            bp1his.setMon(Double.parseDouble(line.getCell(6) != null ? String.valueOf(monLong) : "0"));
+            bp1his.setMon(Double.parseDouble(line.getCell(6) != null ? String.valueOf(monLong.toPlainString()) : "0"));
             bp1his.setSen(line.getCell(7) != null ? line.getCell(7).getStringCellValue() : "");
             bp1his.setPie(line.getCell(8) != null ? line.getCell(8).getStringCellValue() : "");
             bp1his.setNcc(line.getCell(9) != null ? line.getCell(9).getStringCellValue() : "");
@@ -553,9 +499,9 @@ public class BprIntegratorServices {
                 log.info("AFTER DELETE BP3HIS ");
             }
         }*/
-        log.info("BEFORE DELETE BP3HIS "+fileName);
+        log.info("BEFORE DELETE BP3HIS " + fileName);
         bp3HisService.viderBp3His(fileName);
-        log.info("AFTER DELETE BP3HIS "+fileName);
+        log.info("AFTER DELETE BP3HIS " + fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -566,6 +512,7 @@ public class BprIntegratorServices {
             Bp3His bp3his = new Bp3His();
             // String dcoStr = ""+line.getCell(0).getStringCellValue();
             log.info("dateArrete {}", dateArrete);
+            
             bp3his.setDco(dateArrete);
             bp3his.setAge(line.getCell(1) != null ? line.getCell(1).getStringCellValue() : "");
             bp3his.setDev(line.getCell(2) != null ? line.getCell(2).getStringCellValue() : "");
@@ -576,10 +523,10 @@ public class BprIntegratorServices {
             String mon = Double.toString(cellformat.getNumericCellValue()).equals("0.0") ? "0"
                     : Double.toString(cellformat.getNumericCellValue());
             log.info("Monstr {}, MON {}", Double.valueOf(mon), Double.valueOf(mon).longValue());
-            long monLong = Double.valueOf(mon).longValue();
+            BigDecimal monLong = BigDecimal.valueOf(Double.valueOf(mon));
             cellformat.setCellValue(mon);
             // cellformat.setCellStyle(style);
-            bp3his.setMon(Double.parseDouble(line.getCell(6) != null ? String.valueOf(monLong) : "0"));
+            bp3his.setMon(Double.parseDouble(line.getCell(6) != null ? String.valueOf(monLong.toPlainString()) : "0"));
             bp3his.setSen(line.getCell(7) != null ? line.getCell(7).getStringCellValue() : "");
             bp3his.setPie(line.getCell(8) != null ? line.getCell(8).getStringCellValue() : "");
             bp3his.setNcc(line.getCell(9) != null ? line.getCell(9).getStringCellValue() : "");
@@ -595,23 +542,17 @@ public class BprIntegratorServices {
     }
 
     public void chargeCrpAtr(String fileName, Sheet sheet, Row line, int top, int hight, DateTimeFormatter dateformat,
-            LocalDate dateArrete) {
+            LocalDate dateArrete) throws ParseException{
         /**
          * Initialisation de la table BP1 si fichier déjà chargé*
          */
         Pageable pag = PageRequest.of(0, 100000);
         Iterable<CrpAtr> crpATrs = crpAtrService.findAll(pag);
-        dateformat = DateTimeFormatter.ofPattern("dd/MM/yy");
-        /*for (CrpAtr crpAtr : crpATrs) {
-            if (crpAtr.getNomFic() != null && crpAtr.getNomFic().equals(fileName)) {
-                log.info("crpAtr ID {}", crpAtr.getId());
-                crpAtrService.delete(crpAtr.getId());
-                log.info("AFTER DELETE crpAtr ");
-            }
-        }*/
-        log.info("BEFORE DELETE CRPATR "+fileName);
+        dateformat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        log.info("BEFORE DELETE CRPATR " + fileName);
         crpAtrService.viderCrpAtr(fileName);
-        log.info("AFTER DELETE CRPATR "+fileName); 
+        log.info("AFTER DELETE CRPATR " + fileName);
         for (int index = 0; index < hight; index++) {
             line = sheet.getRow(index + top + 1);
             int z = index + top + 1;
@@ -640,8 +581,8 @@ public class BprIntegratorServices {
                     : "");
             crpAtr.setDemAtr(LocalDate.parse(line.getCell(6) != null
                     ? ((!line.getCell(6).getStringCellValue().equals("") ? line.getCell(6).getStringCellValue()
-                            : "01/01/20"))
-                    : "01/01/20", dateformat));
+                    : "01/01/2020"))
+                    : "01/01/2020", dateformat));
             crpAtr.setNumAtr(line.getCell(7) != null
                     ? (!line.getCell(7).getStringCellValue().equals("") ? line.getCell(7).getStringCellValue() : "")
                     : "");
@@ -659,7 +600,7 @@ public class BprIntegratorServices {
             // String.valueOf(line.getCell(11).getNumericCellValue()) :
             // line.getCell(11).getStringCellValue();
             crpAtr.setDatope(LocalDate.parse(
-                    (dateOpe != null) ? ((!dateOpe.equals("") ? dateOpe : "01/01/20")) : "01/01/20", dateformat));
+                    (dateOpe != null) ? ((!dateOpe.equals("") ? dateOpe : "01/01/2020")) : "01/01/2020", dateformat));
             crpAtr.setRegt(line.getCell(12) != null
                     ? (!line.getCell(12).getStringCellValue().equals("") ? line.getCell(12).getStringCellValue() : "")
                     : "");
@@ -669,57 +610,153 @@ public class BprIntegratorServices {
             crpAtr.setNocli(line.getCell(14) != null
                     ? (!line.getCell(14).getStringCellValue().equals("") ? line.getCell(14).getStringCellValue() : "")
                     : "");
-            crpAtr.setCatRes(line.getCell(15) != null
+            crpAtr.setCeco(line.getCell(15) != null
                     ? (!line.getCell(15).getStringCellValue().equals("") ? line.getCell(15).getStringCellValue() : "")
                     : "");
-            crpAtr.setCeco(line.getCell(16) != null
+            /*crpAtr.setCpayEtg(line.getCell(16) != null
                     ? (!line.getCell(16).getStringCellValue().equals("") ? line.getCell(16).getStringCellValue() : "")
-                    : "");
-            crpAtr.setCpayEtg(line.getCell(17) != null
+                    : "");*/
+            crpAtr.setNatcpt(line.getCell(17) != null
                     ? (!line.getCell(17).getStringCellValue().equals("") ? line.getCell(17).getStringCellValue() : "")
                     : "");
-            crpAtr.setNatcpt(line.getCell(18) != null
+            crpAtr.setSens(line.getCell(18) != null
                     ? (!line.getCell(18).getStringCellValue().equals("") ? line.getCell(18).getStringCellValue() : "")
                     : "");
-            crpAtr.setSens(line.getCell(19) != null
-                    ? (!line.getCell(19).getStringCellValue().equals("") ? line.getCell(19).getStringCellValue() : "")
+           //* crpAtr.setSens(line.getCell(19) != null
+                  ////  ? (!line.getCell(19).getStringCellValue().equals("") ? line.getCell(19).getStringCellValue() : "")
+                   // : "");*/
+            Cell cellformat_19 = line.getCell(19);
+            String devn = new DataFormatter().formatCellValue(cellformat_19);
+            cellformat_19.setCellValue(devn);
+            crpAtr.setDevn(cellformat_19 != null
+                    ? devn
                     : "");
-            crpAtr.setDevn(line.getCell(20) != null
-                    ? (!line.getCell(20).getStringCellValue().equals("") ? line.getCell(20).getStringCellValue() : "")
-                    : "");
-            Cell cellformat = line.getCell(21);
+            Cell cellformat = line.getCell(20);
             String mon = new DataFormatter().formatCellValue(cellformat);// Double.toString(cellformat.getNumericCellValue()).equals("0.0")
-                                                                         // ? "0" :
-                                                                         // Double.toString(cellformat.getNumericCellValue());
+            // ? "0" :
+            // Double.toString(cellformat.getNumericCellValue());
             log.info("Monstr CRP {}, MON {}", mon);
             ///long monLong = Double.valueOf(mon).longValue();
             cellformat.setCellValue(mon);
             // cellformat.setCellStyle(style);
-            crpAtr.setMdev(Double.parseDouble(line.getCell(21) != null ? mon.replace(',', '.') : "0"));
+            crpAtr.setMdev(Double.parseDouble(line.getCell(20) != null ? mon.replace(',', '.') : "0"));
             String taux = "";
-            Cell cell_22 = line.getCell(22);
-            taux = new DataFormatter().formatCellValue(cell_22);
-            double tauxlg = Double.valueOf(taux.replace(',', '.'));
-            cell_22.setCellValue(taux);
-            crpAtr.setTaux(Double.parseDouble(cell_22 != null ? String.valueOf(tauxlg) : ""));
-            Cell cellformatNat = line.getCell(23);
+            Cell cell_21 = line.getCell(21);
+            taux = new DataFormatter().formatCellValue(cell_21);
+            
+            double tauxlg = NumberFormat.getNumberInstance(Locale.FRANCE).parse(taux).doubleValue();//Double.valueOf(taux);
+            cell_21.setCellValue(taux);
+            log.info("Monstr taux Crp {}, txlong {}", taux, tauxlg);
+            crpAtr.setTaux(Double.parseDouble(cell_21 != null ? String.valueOf(tauxlg) : ""));
+            Cell cellformatNat = line.getCell(22);
             String monNat = new DataFormatter().formatCellValue(cellformatNat);// Double.toString(cellformatNat.getNumericCellValue()).equals("0.0")
-                                                                               // ? "0" :
-                                                                               // Double.toString(cellformatNat.getNumericCellValue());
-            log.info("Monstr monNat Crp {}, MON {}", Double.valueOf(monNat), Double.valueOf(monNat).longValue());
-            long monLongNat = Double.valueOf(monNat).longValue();
+            // ? "0" :
+            // Double.toString(cellformatNat.getNumericCellValue());
+            //log.info("Monstr monNat Crp {}, MON {}", Double.valueOf(monNat), Double.valueOf(monNat).longValue());
+            //BigDecimal.valueOf(crp.getMnat().longValue()).toPlainString();
+            BigDecimal monLongNat = (monNat!=null && !monNat.equals("")) ? BigDecimal.valueOf(Double.valueOf(monNat).longValue()) : new BigDecimal(0.0);
             cellformat.setCellValue(monNat);
+            log.info("Monstr monNat Crp {}", monLongNat);
             // cellformat.setCellStyle(style);
-            crpAtr.setMnat(Double.parseDouble(line.getCell(23) != null ? String.valueOf(monLongNat) : "0"));
-            crpAtr.setEtab(line.getCell(24) != null
+            crpAtr.setMnat(Double.parseDouble(line.getCell(22) != null ? String.valueOf(monLongNat.toPlainString()) : "0"));
+            crpAtr.setEtab(line.getCell(23) != null
+                    ? (!line.getCell(23).getStringCellValue().equals("") ? line.getCell(23).getStringCellValue() : "")
+                    : "");
+            crpAtr.setCpayEtg(line.getCell(24) != null
                     ? (!line.getCell(24).getStringCellValue().equals("") ? line.getCell(24).getStringCellValue() : "")
                     : "");
+            Cell cellformat_26 = line.getCell(26);
+            String sectInst = new DataFormatter().formatCellValue(cellformat_26);
+            cellformat_26.setCellValue(sectInst);
+            crpAtr.setSectInst(cellformat_26 != null
+                    ? sectInst
+                    : "");
+            /*crpAtr.setSectInst(line.getCell(26) != null
+                    ? (!line.getCell(26).getStringCellValue().equals("") ? line.getCell(26).getStringCellValue() : "")
+                    : "");*/
+            crpAtr.setCodenaema(line.getCell(27) != null
+                    ? (!line.getCell(27).getStringCellValue().equals("") ? line.getCell(27).getStringCellValue() : "")
+                    : "");            
             crpAtr.setDateArrete(dateArrete);
             crpAtr.setNomFic(fileName);
             crpAtrService.save(crpAtr);
 
         }
 
+    }
+    
+    public void chargeAndSaveBp4InfosEmisAcq(String fileName, Sheet sheet, Row line, int top, int hight, DateTimeFormatter dateformat,
+            LocalDate dateArrete) {
+               /**
+         * Initialisation de la table BP4INFOS si fichier déjà chargé*
+         */
+        Pageable pag = PageRequest.of(0, 100000);
+        DateTimeFormatter dateformat0 = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter dateformat1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dateformat2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateformat3 = DateTimeFormatter.ofPattern("dd/MM/yy");
+        log.info("BEFORE DELETE BP4INFOS " + fileName);
+        bp4InfosService.viderBp4Infos(fileName);
+        log.info("AFTER DELETE BP4INFOS " + fileName);
+        for (int index = 0; index < hight; index++) {
+            line = sheet.getRow(index + top + 1);
+            
+            int z = index + top + 1;
+            log.info("index + top + 1 = {}", z);
+            // System.out.println("line = "+line);
+            log.info("cellule {}, line {}", z, line.getCell(4));
+            log.info("devise {}, line {}", z, line.getCell(1));
+            //log.info("date {}, line {}", z, line.getCell(0).getNumericCellValue());
+
+        
+            // line.getCell(11).getStringCellValue();
+            Bp4Infos bp4infos = new Bp4Infos();
+            String dateOpe = ((line.getCell(0)!=null && CellType.NUMERIC ==(line.getCell(0).getCellType()))) ?
+            String.valueOf(line.getCell(0).getNumericCellValue()) : line.getCell(0).getStringCellValue();
+            String mntOpe = ((line.getCell(3)!=null && CellType.NUMERIC ==(line.getCell(3).getCellType()))) ?
+            String.valueOf(line.getCell(3).getNumericCellValue()) : line.getCell(3).getStringCellValue();
+           // bp1his.setAge(line.getCell(1) != null ? line.getCell(1).getStringCellValue() : "");
+            bp4infos.setCodeIsoPays(line.getCell(2) != null ? line.getCell(2).getStringCellValue() : "");
+            log.info("setCodeIsoPays {}, ",bp4infos.getCodeIsoPays());
+            
+            if(!mntOpe.equals("0")) {
+            bp4infos.setCodeIsoPays((bp4infos.getCodeIsoPays()!=null && !bp4infos.getCodeIsoPays().trim().equals(""))?  
+                    (bp4infos.getCodeIsoPays().trim().length()>2 
+                            ? CountryCode.getByCode(Integer.valueOf(bp4infos.getCodeIsoPays())).getAlpha2() 
+                            : (bp4infos.getCodeIsoPays().trim().length()==2 ? bp4infos.getCodeIsoPays().trim() : CountryCode.getByCode(bp4infos.getCodeIsoPays()).getAlpha2())) 
+                    : "");
+            log.info("dateOpe {}, ",dateOpe);
+            if(fileName.startsWith("BP4_EMI")){
+                //dateOpe = String.valueOf(LocalDate.parse(dateOpe, dateformat2).format(dateformat1));
+                //LocalDate date = LocalDate.parse(dateOpe,dateformat2);
+                //Ora
+                //LocalDate dco = LocalDate.parse(dateOpe.substring(0, 10), dateformat1);
+                //dateOpe = dco.format(dateformat1);
+                //UTB
+                LocalDate dco = LocalDate.parse(dateOpe.substring(0, 8), dateformat3);
+                dateOpe = dco.format(dateformat1);
+                //dateOpe = formatDate(dateOpe);
+                log.info("FORMAT EMI =, ",dateOpe);        
+            bp4infos.setMntnosCartes(Double.parseDouble(!mntOpe.equals("") ? mntOpe : "0"));
+            }else{
+            /*LocalDate dco = LocalDate.parse(dateOpe.substring(0, 8), dateformat0);
+            dateOpe = dco.format(dateformat1);*/
+            //Ora
+            LocalDate dco = LocalDate.parse(dateOpe.substring(0, 10), dateformat1);
+            dateOpe = dco.format(dateformat1);
+            //dateOpe = formatDate(dateOpe);
+            System.out.println("FORMAT ACQ = " + dateOpe);
+            bp4infos.setMntCartesEtr(Double.parseDouble(!mntOpe.equals("") ? mntOpe : "0"));    
+            }
+            bp4infos.setDco(LocalDate.parse(dateOpe != null || !dateOpe.equals("") ? dateOpe : "1999-01-01", dateformat1));
+            log.info("CodeIsoPays {}, ",bp4infos.getCodeIsoPays());
+            bp4infos.setLibellePays((bp4infos.getCodeIsoPays()!=null && !bp4infos.getCodeIsoPays().equals(""))? CountryCode.getByCode(bp4infos.getCodeIsoPays()).getName() : "");
+            bp4infos.setDatearrete(dateArrete);
+            bp4infos.setNomfic(fileName);
+            bp4InfosService.save(bp4infos);
+            }
+        }
+        
     }
 
     public void saveBp1Infos() {
@@ -736,69 +773,96 @@ public class BprIntegratorServices {
         Double D231 = 0.0;
         Double D133 = 0.0;
         Double D233 = 0.0;
+        Double D134 = 0.0;
+        Double D234 = 0.0;        
         Double D135 = 0.0;
         Double D235 = 0.0;
         Double D130 = 0.0;
         Double D160 = 0.0;
         Double D230 = 0.0;
         Double D260 = 0.0;
-        Pageable pag = PageRequest.of(0, 100000);
-        Iterable<Bp1Com> bp1Coms = bp1ComService.findAll(pag);
+        log.info("BEFORE DELETE BP1INFOS " );
+        bp1InfosService.viderBp1Infos();
+        log.info("AFTER DELETE BP1INFOS " );
+        Pageable pag = PageRequest.of(0, 1000000);
+       /* Iterable<Bp1Com> bp1Coms = bp1ComService.findAll(pag);
         for (Bp1Com bp1 : bp1Coms) {
             if (bp1.getSde() != null && bp1.getSde() < 0) {
                 D100 = D100 + bp1.getSde();
-                D250 = D250 + bp1.getSde();
+                //D250 = D250 + bp1.getSde();
             }
             if (bp1.getSde() != null && bp1.getSde() > 0) {
                 D200 = D200 + bp1.getSde();
-                D150 = D150 + bp1.getSde();
+                //D150 = D150 + bp1.getSde();
             }
-        }
+            
+            if (bp1.getSdeFin()!= null && bp1.getSdeFin() < 0) {
+                D250 = D250 + bp1.getSdeFin();
+            }
+            if (bp1.getSdeFin() != null && bp1.getSdeFin() > 0) {
+                D150 = D150 + bp1.getSdeFin();
+            }
+        }*/
+        D100 = bp1ComService.findSumSoldeDebutBySoldeDebutNeg();
+        D200 = bp1ComService.findSumSoldeDebutBySoldeDebutPos();
+        D250 = bp1ComService.findSumSoldeFinBySoldeFinNeg();
+        D150 = bp1ComService.findSumSoldeFinBySoldeFinPos();
+        //D250 = bp1ComService.findSumSoldeDebutBySoldeDebutNeg();
+        //D150 = bp1ComService.findSumSoldeDebutBySoldeDebutPos();
 
+        
         Iterable<Bp1His> bp1Hiss = bp1HisService.findAll(pag);
         for (Bp1His bpHis : bp1Hiss) {
             // Double D133 = 0.0;Double D133 = 0.0;
-            if ((bpHis.getMon() != null && bpHis.getMon() < 0)
-                    && (bpHis.getNat() != null && (bpHis.getNat().equals("RGVDCI") || bpHis.getNat().equals("RGPPTI")
-                            || bpHis.getNat().equals("RGPPTE")))) {
+            log.info("SEN {}", bpHis.getSen());
+            if ((bpHis.getMon() != null)
+                    && (bpHis.getNat() != null && (bpHis.getNat().equals("RGVCDI") || bpHis.getNat().equals("RGPPTI")))) {
                 D110 = D110 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() > 0)
-                    && (bpHis.getNat() != null && (bpHis.getNat().equals("RGVDCI") || bpHis.getNat().equals("RGPPTI")
-                            || bpHis.getNat().equals("RGPPTE")))) {
+            if ((bpHis.getMon() != null)
+                    && (bpHis.getNat() != null && (bpHis.getNat().equals("RGVCDE") || bpHis.getNat().equals("RGPPTE")))) {
                 D210 = D210 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() < 0)
-                    && (bpHis.getNat() != null && (bpHis.getNat().equals("OVDETR") || bpHis.getNat().equals("OADETR")
-                            || bpHis.getNat().equals("TOCLIV")))) {
+            if ((bpHis.getMon() != null && bpHis.getSen().equals("C"))
+                    && (bpHis.getNat() != null && bpHis.getNat().equals("TOCLIV"))) {
                 D131 = D131 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() > 0)
-                    && (bpHis.getNat() != null && (bpHis.getNat().equals("OVDETR") || bpHis.getNat().equals("OADETR")
-                            || bpHis.getNat().equals("TOCLIV")))) {
+            if ((bpHis.getMon() != null && bpHis.getSen().equals("D"))
+                    && (bpHis.getNat() != null && bpHis.getNat().equals("TOCLIV"))) {
                 D231 = D231 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() < 0)
-                    && (bpHis.getNat() != null && (bpHis.getNat().equals("SAIRPT")))) {
+            //Laisser à zéro
+            /*if ((bpHis.getMon() != null && bpHis.getSen().equals("D"))
+                    && (bpHis.getNat() != null && (bpHis.getNat().equals("VIRBAN")))) {
                 D133 = D133 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() > 0)
-                    && (bpHis.getNat() != null && (bpHis.getNat().equals("SAIRPT")))) {
+            if ((bpHis.getMon() != null && bpHis.getSen().equals("C"))
+                    && (bpHis.getNat() != null && (bpHis.getNat().equals("VIRBAN")))) {
                 D233 = D233 + bpHis.getMon();
+            }*/
+            if ((bpHis.getMon() != null)
+                    && (bpHis.getNat() != null && (bpHis.getNat().equals("SAITRF")))) {
+                D134 = D134 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() < 0)
+            if ((bpHis.getMon() != null)
+                    && (bpHis.getNat() != null && (bpHis.getNat().equals("SAIRPT")))) {
+                D234 = D234 + bpHis.getMon();
+            }
+            //à zéro
+           /* if ((bpHis.getMon() != null && bpHis.getSen().equals("D"))
                     && (bpHis.getNat() != null && (bpHis.getNat().equals("SAITRF")))) {
                 D135 = D135 + bpHis.getMon();
             }
-            if ((bpHis.getMon() != null && bpHis.getMon() > 0)
+            
+            if ((bpHis.getMon() != null && bpHis.getSen().equals("C"))
                     && (bpHis.getNat() != null && (bpHis.getNat().equals("SAITRF")))) {
                 D235 = D235 + bpHis.getMon();
-            }
+            }*/
         }
-        D130 = D130 + D131 + D133 + D135;
-        D160 = D160 + D100 + D110 + D130 + D150;
-        D230 = D230 + D231 + D233 + D235;
-        D260 = D260 + D200 + D210 + D230 + D250;
+        D130 = D130 + D131 + D133 + D134 + D135;
+        D160 = D160 + (D100<0 ? -1*D100 : D100) + D110 + D130 + D150;
+        D230 = D230 + D231 + D233 + D234 + D235;
+        D260 = D260 + D200 + D210 + D230 + (D250<0 ? -1*D250 : D250);
         log.info("D100 {}", D100);
         bp1infos.setD100(String.valueOf(Double.valueOf(D100).longValue()));
         log.info("D100 get {}", bp1infos.getD100());
@@ -815,8 +879,8 @@ public class BprIntegratorServices {
         // bp1infos.setD232(String.valueOf(D232));
         bp1infos.setD133(String.valueOf(Double.valueOf(D133).longValue()));
         bp1infos.setD233(String.valueOf(Double.valueOf(D233).longValue()));
-        // bp1infos.setD134(String.valueOf(D134));
-        // bp1infos.setD234(String.valueOf(D234));
+        bp1infos.setD134(String.valueOf(Double.valueOf(D134).longValue()));
+        bp1infos.setD234(String.valueOf(Double.valueOf(D234).longValue()));
         bp1infos.setD135(String.valueOf(Double.valueOf(D135).longValue()));
         bp1infos.setD235(String.valueOf(Double.valueOf(D235).longValue()));
         // bp1infos.setD140(String.valueOf(D140));
@@ -843,7 +907,23 @@ public class BprIntegratorServices {
         Double passifCptApresEnc = 0.0;
         Pageable pag = PageRequest.of(0, 100000);
         // List<Bp2Com> bp2ComListEur = bp2ComService.findByDev("952");
-        List<String> listDevise = Arrays.asList("978", "840", "124", "826", "756", "392", "156");
+        List<String> listDevise = Arrays.asList("952","978", "840", "124", "826", "756", "392", "156");
+        
+        List<String> chapitresAutresCorr = Arrays.asList("1111","1112","1131","1141","1151","1161","1181");
+        //'1111','1112','1131','1141','1151','1161','1181'
+        List<String> chapitresCptAVue4 = Arrays.asList("2511");
+        
+        List<String> chapitresCptAVue5 = Arrays.asList("25311","25321","25331","25391");
+        
+        List<String> chapitresPassifCliCpteCh = Arrays.asList("2521");
+        
+        List<String> chapitresPassifCptApresEnc = Arrays.asList("9612","9614");
+        
+        List<String> chapitresActifEffetEnc = Arrays.asList("9611", "9613");
+        
+        //
+        //chapitres 9612 et 9614
+        //chapitres '2511' créditeur et ,'25311','25321','25331','25391'
 
         log.info("BEFORE SAVE BP2INFOS");
 
@@ -862,53 +942,55 @@ public class BprIntegratorServices {
             bp2.setPassifCptApresEnc(0.0);
             String devise = dev;
             log.info("BEFORE SAVE BP2INFOS DEV {}", devise);
-            bp2.setActifBilletEtRcai((bp2ComService.findLikeCha("10", devise) != null
-                    && bp2ComService.findLikeCha("10", devise).size() > 0)
-                            ? bp2ComService.findLikeCha("10", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setActifMaisonMere((bp2ComService.findLikeChaAndSdeNeg("11", devise) != null
+            bp2.setActifBilletEtRcai((bp2ComService.findLikeCha("101", devise) != null
+                    && bp2ComService.findLikeCha("101", devise)!=null)
+                    ? bp2ComService.findLikeCha("101", devise)
+                    : 0.0);
+            //Laisser à zero
+            /*bp2.setActifMaisonMere((bp2ComService.findLikeChaAndSdeNeg("11", devise) != null
                     && bp2ComService.findLikeChaAndSdeNeg("11", devise).size() > 0)
-                            ? bp2ComService.findLikeChaAndSdeNeg("11", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setActifAuTresor((bp2ComService.findLikeChaAndSdeNeg("11", devise) != null
-                    && bp2ComService.findLikeChaAndSdeNeg("11", devise).size() > 0)
-                            ? bp2ComService.findLikeChaAndSdeNeg("11", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setActifClientDeb((bp2ComService.findLikeCha1OrCha2AndSdeNeg("251", "292", devise) != null
-                    && bp2ComService.findLikeCha1OrCha2AndSdeNeg("251", "292", devise).size() > 0)
-                            ? bp2ComService.findLikeCha1OrCha2AndSdeNeg("251", "292", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setActifEffesCpte((bp2ComService.findLikeCha1OrCha2("9611", "9613", devise) != null
+                    ? bp2ComService.findLikeChaAndSdeNeg("11", devise).get(0).getSde()
+                    : 0.0);*/
+            
+            bp2.setActifAuTresor((bp2ComService.findByChapitresAndSdeNeg(chapitresAutresCorr, devise) != null
+                    && bp2ComService.findByChapitresAndSdeNeg(chapitresAutresCorr, devise)!=null)
+                    ? bp2ComService.findByChapitresAndSdeNeg(chapitresAutresCorr, devise)
+                    : 0.0); //'1111','1112','1131','1141','1151','1161','1181' 
+            bp2.setActifClientDeb((bp2ComService.findLikeCha1OrCha2AndSdeNeg("2511", "292", devise) != null
+                    && bp2ComService.findLikeCha1OrCha2AndSdeNeg("2511", "292", devise)!=null)
+                    ? bp2ComService.findLikeCha1OrCha2AndSdeNeg("2511", "292", devise)
+                    : 0.0);
+            /*bp2.setActifEffesCpte((bp2ComService.findLikeCha1OrCha2("9611", "9613", devise) != null
                     && bp2ComService.findLikeCha1OrCha2("9611", "9613", devise).size() > 0)
-                            ? bp2ComService.findLikeCha1OrCha2("9611", "9613", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setActifEffetEnc((bp2ComService.findLikeCha1OrCha2("9611", "9613", devise) != null
-                    && bp2ComService.findLikeCha1OrCha2("9611", "9613", devise).size() > 0)
-                            ? bp2ComService.findLikeCha1OrCha2("9611", "9613", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setPassifMaisonMere((bp2ComService.findLikeChaAndSdePos("11", devise) != null
+                    ? bp2ComService.findLikeCha1OrCha2("9611", "9613", devise).get(0).getSde()
+                    : 0.0);*/
+            bp2.setActifEffetEnc((bp2ComService.findByChapitresAndSdePos(chapitresActifEffetEnc, devise) != null
+                    && bp2ComService.findByChapitresAndSdePos(chapitresActifEffetEnc, devise)!=null)
+                    ? bp2ComService.findByChapitresAndSdePos(chapitresActifEffetEnc, devise)
+                    : 0.0);
+            /*bp2.setPassifMaisonMere((bp2ComService.findLikeChaAndSdePos("11", devise) != null
                     && bp2ComService.findLikeChaAndSdePos("11", devise).size() > 0)
-                            ? bp2ComService.findLikeChaAndSdePos("11", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setPassifAuTresor((bp2ComService.findLikeChaAndSdePos("11", devise) != null
-                    && bp2ComService.findLikeChaAndSdePos("11", devise).size() > 0)
-                            ? bp2ComService.findLikeChaAndSdePos("11", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setPassifCliCptVue((bp2ComService.findLikeChaAndSdePos("251", devise) != null
-                    && bp2ComService.findLikeChaAndSdePos("251", devise).size() > 0)
-                            ? bp2ComService.findLikeChaAndSdePos("251", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setPassifCliCpteCh((bp2ComService.findLikeCha("252", devise) != null
-                    && bp2ComService.findLikeCha("252", devise).size() > 0)
-                            ? bp2ComService.findLikeCha("252", devise).get(0).getSde()
-                            : 0.0);
-            bp2.setPassifCptApresEnc((bp2ComService.findLikeCha1OrCha2("9612", "9614", devise) != null
-                    && bp2ComService.findLikeCha1OrCha2("9612", "9614", devise).size() > 0)
-                            ? bp2ComService.findLikeCha1OrCha2("9612", "9614", devise).get(0).getSde()
-                            : 0.0);
+                    ? bp2ComService.findLikeChaAndSdePos("11", devise).get(0).getSde()
+                    : 0.0);*/
+            bp2.setPassifAuTresor((bp2ComService.findByChapitresAndSdePos(chapitresAutresCorr, devise) != null
+                    && bp2ComService.findByChapitresAndSdePos(chapitresAutresCorr, devise)!=null)
+                    ? bp2ComService.findByChapitresAndSdePos(chapitresAutresCorr, devise)
+                    : 0.0);
+            bp2.setPassifCliCptVue((bp2ComService.findByChapitres4And5AndSdePos(chapitresCptAVue4, chapitresCptAVue5, devise) != null
+                    && bp2ComService.findByChapitres4And5AndSdePos(chapitresCptAVue4, chapitresCptAVue5, devise)!=null)
+                    ? bp2ComService.findByChapitres4And5AndSdePos(chapitresCptAVue4, chapitresCptAVue5, devise)
+                    : 0.0);
+            bp2.setPassifCliCpteCh((bp2ComService.findByChapitresAndSdePos(chapitresPassifCliCpteCh, devise) != null
+                    && bp2ComService.findByChapitresAndSdePos(chapitresPassifCliCpteCh, devise)!=null)
+                    ? bp2ComService.findByChapitresAndSdePos(chapitresPassifCliCpteCh, devise)
+                    : 0.0);
+            bp2.setPassifCptApresEnc((bp2ComService.findByChapitresAndSdePos(chapitresPassifCptApresEnc, devise) != null
+                    && bp2ComService.findByChapitresAndSdePos(chapitresPassifCptApresEnc, devise)!=null)
+                    ? bp2ComService.findByChapitresAndSdePos(chapitresPassifCptApresEnc, devise)
+                    : 0.0);
             log.info("bp2.setActifBilletEtRcai {}", bp2.getActifBilletEtRcai());
             log.info("bp2.setActifMaisonMere {}", bp2.getActifMaisonMere());
-            log.info("bp2.setActifAuTresor {}" , bp2.getActifAuTresor());
+            log.info("bp2.setActifAuTresor {}", bp2.getActifAuTresor());
             log.info("bp2.setActifClientDeb {}", bp2.getActifClientDeb());
             log.info("bp2.setActifEffesCpte {}", bp2.getActifEffesCpte());
             log.info("bp2.setActifEffetEnc {}", bp2.getActifEffetEnc());
@@ -917,33 +999,37 @@ public class BprIntegratorServices {
             log.info("bp2.setPassifCliCptVue {}", bp2.getPassifCliCptVue());
             log.info("bp2.setPassifCliCpteCh {}", bp2.getPassifCliCpteCh());
             log.info("bp2.setPassifCptApresEnc {}", bp2.getPassifCptApresEnc());
-
-            if (dev != null && dev.equals("978")) {
+            if (dev != null && dev.equals("952")) {
                 bp2.setId(1l);
+                bp2.setCodeIsoDevise("XOF");
+                log.info(" SAVE BP2INFOS 978 {}", bp2.getCodeIsoDevise());
+            }
+            if (dev != null && dev.equals("978")) {
+                bp2.setId(2l);
                 bp2.setCodeIsoDevise("EUR");
                 log.info(" SAVE BP2INFOS 978 {}", bp2.getCodeIsoDevise());
             } else if (dev != null && dev.equals("840")) {
-                bp2.setId(2l);
+                bp2.setId(3l);
                 bp2.setCodeIsoDevise("USD");
                 log.info(" SAVE BP2INFOS 840 {}", bp2.getCodeIsoDevise());
             } else if (dev != null && dev.equals("124")) {
-                bp2.setId(3l);
+                bp2.setId(4l);
                 bp2.setCodeIsoDevise("CAD");
                 log.info(" SAVE BP2INFOS 124 {}", bp2.getCodeIsoDevise());
             } else if (dev != null && dev.equals("826")) {
-                bp2.setId(4l);
+                bp2.setId(5l);
                 bp2.setCodeIsoDevise("GBF");
                 log.info(" SAVE BP2INFOS 826 {}", bp2.getCodeIsoDevise());
             } else if (dev != null && dev.equals("756")) {
-                bp2.setId(5l);
+                bp2.setId(6l);
                 bp2.setCodeIsoDevise("CHF");
                 log.info(" SAVE BP2INFOS 756 {}", bp2.getCodeIsoDevise());
             } else if (dev != null && dev.equals("392")) {
-                bp2.setId(6l);
+                bp2.setId(7l);
                 bp2.setCodeIsoDevise("JPY");
                 log.info(" SAVE BP2INFOS 392 {}", bp2.getCodeIsoDevise());
             } else if (dev != null && dev.equals("156")) {
-                bp2.setId(7l);
+                bp2.setId(8l);
                 bp2.setCodeIsoDevise("CNY");
                 log.info(" SAVE BP2INFOS 156 {}", bp2.getCodeIsoDevise());
             }
@@ -955,14 +1041,15 @@ public class BprIntegratorServices {
 
     public void saveBp3Infos() {
 
-        List<String> listDevise = Arrays.asList("952", "978", "840", "124", "826", "756", "392", "156");
+        //List<String> listDevise = Arrays.asList("952", "978", "840", "124", "826", "756", "392", "156");
+        List<String> listDevise = Arrays.asList("XOF", "EUR", "USD", "CAD", "826", "756", "392", "156");
         List<String> listAchVend = Arrays.asList("CORRESETRANG", "CLIENTELE");
 
         log.info("BEFORE SAVE BP2INFOS");
         for (String AchVend : listAchVend) {
             if (AchVend.equals("CORRESETRANG")) {
                 for (String dev : listDevise) {
-                    if (dev != null && dev.equals("952")) {
+                    if (dev != null && dev.equals("XOF")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(new Long(25));
                         bp3.setCodeIsoDevise("XOF");
@@ -980,7 +1067,7 @@ public class BprIntegratorServices {
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 978 {}", bp3.getCodeIsoDevise());
                     }
-                    if (dev != null && dev.equals("978")) {
+                    if (dev != null && dev.equals("EUR")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(26l);
                         bp3.setCodeIsoDevise("EUR");
@@ -996,7 +1083,7 @@ public class BprIntegratorServices {
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 978 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("840")) {
+                    } else if (dev != null && dev.equals("USD")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(27l);
                         bp3.setCodeIsoDevise("USD");
@@ -1012,7 +1099,7 @@ public class BprIntegratorServices {
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 840 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("124")) {
+                    } else if (dev != null && dev.equals("CAD")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(28l);
                         bp3.setCodeIsoDevise("CAD");
@@ -1028,7 +1115,7 @@ public class BprIntegratorServices {
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 124 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("826")) {
+                    } else if (dev != null && dev.equals("GBF")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(29l);
                         bp3.setCodeIsoDevise("GBF");
@@ -1044,7 +1131,7 @@ public class BprIntegratorServices {
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 826 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("756")) {
+                    } else if (dev != null && dev.equals("CHF")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(30l);
                         bp3.setCodeIsoDevise("CHF");
@@ -1060,7 +1147,7 @@ public class BprIntegratorServices {
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 756 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("392")) {
+                    } else if (dev != null && dev.equals("JPY")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(31l);
                         bp3.setCodeIsoDevise("JPY");
@@ -1076,7 +1163,7 @@ public class BprIntegratorServices {
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 392 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("156")) {
+                    } else if (dev != null && dev.equals("CNY")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(32l);
                         bp3.setCodeIsoDevise("CNY");
@@ -1098,82 +1185,82 @@ public class BprIntegratorServices {
             } else if (AchVend.equals("CLIENTELE")) {
                 for (String dev : listDevise) {
 
-                    if (dev != null && dev.equals("952")) {
+                    if (dev != null && dev.equals("XOF")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(1l);
                         bp3.setCodeIsoDevise("XOF");
                         bp3.setLibelleDevise("Franc CFA BCEAO");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 978 {}", bp3.getCodeIsoDevise());
                     }
-                    if (dev != null && dev.equals("978")) {
+                    if (dev != null && dev.equals("EUR")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(2l);
                         bp3.setCodeIsoDevise("EUR");
                         bp3.setLibelleDevise("Euro");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 978 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("840")) {
+                    } else if (dev != null && dev.equals("USD")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(3l);
                         bp3.setCodeIsoDevise("USD");
                         bp3.setLibelleDevise("Dollar US");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 840 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("124")) {
+                    } else if (dev != null && dev.equals("CAD")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(4l);
                         bp3.setCodeIsoDevise("CAD");
                         bp3.setLibelleDevise("Dollar Canadien");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
                         bp3InfosService.save(bp3);
                         log.info(" SAVE BP3INFOS 124 {}", bp3.getCodeIsoDevise());
-                    } else if (dev != null && dev.equals("826")) {
+                    } else if (dev != null && dev.equals("GBF")) {
                         Bp3Infos bp3 = new Bp3Infos();
                         bp3.setId(5l);
                         bp3.setCodeIsoDevise("GBF");
                         bp3.setLibelleDevise("Livre Sterling");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
@@ -1185,11 +1272,11 @@ public class BprIntegratorServices {
                         bp3.setCodeIsoDevise("CHF");
                         bp3.setLibelleDevise("Franc Suisse");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
@@ -1201,11 +1288,11 @@ public class BprIntegratorServices {
                         bp3.setCodeIsoDevise("JPY");
                         bp3.setLibelleDevise("Yen Japonais");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
@@ -1217,11 +1304,11 @@ public class BprIntegratorServices {
                         bp3.setCodeIsoDevise("CNY");
                         bp3.setLibelleDevise("Yuan");
                         bp3.acheteurVendeur(AchVend);
-                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("TOCLIV", dev).doubleValue()
+                        bp3.setAchatsBilletETr((bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonNeg("ACHDEV", dev).doubleValue()
                                 : 0.0);
-                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev) != null)
-                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("TOCLIV", dev).doubleValue()
+                        bp3.setVentesBilletEtr((bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev) != null)
+                                ? bp3HisService.findSumMonByDevAndNatAndMonPos("VENDEV", dev).doubleValue()
                                 : 0.0);
                         bp3.setAchatsChqVoy(0.0);
                         bp3.setVentesChqVoy(0.0);
@@ -1232,4 +1319,52 @@ public class BprIntegratorServices {
             }
         }
     }
+
+    public LocalDate recupDateArrete(String filename) {
+
+        DateTimeFormatter dateformat1 = DateTimeFormatter.ofPattern("ddMMyyyy");
+        DateTimeFormatter dateformat2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        System.out.println("DATE = " + filename.substring(8, 16));
+        LocalDate dateArrete = LocalDate.parse(filename.substring(8, 16), dateformat1);
+        System.out.println("FORMAT = " + dateArrete.format(dateformat2));
+
+        return dateArrete;
+    }
+    
+ private static SimpleDateFormat inSDF = new SimpleDateFormat("dd/mm/yyyy");
+  private static SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-mm-dd");
+
+  public static String formatDate(String inDate) {
+    String outDate = "";
+    System.out.println("date inDate "+inDate);
+    if (inDate != null) {
+        try {
+            Date date = inSDF.parse(inDate);
+            System.out.println("date inSDF "+date);
+            outDate = outSDF.format(date);
+            System.out.println("date outSDF "+outDate);
+        } catch (ParseException ex){ 
+        }
+    }
+    return outDate;
+  }
+  
+  public class CurrencyHelper {
+
+    /*private static Map<Integer, Currency> currencies = new HashMap<>();
+
+    static {
+        Set<Currency> set = Currency.getAvailableCurrencies();
+        for (Currency currency : set) {
+             currencies.put(currency.getNumericCode(), currency);
+        }
+    }
+
+    public static Currency getInstance(Integer code) {
+        return currencies.get(code);
+    }*/
+}
+    
+
 }

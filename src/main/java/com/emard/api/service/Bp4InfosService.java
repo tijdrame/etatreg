@@ -2,6 +2,7 @@ package com.emard.api.service;
 
 import com.emard.api.domain.Bp4Infos;
 import com.emard.api.repository.Bp4InfosRepository;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,4 +73,15 @@ public class Bp4InfosService {
         log.debug("Request to delete Bp4Infos : {}", id);
         bp4InfosRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public List<Object[]> findListEmissionAcquisition(){
+        return bp4InfosRepository.findListEmissionAcquisition();
+    }
+    
+    @Transactional(readOnly = false)
+    public void viderBp4Infos(String nomFic) {
+        log.debug("Request to delete all Bp4Infos by filename");
+        bp4InfosRepository.viderBp4Infos(nomFic);
+    } 
 }

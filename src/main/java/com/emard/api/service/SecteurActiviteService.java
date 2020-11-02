@@ -72,4 +72,10 @@ public class SecteurActiviteService {
         log.debug("Request to delete SecteurActivite : {}", id);
         secteurActiviteRepository.deleteById(id);
     }
+    
+    @Transactional(readOnly = true)
+    public String findCodeNaemaByCodeInterne (String codeInterne) {
+        log.info("Request to find SecteurActivite : {}", codeInterne);
+        return secteurActiviteRepository.findCodeNaemaByCodeInterne(codeInterne);
+    }
 }
