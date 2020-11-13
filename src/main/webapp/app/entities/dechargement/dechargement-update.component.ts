@@ -15,21 +15,25 @@ import { FilesInfosService } from '../files-infos/files-infos.service';
 })
 export class DechargementUpdateComponent implements OnInit {
   isSaving = false;
+  isLoading = false;
   folderFiles: String[] = [];
 
   editForm = this.fb.group({
     id: [],
   });
 
-  constructor(protected dechargementService: DechargementService, protected activatedRoute: ActivatedRoute, 
-    protected filesInfosService: FilesInfosService, private fb: FormBuilder) {}
+  constructor(
+    protected dechargementService: DechargementService,
+    protected activatedRoute: ActivatedRoute,
+    protected filesInfosService: FilesInfosService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ dechargement }) => {
       this.updateForm(dechargement);
     });
     this.filesInfosService.queryQua().subscribe((res: HttpResponse<String[]>) => (this.folderFiles = res.body || []));
-
   }
 
   updateForm(dechargement: IDechargement): void {
@@ -43,7 +47,7 @@ export class DechargementUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
+    // this.isSaving = true;
     const dechargement = this.createFromForm();
     if (dechargement.id !== undefined) {
       this.subscribeToSaveResponse(this.dechargementService.update(dechargement));

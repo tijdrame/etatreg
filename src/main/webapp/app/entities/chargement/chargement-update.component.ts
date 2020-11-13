@@ -19,6 +19,7 @@ export class ChargementUpdateComponent implements OnInit {
   isSaving = false;
   filesinfos: IFilesInfos[] = [];
   folderFiles: String[] = [];
+  isLoading = false;
 
   editForm = this.fb.group({
     id: [],
@@ -62,9 +63,15 @@ export class ChargementUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.chargementService.create(chargement));
     } */
     console.log('before saving ');
+    this.isLoading = true;
     this.chargementService.doChargementBalPaiemt().subscribe((res: any) => {
-      console.log('res = ', res['status']);
-      if (res['status'] === 200) this.jhiAlertService.info('Chargement effectué avec succés');
+      console.log('res = ', JSON.stringify(res));
+      if (res['status'] === 200) {
+        this.jhiAlertService.info('Chargement effectué avec succés');
+        this.isLoading = false;
+      }
+      this.jhiAlertService.warning('Erreur lors du chargement');
+      this.isLoading = false;
     });
     console.log('after saving');
   }

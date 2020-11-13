@@ -20,7 +20,7 @@
             </table>
         </div>
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-           
+            <img *ngIf="isLoading"  src="../../../content/images/loading.gif" style="align-content: center;"/>
             <h2 id="page-heading" *ngIf="folderFiles && folderFiles.length > 0">
                 <button id="jh-create-entity" type="submit" [disabled]="!editForm.valid"
                 class="btn btn-primary float-right jh-create-entity create-chargement" >

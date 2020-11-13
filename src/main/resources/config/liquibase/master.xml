@@ -14,11 +14,16 @@
     </changeSet>
     <changeSet author="tijdr (generated)" id="1592497095418-2">
         <dropDefaultValue columnDataType="varchar(255)" columnName="libelle" tableName="periode"/>
-    </changeSet> -->
+    </changeSet> 
     <include file="config/liquibase/changelog/20200912144623_added_entity_ChargeFile.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200912145658_added_entity_Bp1Com.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200912150846_added_entity_Bp1His.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200912151615_added_entity_Bp2Com.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200912152334_added_entity_Bp3His.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20200912155037_added_entity_CrpAtr.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200912155037_added_entity_CrpAtr.xml" relativeToChangelogFile="false"/>-->
+    <include file="config/liquibase/changelog/20201113112125_added_entity_Bpbqe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201113112514_added_entity_Bpitrs.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201113112956_added_entity_Bpnaema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201113113448_added_entity_Bppaysiso.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201113113655_added_entity_Bpsectinst.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

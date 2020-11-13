@@ -96,6 +96,30 @@ import { RouterModule } from '@angular/router';
         path: 'crp-atr',
         loadChildren: () => import('./crp-atr/crp-atr.module').then(m => m.EtatregCrpAtrModule),
       },
+      {
+        path: 'bpdevise',
+        loadChildren: () => import('./bpdevise/bpdevise.module').then(m => m.EtatregBpdeviseModule),
+      },
+      {
+        path: 'bpbqe',
+        loadChildren: () => import('./bpbqe/bpbqe.module').then(m => m.EtatregBpbqeModule),
+      },
+      {
+        path: 'bpitrs',
+        loadChildren: () => import('./bpitrs/bpitrs.module').then(m => m.EtatregBpitrsModule),
+      },
+      {
+        path: 'bpnaema',
+        loadChildren: () => import('./bpnaema/bpnaema.module').then(m => m.EtatregBpnaemaModule),
+      },
+      {
+        path: 'bppaysiso',
+        loadChildren: () => import('./bppaysiso/bppaysiso.module').then(m => m.EtatregBppaysisoModule),
+      },
+      {
+        path: 'bpsectinst',
+        loadChildren: () => import('./bpsectinst/bpsectinst.module').then(m => m.EtatregBpsectinstModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
