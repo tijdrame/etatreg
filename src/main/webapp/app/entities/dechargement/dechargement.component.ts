@@ -34,6 +34,7 @@ export class DechargementComponent implements OnInit, OnDestroy {
   dateGen = '';
   version = '';
   filesInfos: IFilesInfos[] = [];
+  isLoading = false;
   fileInfo: IFilesInfos = {};
 
   constructor(

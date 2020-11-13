@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IChargement } from 'app/shared/model/chargement.model';
@@ -35,6 +35,7 @@ export class ChargementComponent implements OnInit, OnDestroy {
   fileInfo: IFilesInfos = {};
   dateGen = '';
   version = '';
+  isLoading = false;
 
   constructor(
     protected chargementService: ChargementService,
@@ -43,7 +44,8 @@ export class ChargementComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected periodeService: PeriodeService,
-    protected filesInfosService: FilesInfosService
+    protected filesInfosService: FilesInfosService,
+    private jhiAlertService: JhiAlertService
   ) {}
 
   ngOnInit(): void {
@@ -121,9 +123,10 @@ export class ChargementComponent implements OnInit, OnDestroy {
   }
 
   generate(): void {
+    this.isLoading = true;
     // alert('date=' + this.dateGen + ' codeFic=' + this.fileInfo?.codeFile + ' period=' + this.periode?.code + ' version=' + this.version);
-    this.chargementService.generate(this.fileInfo?.id!, this.dateGen, this.version).subscribe(
-      (res: any) => res
+    this.chargementService.generate(this.fileInfo?.id!, this.dateGen, this.version).subscribe((res: any) => {
+      console.log(JSON.stringify(res));
       /* {
         alert('resp =' + JSON.stringify(res.blob))
 
@@ -134,6 +137,10 @@ export class ChargementComponent implements OnInit, OnDestroy {
       } */
 
       // () => this.onError()
-    );
+      this.jhiAlertService.info('Chargement effectué avec succés');
+      this.isLoading = false;
+    });
+    this.jhiAlertService.warning('Erreur lors du chargement');
+    // this.isLoading = false;
   }
 }

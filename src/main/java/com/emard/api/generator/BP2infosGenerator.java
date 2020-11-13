@@ -214,7 +214,7 @@ public class BP2infosGenerator {
     }
     
     public static Double divideByMillion (Double val) {
-        Double value = val!=null && val!=0 ? (val)/1000000 : 0;
+        Double value = val!=null && val!=0 ? Double.valueOf(Math.round(val/1000000)) : 0;
         value = value<0 ? value*(-1) : value; 
         return value;
     }

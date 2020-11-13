@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface Bp4InfosRepository extends JpaRepository<Bp4Infos, Long> {
     
     
-    @Query("select od.codeIsoPays as codeIsoPays, od.libellePays as libellePays, sum(od.mntnosCartes) as mntnosCartes, sum(od.mntCartesEtr) as mntCartesEtr FROM Bp4Infos od where od.codeIsoPays!='' group by od.codeIsoPays")
+    @Query("select od.codeIsoPays as codeIsoPays, od.libellePays as libellePays, sum(od.mntnosCartes) as mntnosCartes, sum(od.mntCartesEtr) as mntCartesEtr FROM Bp4Infos od where od.codeIsoPays is not null group by od.codeIsoPays,od.libellePays")
     List<Object[]> findListEmissionAcquisition();
     
     @Modifying

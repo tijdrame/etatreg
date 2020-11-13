@@ -17,7 +17,6 @@ import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -87,9 +86,8 @@ public class BP4infosGenerator {
     
     public static Double divideByMillion (Double val) {
         System.out.println("Double = "+val);
-        String strVal = "0";
-        Double value = val!=null && val!=0 ? (val)/1000000 : 0;
-        
+        Double value = val!=null && val!=0 ? Double.valueOf(Math.round(val/1000000)) : 0;
+        value = value<0 ? value*(-1) : value;
         System.out.println(" Str = "+String.valueOf(value));
         return value;
     }

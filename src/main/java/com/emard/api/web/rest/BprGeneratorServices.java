@@ -103,6 +103,9 @@ public class BprGeneratorServices {
     
     @Autowired
     NatureDepotService natureDepotService;
+    
+    @Autowired
+    ObjetCreditService objetCreditService;
 
     @GetMapping(value = "/generated/bp2file/{idFile}/{dateRef}/{version}")
     public ResponseEntity<InputStreamResource> excelBP2Report(@PathVariable("idFile") Long idFile, @PathVariable("dateRef") String dateRef, @PathVariable("version") String version) throws IOException, ParseException {
@@ -156,11 +159,11 @@ public class BprGeneratorServices {
                         break;
                     case "CRP":
                         resource = new ClassPathResource("fichierstemplate/BPR_CRP_INFOS_CSV.CSV");
-                        CRPinfosGenerator cRPinfosGenerator =  new CRPinfosGenerator();
+                        //CRPinfosGenerator cRPinfosGenerator =  new CRPinfosGenerator();
                         InputStream templatefileCrp = resource.getInputStream();
                         copyFile(templatefileCrp, bpFile);
                         Iterable<CrpAtr> crpinfos = crpAtrService.findAll(pag);
-                        in = cRPinfosGenerator.crpInfosToCsv(crpinfos, bpFile, bankInfos.get(), codeIdBank, dateDebutPeriode, dateFinPeriode, secteurActivite, natureDepotService);
+                        in = CRPinfosGenerator.crpInfosToCsv(crpinfos, bpFile, bankInfos.get(), codeIdBank, dateDebutPeriode, dateFinPeriode, secteurActivite, natureDepotService, objetCreditService);
                         break;
                     case "ATR":
                         resource = new ClassPathResource("fichierstemplate/BPR_ATR_INFOS_CSV.CSV");

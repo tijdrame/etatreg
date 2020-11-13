@@ -136,7 +136,12 @@ public class BprIntegratorServices {
 
             File bpFile = new File(pathOutPutFile);
             File repArch = new File(pathOutPutFile + "\\archives");
+             if(!repArch.exists())
+            {
+            // Créer le dossier avec tous ses parents
             repArch.mkdir();
+            }
+
             String codeIdBank = bankInfos.get().getCodeId();
 
             File[] matchingFiles = bpFile.listFiles();
@@ -171,6 +176,12 @@ public class BprIntegratorServices {
                     chf.setNomFic(nomfic);
                     chargeFileService.save(chf);
                     log.info("AFTER SAVE [{}]" + chf.getNomFic());
+                    System.out.println("Rep !"+repArch);
+                    if(item.renameTo(new File(repArch+"\\"+nomfic+"_"+System.currentTimeMillis()))){
+                    System.out.println("File is moved successful!");
+                   }else{
+                    System.out.println("File is failed to move!");
+                   }
                 }
 
             }
@@ -178,6 +189,7 @@ public class BprIntegratorServices {
             /*saveBp1Infos();
             saveBp2Infos();
             saveBp3Infos();*/
+            
         }
 
         HttpHeaders headers = new HttpHeaders();
@@ -368,6 +380,7 @@ public class BprIntegratorServices {
             bp1Com.setNomFic(fileName);
             bp1ComService.save(bp1Com);
             log.info("AFTER SAVE bp1Com {}", fileName);
+            
             //dateArrete = (bp1Com.getDateArrete() != null ? bp1Com.getDateArrete() : dateArrete);
         }
         
@@ -426,9 +439,9 @@ public class BprIntegratorServices {
             bp2com.setDateArrete(dateArrete);
             bp2com.setNomFic(fileName);
             bp2ComService.save(bp2com);
-
+            
         }
-
+        saveBp2Infos();
     }
 
     public void chargeBP1His(String fileName, Sheet sheet, Row line, int top, int hight, DateTimeFormatter dateformat,
@@ -481,8 +494,9 @@ public class BprIntegratorServices {
             bp1his.setNomFic(fileName);
             bp1HisService.save(bp1his);
             log.info("AFTER SAVE bp1his {}", fileName);
+            
         }
-
+        saveBp1Infos();
     }
 
     public void chargeBP3His(String fileName, Sheet sheet, Row line, int top, int hight, DateTimeFormatter dateformat,
@@ -536,9 +550,9 @@ public class BprIntegratorServices {
             bp3his.setDateArrete(dateArrete);
             bp3his.setNomFic(fileName);
             bp3HisService.save(bp3his);
-
+            
         }
-
+        saveBp3Infos();
     }
 
     public void chargeCrpAtr(String fileName, Sheet sheet, Row line, int top, int hight, DateTimeFormatter dateformat,
@@ -567,15 +581,23 @@ public class BprIntegratorServices {
             crpAtr.setRefint(line.getCell(1) != null
                     ? (!line.getCell(1).getStringCellValue().equals("") ? line.getCell(1).getStringCellValue() : "")
                     : "");
-            crpAtr.setNum(line.getCell(2) != null
-                    ? (!line.getCell(2).getStringCellValue().equals("") ? line.getCell(2).getStringCellValue() : "")
-                    : "");
-            crpAtr.setNobor(line.getCell(3) != null
+            System.out.println("line.getCell(2)."+line.getCell(2));
+            crpAtr.setNum((line.getCell(2) != null && CellType.NUMERIC ==(line.getCell(2).getCellType())) ? String.valueOf(line.getCell(2).getNumericCellValue())!=null ? String.valueOf(line.getCell(2).getNumericCellValue()):"" : 
+                    (line.getCell(2)!=null && 
+                            !line.getCell(2).getStringCellValue().equals("") ? line.getCell(2).getStringCellValue() : ""));
+                    /*? (!line.getCell(2).getStringCellValue().equals("") ? line.getCell(2).getStringCellValue() : "")
+                    : "");*/
+            
+            /*((line.getCell(0)!=null && CellType.NUMERIC ==(line.getCell(0).getCellType()))) ?
+            String.valueOf(line.getCell(0).getNumericCellValue()) : line.getCell(0).getStringCellValue()*/
+            crpAtr.setNobor((line.getCell(3) != null && CellType.NUMERIC ==(line.getCell(3).getCellType())) ? String.valueOf(line.getCell(3).getNumericCellValue()) : (line.getCell(3)!=null && !line.getCell(3).getStringCellValue().equals("") ? line.getCell(3).getStringCellValue() : ""));
+               /*(line.getCell(3) != null
                     ? (!line.getCell(3).getStringCellValue().equals("") ? line.getCell(3).getStringCellValue() : "")
-                    : "");
-            crpAtr.setTypenr(line.getCell(4) != null
+                    : "");*/
+            crpAtr.setTypenr((line.getCell(4) != null && CellType.NUMERIC ==(line.getCell(4).getCellType())) ? String.valueOf(line.getCell(4).getNumericCellValue()) : (line.getCell(4)!=null && !line.getCell(4).getStringCellValue().equals("") ? line.getCell(4).getStringCellValue() : ""));
+                    /*(line.getCell(4) != null
                     ? (!line.getCell(4).getStringCellValue().equals("") ? line.getCell(4).getStringCellValue() : "")
-                    : "");
+                    : "");*/
             crpAtr.setIdAtr(line.getCell(5) != null
                     ? (!line.getCell(5).getStringCellValue().equals("") ? line.getCell(5).getStringCellValue() : "")
                     : "");
@@ -601,27 +623,32 @@ public class BprIntegratorServices {
             // line.getCell(11).getStringCellValue();
             crpAtr.setDatope(LocalDate.parse(
                     (dateOpe != null) ? ((!dateOpe.equals("") ? dateOpe : "01/01/2020")) : "01/01/2020", dateformat));
-            crpAtr.setRegt(line.getCell(12) != null
+            crpAtr.setRegt((line.getCell(12) != null && CellType.NUMERIC ==(line.getCell(12).getCellType())) ? String.valueOf(line.getCell(12).getNumericCellValue()) : (line.getCell(12)!=null && !line.getCell(12).getStringCellValue().equals("") ? line.getCell(12).getStringCellValue() : ""));
+        /*(line.getCell(12) != null
                     ? (!line.getCell(12).getStringCellValue().equals("") ? line.getCell(12).getStringCellValue() : "")
-                    : "");
+                    : "");*/
             crpAtr.setNomEtr(line.getCell(13) != null
                     ? (!line.getCell(13).getStringCellValue().equals("") ? line.getCell(13).getStringCellValue() : "")
                     : "");
-            crpAtr.setNocli(line.getCell(14) != null
+            crpAtr.setNocli((line.getCell(14) != null && CellType.NUMERIC ==(line.getCell(14).getCellType())) ? String.valueOf(line.getCell(14).getNumericCellValue()) : (line.getCell(14)!=null && !line.getCell(14).getStringCellValue().equals("") ? line.getCell(14).getStringCellValue() : ""));
+        /*(line.getCell(14) != null
                     ? (!line.getCell(14).getStringCellValue().equals("") ? line.getCell(14).getStringCellValue() : "")
-                    : "");
-            crpAtr.setCeco(line.getCell(15) != null
+                    : "");*/
+            crpAtr.setCeco((line.getCell(15) != null && CellType.NUMERIC ==(line.getCell(15).getCellType())) ? String.valueOf(line.getCell(15).getNumericCellValue()) : (line.getCell(15)!=null && !line.getCell(15).getStringCellValue().equals("") ? line.getCell(15).getStringCellValue() : ""));
+        /*(line.getCell(15) != null
                     ? (!line.getCell(15).getStringCellValue().equals("") ? line.getCell(15).getStringCellValue() : "")
-                    : "");
+                    : "");*/
             /*crpAtr.setCpayEtg(line.getCell(16) != null
                     ? (!line.getCell(16).getStringCellValue().equals("") ? line.getCell(16).getStringCellValue() : "")
                     : "");*/
-            crpAtr.setNatcpt(line.getCell(17) != null
+            crpAtr.setNatcpt((line.getCell(17) != null && CellType.NUMERIC ==(line.getCell(17).getCellType())) ? String.valueOf(line.getCell(17).getNumericCellValue()) : (line.getCell(17)!=null && !line.getCell(17).getStringCellValue().equals("") ? line.getCell(17).getStringCellValue() : ""));
+        /*(line.getCell(17) != null
                     ? (!line.getCell(17).getStringCellValue().equals("") ? line.getCell(17).getStringCellValue() : "")
-                    : "");
-            crpAtr.setSens(line.getCell(18) != null
+                    : "");*/
+            crpAtr.setSens((line.getCell(18) != null && CellType.NUMERIC ==(line.getCell(18).getCellType())) ? String.valueOf(line.getCell(18).getNumericCellValue()) : (line.getCell(18)!=null && !line.getCell(18).getStringCellValue().equals("") ? line.getCell(18).getStringCellValue() : ""));
+        /*(line.getCell(18) != null
                     ? (!line.getCell(18).getStringCellValue().equals("") ? line.getCell(18).getStringCellValue() : "")
-                    : "");
+                    : "");*/
            //* crpAtr.setSens(line.getCell(19) != null
                   ////  ? (!line.getCell(19).getStringCellValue().equals("") ? line.getCell(19).getStringCellValue() : "")
                    // : "");*/
@@ -733,7 +760,7 @@ public class BprIntegratorServices {
                 //LocalDate dco = LocalDate.parse(dateOpe.substring(0, 10), dateformat1);
                 //dateOpe = dco.format(dateformat1);
                 //UTB
-                LocalDate dco = LocalDate.parse(dateOpe.substring(0, 8), dateformat3);
+                LocalDate dco = LocalDate.parse(dateOpe.substring(0, 10), dateformat1);
                 dateOpe = dco.format(dateformat1);
                 //dateOpe = formatDate(dateOpe);
                 log.info("FORMAT EMI =, ",dateOpe);        
@@ -803,10 +830,10 @@ public class BprIntegratorServices {
                 D150 = D150 + bp1.getSdeFin();
             }
         }*/
-        D100 = bp1ComService.findSumSoldeDebutBySoldeDebutNeg();
-        D200 = bp1ComService.findSumSoldeDebutBySoldeDebutPos();
-        D250 = bp1ComService.findSumSoldeFinBySoldeFinNeg();
-        D150 = bp1ComService.findSumSoldeFinBySoldeFinPos();
+        D100 = Double.valueOf(Math.round(bp1ComService.findSumSoldeDebutBySoldeDebutNeg()));
+        D200 = Double.valueOf(Math.round(bp1ComService.findSumSoldeDebutBySoldeDebutPos()));
+        D250 = Double.valueOf(Math.round(bp1ComService.findSumSoldeFinBySoldeFinNeg()));
+        D150 = Double.valueOf(Math.round(bp1ComService.findSumSoldeFinBySoldeFinPos()));
         //D250 = bp1ComService.findSumSoldeDebutBySoldeDebutNeg();
         //D150 = bp1ComService.findSumSoldeDebutBySoldeDebutPos();
 
@@ -859,6 +886,14 @@ public class BprIntegratorServices {
                 D235 = D235 + bpHis.getMon();
             }*/
         }
+        
+        D110 = Double.valueOf(Math.round(D110));
+        D210 = Double.valueOf(Math.round(D210));
+        D131 = Double.valueOf(Math.round(D131));
+        D231 = Double.valueOf(Math.round(D231));
+        D134 = Double.valueOf(Math.round(D134));
+        D234 = Double.valueOf(Math.round(D234));
+        
         D130 = D130 + D131 + D133 + D134 + D135;
         D160 = D160 + (D100<0 ? -1*D100 : D100) + D110 + D130 + D150;
         D230 = D230 + D231 + D233 + D234 + D235;

@@ -6,7 +6,6 @@
 package com.emard.api.generator;
 
 import com.emard.api.domain.Bp1Infos;
-import com.emard.api.domain.FilesInfos;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,6 +40,13 @@ public class BP1infosGenerator {
         row.createCell(1).setCellValue(codeIdBank);
         row.createCell(2).setCellValue(dateDebutPeriode);
         row.createCell(3).setCellValue(dateFinPeriode);
+        /*
+         
+        D130 = D130 + D131 + D133 + D134 + D135;
+        D160 = D160 + (D100<0 ? -1*D100 : D100) + D110 + D130 + D150;
+        D230 = D230 + D231 + D233 + D234 + D235;
+        D260 = D260 + D200 + D210 + D230 + (D250<0 ? -1*D250 : D250);*/
+
         
         for (Bp1Infos bp1 : bp1infos) {             
                 Row row1 = firstSheet.getRow(13);
@@ -125,7 +131,7 @@ public class BP1infosGenerator {
     
     public static String divideByMillion (String val) {
         
-        String value = String.valueOf(val!=null && !val.equals("0") ? Double.valueOf(val)/1000000 : "0");
+        String value = String.valueOf(val!=null && !val.equals("0") ? Math.round(Double.valueOf(val)/1000000) : "0");
         value = value.replace('.', ',');
         return value;
     }
